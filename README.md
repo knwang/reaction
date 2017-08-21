@@ -1,24 +1,11 @@
-# README
+# Rails + Webpack + React + Heroku
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Deployment hints ([source](https://medium.com/@hpux/rails-5-1-loves-javascript-a1d84d5318b))
 
-Things you may want to cover:
+1. Add the nodejs and ruby buildpacks:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+    ```
+    heroku create 
+    heroku buildpacks:add --index 1 heroku/nodejs
+    heroku buildpacks:add --index 2 heroku/ruby
+    ```
