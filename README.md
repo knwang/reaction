@@ -1,9 +1,11 @@
 # Rails + Webpack + React + Heroku
 
-## Running JavaScript Tests
+## Useful commands
 
 ```
-$ bin/yarn test
+$ bin/yarn run test # Run JS unit tests
+
+$ bin/yarn run lint # Run eslint on files in app/javascript
 ```
 
 ## Deployment hints ([source](https://medium.com/@hpux/rails-5-1-loves-javascript-a1d84d5318b))
