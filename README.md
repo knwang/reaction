@@ -31,3 +31,6 @@ $ bin/yarn run lint
     $ heroku buildpacks:add --index 1 heroku/nodejs
     $ heroku buildpacks:add --index 2 heroku/ruby
     ```
+
+This template is deployed
+[here](https://obscure-fortress-25974.herokuapp.com/).
