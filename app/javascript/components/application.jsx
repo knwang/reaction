@@ -1,9 +1,15 @@
 import React from 'react';
-import Hello from './hello';
+import { Route } from 'react-router-dom';
 
-module.exports = class Application extends React.Component {
-  render() {
-    return <Hello name="React" />;
-  }
-};
+import TopNav from './TopNav';
+import BoardsDashboard from './BoardsDashboard';
 
+const Application = () => (
+  <div>
+    <TopNav />
+
+    <Route path='/' exact component={BoardsDashboard} />
+  </div>
+);
+
+export default Application;
