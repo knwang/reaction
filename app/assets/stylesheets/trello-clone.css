@@ -43,6 +43,13 @@ nav {
 nav .dropdown {
   top: 41px;
 }
+nav > ul {
+  font-size: 0;
+  line-height: 24px;
+}
+nav > ul > * {
+  font-size: 14px;
+}
 nav > ul > li,
 nav > h1,
 nav > ul,
@@ -1213,7 +1220,7 @@ main {
   height: 100%;
 }
 .list-wrapper + .list-wrapper {
-  margin-left: 10px;
+  margin-left: 6px;
 }
 .list-background {
   background-color: rgba(0,0,0,0.2);
