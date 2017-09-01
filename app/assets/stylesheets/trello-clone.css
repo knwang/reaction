@@ -20,7 +20,6 @@ body {
   bottom: 0;
   right: 0;
   left: 0;
-  min-width: 550px;
 }
 body {
   font-family: "Helvetica Neue";
@@ -30,7 +29,7 @@ body {
   overflow: hidden;
 }
 nav {
-  background-color: rgba(0,0,0,0.15);
+  background-color: #026aa7;
   height: 40px;
   color: #f3f3f3;
   font-size: 14px;
@@ -3886,9 +3885,6 @@ form.description .textarea-toggle:focus {
 .email-icon:before {
   content: "\e935";
 }
-.send-icon:before {
-  content: "\e945";
-}
 .minus-icon:before {
   content: "\e946";
 }
@@ -3942,5 +3938,102 @@ form.description .textarea-toggle:focus {
   #search-dropdown {
     width: 500px;
     left: 45px !important;
+  }
+}
+
+main.dashboard {
+  padding: 55px 0 0 0;
+  background: white;
+  bottom: 0;
+}
+
+main.dashboard .board-group {
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 1250px;
+}
+
+.board-group h2 {
+  font-size: 1rem;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-weight: 700;
+  color: #4d4d4d;
+  display: inline-block;
+  line-height: 24px;
+  margin-left: 35px;
+  margin-top: 3px;
+}
+
+
+.board-section-logo {
+  position: absolute;
+}
+
+.board-section-logo span {
+  font-family: 'trellicons';
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 400;
+  width: 30px;
+  color: #999;
+  line-height: 30px;
+}
+
+.board-section-logo .person-logo::before {
+  content: "\e934"
+}
+
+.dashboard-board-tiles {
+  width: 100%;
+  font-size: 0;
+}
+
+.dashboard-board-tiles .board-tile {
+  padding: 0 16px 8px 0; 
+  display: inline-block;
+  vertical-align: top;
+}
+
+.dashboard-board-tiles .board-tile a {
+  background: rgb(0, 121, 191);
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  height: 80px;
+  display: block;
+  border-radius: 3px;
+}
+
+.dashboard-board-tiles .board-tile .board-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  max-height: 40px;
+  overflow: hidden;
+  padding-bottom: 20px;
+}
+
+@media only screen and (min-width: 901px) {
+  .dashboard-board-tiles .board-tile {
+    width: calc(25% - 16px);
+  }
+}
+
+@media only screen and (max-width: 900px) and (min-width: 751px) {
+  .dashboard-board-tiles .board-tile {
+    width: calc(33% - 12px);
+  }
+
+  .dashboard-board-tiles .board-tile:nth-child(3n) {
+    padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .dashboard-board-tiles .board-tile {
+    width: 100%;
+  }
+
+  main.dashboard .board-group {
+    padding: 0 8px;
   }
 }
