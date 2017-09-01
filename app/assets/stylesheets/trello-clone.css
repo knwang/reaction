@@ -3995,12 +3995,29 @@ main.dashboard .board-group {
 }
 
 .dashboard-board-tiles .board-tile a {
-  background: rgb(0, 121, 191);
+  background: #0c66a3;
   padding: 8px 12px;
   margin-bottom: 8px;
   height: 80px;
   display: block;
   border-radius: 3px;
+}
+
+.dashboard-board-tiles .board-tile a.new-board {
+  text-align: center;
+}
+
+.dashboard-board-tiles .board-tile a:hover {
+  background: #095a8f;
+  cursor: pointer;
+}
+
+.dashboard-board-tiles .board-tile a.new-board {
+  background: #e2e4e6;
+}
+
+.dashboard-board-tiles .board-tile a.new-board:hover {
+  background: #d6dadc;
 }
 
 .dashboard-board-tiles .board-tile .board-title {
@@ -4010,6 +4027,18 @@ main.dashboard .board-group {
   max-height: 40px;
   overflow: hidden;
   padding-bottom: 20px;
+}
+
+.dashboard-board-tiles .board-tile a.new-board .board-title {
+  color: #8c8c8c;
+  display: block;
+  font-weight: normal;
+  font-size: .875rem;
+  margin-top: 30px;
+}
+
+.dashboard-board-tiles .board-tile a.new-board:hover .board-title {
+  color: #4d4d4d;
 }
 
 @media only screen and (min-width: 901px) {
