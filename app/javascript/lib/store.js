@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 
 function reducer(state = {}, action) {
   return {
@@ -25,6 +26,6 @@ function boardsReducer(state = [{
   return state;
 }
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(ReduxThunk));
 
 export default store;
