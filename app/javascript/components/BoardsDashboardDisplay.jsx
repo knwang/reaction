@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BoardTile from './BoardTile';
-import CreateBoardTile from './CreateBoardTile';
+import ToggleableCreateBoardTile from './ToggleableCreateBoardTile';
 
 const BoardsDashboard = props => {
   let boards = props.boards.map((board) => (
@@ -13,7 +13,7 @@ const BoardsDashboard = props => {
   ));
 
   boards.push(
-    <CreateBoardTile 
+    <ToggleableCreateBoardTile 
       key={'new-board'}
     />
   );
