@@ -7,23 +7,12 @@ function reducer(state = {}, action) {
   };
 }
 
-function boardsReducer(state = [{
-  id: 1,
-  title: "Website Development"
-}, {
-  id: 2,
-  title: "Recipes"
-}, {
-  id: 3,
-  title: "Weekend Projects"
-}, {
-  id: 4,
-  title: "Legal Stuff"
-}, {
-  id: 5,
-  title: "Running Amuck"
-}]) {
-  return state;
+function boardsReducer(state = [], action) {
+  if (action.type === 'FETCH_BOARDS_SUCCESS') {
+    return action.boards;
+  } else {
+    return state;
+  }
 }
 
 const store = createStore(reducer, applyMiddleware(ReduxThunk));
