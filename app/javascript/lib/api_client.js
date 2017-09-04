@@ -5,7 +5,8 @@ const BOARDS_INDEX_URL = '/api/boards';
 const apiClient = {
   getBoards: function(callback) {
     return axios.get(BOARDS_INDEX_URL)
-      .then(response => response.data);
+      .then(response => response.data)
+      .then(callback);
   }
 };
 

@@ -1,19 +1,16 @@
 import React from 'react';
 import store from './store';
-import jest from 'jest';
+
+import apiClient from './api_client.js';
+jest.mock('./api_client');
 
 import { dispatch } from 'redux';
 
 import { fetchBoards } from './redux_actions'; 
 
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-
-const axiosMock = new MockAdapter(axios);
-
 describe("Redux actions", () => {
   afterEach(() => {
-    axiosMock.restore();
+    apiClient.getBoards.mockClear();
   });
 
   describe("fetchBoards", () => {
@@ -23,14 +20,16 @@ describe("Redux actions", () => {
         title: 'Mechanics Tricks'
       }];
 
-      axiosMock.onAny().reply(200, boards);
+      store.dispatch(fetchBoards());
 
-      store.dispatch(fetchBoards())
-        .then(() => {
-          expect(
-            store.getState().boards
-          ).toEqual(boards);
-        });
+      const invocationArgs = apiClient.getBoards.mock.calls[0];
+      const callback = invocationArgs[0];
+
+      callback(boards);
+
+      expect(
+        store.getState().boards
+      ).toEqual(boards);
     });
   });
 });

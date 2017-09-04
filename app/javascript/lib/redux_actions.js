@@ -13,7 +13,6 @@ function fetchBoardsSuccess(boards) {
 export function fetchBoards() {
   return function(dispatch) {
     dispatch(fetchBoardsRequest());
-    return apiClient.getBoards()
-      .then(boards => dispatch(fetchBoardsSuccess(boards)))
+    apiClient.getBoards(boards => dispatch(fetchBoardsSuccess(boards)));
   };
 }
