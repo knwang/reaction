@@ -4109,6 +4109,8 @@ main.dashboard .board-group {
   text-align: center;
 }
 
+// The first selector is to match /ui/create_board
+.new-board-form header a,
 .board-tile .new-board-form header a,
 .board-tile .new-board-form header a:link,
 .board-tile .new-board-form header a:visited,
