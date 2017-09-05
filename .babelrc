@@ -12,7 +12,8 @@
       }
     ],
     "es2015",
-    "react"
+    "react",
+    "stage-2"
   ],
   "plugins": [
     "syntax-dynamic-import",
