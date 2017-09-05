@@ -3,9 +3,8 @@ import { mount } from 'enzyme';
 
 import CreateBoardTileForm from './CreateBoardTileForm';
 
-import apiClient from '../lib/api_client';
-
-jest.mock('../lib/api_client');
+import apiClient from '../lib/ApiClient';
+jest.mock('../lib/ApiClient');
 
 describe("CreateBoardTileForm", () => {
   it("displays the `title` prop", () => {

@@ -1,7 +1,7 @@
 import BoardsDashboardDisplay from './BoardsDashboardDisplay';
 import React from 'react';
 import { mount } from 'enzyme';
-import { createStore } from '../lib/store';
+import { createStore } from '../lib/Store';
 
 const boardsWrapper = function(boards) {
   return mount(<BoardsDashboardDisplay boards={boards} />, { context: { store: createStore() }});

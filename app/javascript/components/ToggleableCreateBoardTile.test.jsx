@@ -1,7 +1,7 @@
 import ToggleableCreateBoardTile from './ToggleableCreateBoardTile';
 import React from 'react';
 import { mount } from 'enzyme';
-import { createStore } from '../lib/store';
+import { createStore } from '../lib/Store';
 
 describe("ToggleableCreateBoardTile", () => {
   let wrapper;

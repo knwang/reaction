@@ -11,7 +11,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from '../lib/store';
+import { createStore } from '../lib/Store';
 
 import Application from '../components/application';
 

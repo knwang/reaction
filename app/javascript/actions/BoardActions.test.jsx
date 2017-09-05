@@ -1,8 +1,8 @@
 import React from 'react';
-import { createStore } from '../lib/store';
+import { createStore } from '../lib/Store';
 
-import apiClient from '../lib/api_client.js';
-jest.mock('../lib/api_client');
+import apiClient from '../lib/ApiClient.js';
+jest.mock('../lib/ApiClient');
 
 import { dispatch } from 'redux';
 

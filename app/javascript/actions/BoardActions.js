@@ -1,4 +1,4 @@
-import apiClient from '../lib/api_client';
+import apiClient from '../lib/ApiClient';
 import * as types from '../constants/ActionTypes';
 
 function fetchBoardsRequest() {

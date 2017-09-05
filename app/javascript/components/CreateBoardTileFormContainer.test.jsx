@@ -1,12 +1,12 @@
 import React from 'react';
-import { createStore } from '../lib/store';
+import { createStore } from '../lib/Store';
 import { mount } from 'enzyme';
 
 import CreateBoardTileFormContainer from './CreateBoardTileFormContainer';
 
-import apiClient from '../lib/api_client';
+import apiClient from '../lib/ApiClient';
 
-jest.mock('../lib/api_client');
+jest.mock('../lib/ApiClient');
 
 describe("CreateBoardTileFormContainer", () => {
   let wrapper;
