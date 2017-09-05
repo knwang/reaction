@@ -1,25 +1,25 @@
 import React from 'react';
-import store from '../lib/store';
+import { createStore } from '../lib/store';
 import { mount } from 'enzyme';
 
 import CreateBoardTileFormContainer from './CreateBoardTileFormContainer';
 
 import apiClient from '../lib/api_client';
 
-import { clearStoreData } from '../lib/redux_actions';
-
 jest.mock('../lib/api_client');
 
 describe("CreateBoardTileFormContainer", () => {
   let wrapper;
+  let store;
 
   beforeEach(() => {
+    store = createStore();
     wrapper = mount(<CreateBoardTileFormContainer />, { context: { store } });
   });
 
   afterEach(() => {
-    store.dispatch(clearStoreData());
-  })
+    apiClient.createBoard.mockClear();
+  });
 
   describe("user submits the form with no title entered", () => {
     beforeEach(() => {
@@ -71,6 +71,8 @@ describe("CreateBoardTileFormContainer", () => {
           id: "1",
           title: boardTitle
         });
+
+        wrapper.update();
 
         expect(
           store.getState().boards[0].title

@@ -1,21 +1,15 @@
 import ToggleableCreateBoardTile from './ToggleableCreateBoardTile';
 import React from 'react';
 import { mount } from 'enzyme';
-import store from '../lib/store';
-
-import { clearStoreData } from '../lib/redux_actions';
+import { createStore } from '../lib/store';
 
 describe("ToggleableCreateBoardTile", () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = mount(
-      <ToggleableCreateBoardTile />, { context: { store }}
+      <ToggleableCreateBoardTile />, { context: { store: createStore() }}
     );
-  });
-
-  afterEach(() => {
-    store.dispatch(clearStoreData());
   });
 
   it("shows the tile", () => {

@@ -1,15 +1,7 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore as cs, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 
-function reducer(state, action) {
-  if (action.type === 'CLEAR_STORE_DATA') {
-    state = undefined;
-  }
-
-  return appReducer(state, action);
-};
-
-function appReducer(state = {}, action) {
+function reducer(state = {}, action) {
   return {
     boards: boardsReducer(state.boards, action),
     newBoardForm: newBoardFormReducer(state.newBoardForm, action)
@@ -61,4 +53,6 @@ function boardsReducer(state = [], action) {
   }
 }
 
-export default createStore(reducer, applyMiddleware(ReduxThunk));
+export function createStore() {
+  return cs(reducer, applyMiddleware(ReduxThunk));
+}

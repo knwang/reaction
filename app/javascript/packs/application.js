@@ -11,13 +11,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '../lib/store';
+import { createStore } from '../lib/store';
 
 import Application from '../components/application';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={createStore()}>
       <Router>
         <Application />
       </Router>
