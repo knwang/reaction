@@ -1,18 +1,21 @@
 import ToggleableCreateBoardTile from './ToggleableCreateBoardTile';
 import React from 'react';
 import { mount } from 'enzyme';
+import store from '../lib/store';
+
+import { clearStoreData } from '../lib/redux_actions';
 
 describe("ToggleableCreateBoardTile", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<ToggleableCreateBoardTile />)
+    wrapper = mount(
+      <ToggleableCreateBoardTile />, { context: { store }}
+    );
   });
 
-  it("has a false `showForm` state property", () => {
-    expect(
-      wrapper.state().showForm
-    ).toBe(false);
+  afterEach(() => {
+    store.dispatch(clearStoreData());
   });
 
   it("shows the tile", () => {
@@ -29,14 +32,8 @@ describe("ToggleableCreateBoardTile", () => {
 
   describe("user clicks on the tile", () => {
     beforeEach(() => {
-      const tileLink = wrapper.find('.new-board').first();
+      const tileLink = wrapper.find('.board-tile .new-board').first();
       tileLink.simulate('click');
-    });
-
-    it("sets the `showForm` state property", () => {
-      expect(
-        wrapper.state().showForm
-      ).toBe(true);
     });
     
     it("doesn't show the tile", () => {
@@ -57,10 +54,16 @@ describe("ToggleableCreateBoardTile", () => {
         closeLink.simulate('click');
       });
 
-      it("sets the `showForm` state property", () => {
+      it("shows the tile", () => {
         expect(
-          wrapper.state().showForm
-        ).toBe(false);
+          wrapper.find(".board-tile .new-board").length
+        ).toEqual(1);
+      });
+
+      it("doesn't show the form", () => {
+        expect(
+          wrapper.find(".new-board-form").length
+        ).toEqual(0);
       });
     });
   });

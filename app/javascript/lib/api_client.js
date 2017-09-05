@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const BOARDS_INDEX_URL = '/api/boards';
+const CREATE_BOARD_URL = '/api/boards';
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -14,11 +15,21 @@ function checkStatus(response) {
   }
 }
 
+function unwrapData(response) {
+  return response.data;
+}
+
 const apiClient = {
   getBoards: function(callback) {
     return axios.get(BOARDS_INDEX_URL)
       .then(checkStatus)
-      .then(response => response.data)
+      .then(unwrapData)
+      .then(callback);
+  },
+  createBoard: function(board, callback) {
+    return axios.post(CREATE_BOARD_URL, { board: board })
+      .then(checkStatus)
+      .then(unwrapData)
       .then(callback);
   }
 };

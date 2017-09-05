@@ -1,6 +1,11 @@
 import BoardsDashboardDisplay from './BoardsDashboardDisplay';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import store from '../lib/store';
+
+const boardsWrapper = function(boards) {
+  return mount(<BoardsDashboardDisplay boards={boards} />, { context: { store }});
+}
 
 describe("BoardsDashboardDisplay", () => {
   it("renders one tile", () => {
@@ -9,7 +14,7 @@ describe("BoardsDashboardDisplay", () => {
       title: "Web Development"
     }];
 
-    const wrapper = shallow(<BoardsDashboardDisplay boards={boards} />);
+    const wrapper = boardsWrapper(boards);
 
     expect(
       wrapper.html().match('Web Development').length
@@ -25,7 +30,7 @@ describe("BoardsDashboardDisplay", () => {
       title: "Recipes"
     }];
 
-    const wrapper = shallow(<BoardsDashboardDisplay boards={boards} />);
+    const wrapper = boardsWrapper(boards);
 
     expect(
       wrapper.html().match('Web Development').length
@@ -39,7 +44,7 @@ describe("BoardsDashboardDisplay", () => {
   it("renders a 'create a board' tile", () => {
     const boards = [];
 
-    const wrapper = shallow(<BoardsDashboardDisplay boards={boards} />);
+    const wrapper = boardsWrapper(boards);
 
     expect(
       wrapper.html().match(

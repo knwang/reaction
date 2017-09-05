@@ -6,11 +6,13 @@ jest.mock('./api_client');
 
 import { dispatch } from 'redux';
 
-import { fetchBoards } from './redux_actions'; 
+import { fetchBoards, createBoard, clearStoreData } from './redux_actions'; 
 
 describe("Redux actions", () => {
   afterEach(() => {
     apiClient.getBoards.mockClear();
+    apiClient.createBoard.mockClear();
+    store.dispatch(clearStoreData());
   });
 
   describe("fetchBoards", () => {
@@ -30,6 +32,38 @@ describe("Redux actions", () => {
       expect(
         store.getState().boards
       ).toEqual(boards);
+    });
+  });
+
+  describe("createBoard", () => {
+    const newBoard = {
+      title: "Awesome board"
+    };
+
+    const newBoardResponse = {
+      id: "1",
+      title: "Awesome board"
+    };
+
+    beforeEach(() => {
+      store.dispatch(createBoard(newBoard));
+
+      const invocation = apiClient.createBoard.mock.calls[0];
+      const callback = invocation[1];
+
+      callback(newBoardResponse);
+    });
+
+    it("adds the new board to the store", () => {
+      expect(
+        store.getState().boards[0].title
+      ).toEqual("Awesome board");
+    });
+
+    it("converts the id to a number", () => {
+      expect(
+        typeof store.getState().boards[0].id
+      ).toEqual("number");
     });
   });
 });
