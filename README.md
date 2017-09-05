@@ -34,3 +34,10 @@ $ bin/yarn run lint
 
 This template is deployed
 [here](https://obscure-fortress-25974.herokuapp.com/).
+
+## Testing
+
+Jest tests which affect state need to dispatch `CLEAR_STORE_DATA` after each
+test. If this is not done, the redux store is maintained between tests. I could
+not find a way to automatically do this after every test in the suite, and I
+could not figure out how to resolve my issue easily using a store mock.
