@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import CreateBoardTileForm from './CreateBoardTileForm';
 
-import { createBoard, updateCreateBoardFormInputText } from '../lib/redux_actions';
+import * as boardActions from '../actions/BoardActions';
+import * as formActions from '../actions/FormActions';
 
 const mapStateToProps = function(state) {
   return {
@@ -15,7 +16,7 @@ const mapDispatchToProps = function(dispatch, ownProps) {
   return {
     onCloseClick: ownProps.onCloseClick,
     onTextChange: function(e) {
-      dispatch(updateCreateBoardFormInputText(e.target.value));
+      dispatch(formActions.updateCreateBoardFormInputText(e.target.value));
     },
     dispatch
   };
@@ -30,7 +31,7 @@ const mergeProps = function(stateProps, dispatchProps) {
 
       const newBoard = { title: stateProps.title };
 
-      dispatchProps.dispatch(createBoard(newBoard));
+      dispatchProps.dispatch(boardActions.createBoard(newBoard));
     }
   };
 }

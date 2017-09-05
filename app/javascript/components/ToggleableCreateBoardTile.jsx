@@ -5,7 +5,7 @@ import CreateBoardTile from './CreateBoardTile';
 import CreateBoardTileForm from './CreateBoardTileForm';
 import CreateBoardTileFormContainer from './CreateBoardTileFormContainer';
 
-import { showCreateBoardForm, hideCreateBoardForm } from '../lib/redux_actions';
+import * as formActions from '../actions/FormActions';
 
 class ToggleableCreateBoardTile extends React.Component {
   static contextTypes = {
@@ -19,13 +19,13 @@ class ToggleableCreateBoardTile extends React.Component {
   handleTileClick = (e) => {
     e.preventDefault();
 
-    this.context.store.dispatch(showCreateBoardForm());
+    this.context.store.dispatch(formActions.showCreateBoardForm());
   }
 
   handleFormCloseClick = (e) => {
     e.preventDefault();
 
-    this.context.store.dispatch(hideCreateBoardForm());
+    this.context.store.dispatch(formActions.hideCreateBoardForm());
   }
 
   render() {
