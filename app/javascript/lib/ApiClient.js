@@ -1,18 +1,9 @@
 import axios from 'axios';
+import * as routes from '../constants/ApiRoutes';
 
-const BOARDS_INDEX_URL = '/api/boards';
-const CREATE_BOARD_URL = '/api/boards';
-
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    const error = new Error(`HTTP Error ${response.statusText}`);
-    error.status = response.statusText;
-    error.response = response;
-    console.log(error); // eslint-disable-line no-console
-    throw error;
-  }
+function logError(errorResponse) {
+  const response = errorResponse.response;
+  console.error(`HTTP Error: ${response.data.error}`);
 }
 
 function unwrapData(response) {
@@ -21,16 +12,16 @@ function unwrapData(response) {
 
 const apiClient = {
   getBoards: function(callback) {
-    return axios.get(BOARDS_INDEX_URL)
-      .then(checkStatus)
+    return axios.get(routes.BOARDS_INDEX_URL)
       .then(unwrapData)
-      .then(callback);
+      .then(callback)
+      .catch(logError);
   },
   createBoard: function(board, callback) {
-    return axios.post(CREATE_BOARD_URL, { board: board })
-      .then(checkStatus)
+    return axios.post(routes.CREATE_BOARD_URL, { board })
       .then(unwrapData)
-      .then(callback);
+      .then(callback)
+      .catch(logError);
   }
 };
 
