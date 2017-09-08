@@ -3,7 +3,12 @@ import * as routes from '../constants/ApiRoutes';
 
 function logError(errorResponse) {
   const response = errorResponse.response;
-  console.error(`HTTP Error: ${response.data.error}`);
+
+  if (response && response.data && response.data.error) {
+    console.error(`HTTP Error: ${response.data.error}`);
+  } else {
+    console.error("Error: ", errorResponse);
+  }
 }
 
 function unwrapData(response) {
