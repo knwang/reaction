@@ -4,10 +4,17 @@ class Api::BoardsController < ApplicationController
   end
 
   def create
-    board = Board.create!(board_params)
-    render json: board, status: :created
-  rescue ActiveRecord::RecordInvalid
-    head :unprocessable_entity
+    board = Board.new(board_params)
+
+    if board.save
+      render json: board, status: :created
+    else
+      render json: { error: board.errors.full_messages.join(', ') },
+             status: :unprocessable_entity
+    end
+  rescue ActionController::ParameterMissing
+    render json: { error: "Invalid board data provided" },
+           status: :unprocessable_entity
   end
 
   private
