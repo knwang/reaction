@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import TopNav from './TopNav';
 import BoardsDashboard from './BoardsDashboard';
 
-import { fetchBoards } from '../lib/redux_actions';
+import { fetchBoards } from '../actions/BoardActions';
 
 class Application extends React.Component {
   static contextTypes = {
