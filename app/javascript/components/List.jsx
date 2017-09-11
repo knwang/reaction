@@ -6,7 +6,7 @@ const List = props => (
   <div className="list-wrapper">
       <div className="list-background">
           <div className="list">
-              <a className="more-icon sm-icon" href=""></a><i className="sub-icon sm-icon"></i>
+              <a className="more-icon sm-icon" href=""></a>
               <div>
                   <input 
                     type="text" 
