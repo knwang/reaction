@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router-dom';
+
 const BoardTile = (props) => (
   <li className="board-tile">
-    <a>
+    <Link to={`/board/${props.id}`}>
       <span className="board-title">{props.title}</span>
-    </a>
+    </Link>
   </li>
 );
 

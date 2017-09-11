@@ -8,6 +8,7 @@ const BoardsDashboard = props => {
   let boards = props.boards.map((board) => (
     <BoardTile 
       title={board.title}
+      id={board.id}
       key={board.id}
     />
   ));

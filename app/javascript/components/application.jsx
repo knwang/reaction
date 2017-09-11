@@ -1,9 +1,10 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import TopNav from './TopNav';
 import BoardsDashboard from './BoardsDashboard';
+import Board from './Board';
 
 import { fetchBoards } from '../actions/BoardActions';
 
@@ -21,7 +22,10 @@ class Application extends React.Component {
       <div>
         <TopNav />
 
-        <Route path='/' exact component={BoardsDashboard} />
+        <Switch>
+          <Route path='/board/:boardId' exact component={Board} />
+          <Route path='/' exact component={BoardsDashboard} />
+        </Switch>
       </div>
     );
   }
