@@ -1511,44 +1511,6 @@ main {
 .edit-toggle:hover:before {
   color: #4d4d4d;
 }
-.members {
-  float: right;
-  margin-right: 6px;
-}
-.members:after {
-  clear: both;
-  content: "";
-  display: block;
-}
-.member-container {
-  float: left;
-  padding: 2px 0 2px 0;
-}
-.member-container + .member-container {
-  margin-left: 4px;
-}
-.card-member {
-  height: 30px;
-  width: 30px;
-  line-height: 30px;
-  background-color: #d6dadc;
-  border-radius: 3px;
-  font-size: 9pt;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  vertical-align: top;
-}
-.card-member.small-size {
-  margin: -1px 0 0 12px;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
-  font-size: 11px;
-}
-.card-member:hover {
-  background-color: #cdd2d4;
-}
 .grey,
 .grey:before {
   background-color: #b6bbbf;
