@@ -14,9 +14,9 @@ const lists = [{
   }]
 }];
 
-const Board = () => (
+const Board = props => (
   <div>
-    <BoardHeader />
+    <BoardHeader title={props.board.title} />
     <main>
       <ListListing lists={lists} />
     </main>
