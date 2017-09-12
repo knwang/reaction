@@ -25,7 +25,7 @@ class Application extends React.Component {
 
         <BoardsFetchedConstraint>
           <Switch>
-            <Route path='/board/:boardId' exact component={BoardContainer} />
+            <Route path='/boards/:boardId' exact component={BoardContainer} />
           </Switch>
         </BoardsFetchedConstraint>
 
