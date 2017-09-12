@@ -3,22 +3,11 @@ import React from 'react';
 import BoardHeader from './BoardHeader';
 import ListListing from './ListListing';
 
-const lists = [{
-  id: 1,
-  title: 'Stuff to try (this is a list)',
-  cards: [{
-    id: 1,
-    title: "Cards do many cool things. Click on this card to open it and learn more...",
-    description: null,
-    labels: ['green', 'yellow', 'red', 'orange', 'blue', 'purple']
-  }]
-}];
-
 const Board = props => (
   <div>
     <BoardHeader title={props.board.title} />
     <main>
-      <ListListing lists={lists} />
+      <ListListing lists={props.board.lists} />
     </main>
     <div className="menu-sidebar">
         <div id="menu-main" className="main slide"><i className="back-icon icon"></i><i className="x-icon icon"></i>
