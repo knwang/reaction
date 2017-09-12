@@ -70,22 +70,30 @@ describe("Board actions", () => {
 
   describe("action creators", () => {
     describe("fetchBoards", () => {
-      it("updates state property `boards`", () => {
-        const boards = [{
-          id: 1,
-          title: 'Mechanics Tricks'
-        }];
+      const boards = [{
+        id: 1,
+        title: 'Mechanics Tricks'
+      }];
 
+      beforeEach(() => {
         store.dispatch(actions.fetchBoards());
 
         const invocationArgs = apiClient.getBoards.mock.calls[0];
         const callback = invocationArgs[0];
 
         callback(boards);
+      });
 
+      it("updates state property `boards`", () => {
         expect(
           store.getState().boards
         ).toEqual(boards);
+      });
+
+      it("sets the `status` store property", () => {
+        expect(
+          store.getState().status
+        ).toEqual(statuses.BOARDS_FETCHED_SUCCESSFULLY);
       });
     });
 
