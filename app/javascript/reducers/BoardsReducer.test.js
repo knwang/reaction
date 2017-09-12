@@ -11,13 +11,19 @@ describe("BoardsReducer", () => {
   });
 
   describe("FETCH_BOARDS_SUCCESS", () => {
-    it("returns the `boards` value of the action parameter", () => {
+    it("adds an empty `lists` array property to each board", () => {
       expect(
         reducer([], {
           type: types.FETCH_BOARDS_SUCCESS,
-          boards: "boards value",
+          boards: [
+            { id: 1, title: "My board" },
+            { id: 2, title: "My other board" }
+          ]
         })
-      ).toEqual("boards value");
+      ).toEqual([
+        { id: 1, title: "My board", lists: [] },
+        { id: 2, title: "My other board", lists: [] }
+      ]);
     });
   });
 

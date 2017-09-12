@@ -87,7 +87,7 @@ describe("Board actions", () => {
       it("updates state property `boards`", () => {
         expect(
           store.getState().boards
-        ).toEqual(boards);
+        ).toEqual(boards.map(board => ({ ...board, lists: [] })));
       });
 
       it("sets the `status` store property", () => {
