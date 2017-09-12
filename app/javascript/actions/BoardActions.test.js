@@ -4,10 +4,9 @@ import { createStore } from '../lib/Store';
 import apiClient from '../lib/ApiClient.js';
 jest.mock('../lib/ApiClient');
 
-import { dispatch } from 'redux';
-
 import * as actions from './BoardActions';
 import * as types from '../constants/ActionTypes';
+import * as statuses from '../constants/Statuses';
 
 describe("Board actions", () => {
   let store;
@@ -26,6 +25,18 @@ describe("Board actions", () => {
       expect(
         actions.fetchBoardsRequest()
       ).toEqual({ type: types.FETCH_BOARDS_REQUEST });
+    });
+
+    it("sets the `status` store property", () => {
+      expect(
+        store.getState().status
+      ).not.toEqual(statuses.FETCHING_BOARDS);
+
+      store.dispatch(actions.fetchBoardsRequest());
+
+      expect(
+        store.getState().status
+      ).toEqual(statuses.FETCHING_BOARDS);
     });
   });
 

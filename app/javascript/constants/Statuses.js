@@ -1,0 +1,1 @@
+export const FETCHING_BOARDS = 'FETCHING_BOARDS';
