@@ -2,9 +2,17 @@ import BoardsDashboardDisplay from './BoardsDashboardDisplay';
 import React from 'react';
 import { mount } from 'enzyme';
 import { createStore } from '../lib/Store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 const boardsWrapper = function(boards) {
-  return mount(<BoardsDashboardDisplay boards={boards} />, { context: { store: createStore() }});
+  return mount(
+    <Provider store={createStore()}>
+      <Router>
+        <BoardsDashboardDisplay boards={boards} />
+      </Router>
+    </Provider>
+  );
 }
 
 describe("BoardsDashboardDisplay", () => {
