@@ -13,6 +13,6 @@ function reducer(state = {}, action) {
   };
 }
 
-export function createStore() {
-  return cs(reducer, applyMiddleware(ReduxThunk));
+export function createStore(initialState = {}) {
+  return cs(reducer, initialState, applyMiddleware(ReduxThunk));
 }
