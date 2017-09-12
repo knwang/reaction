@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 import TopNav from './TopNav';
 import BoardsDashboard from './BoardsDashboard';
-import Board from './Board';
+import BoardContainer from './BoardContainer';
+import BoardsFetchedConstraint from './BoardsFetchedConstraint';
 
 import { fetchBoards } from '../actions/BoardActions';
 
@@ -22,10 +23,13 @@ class Application extends React.Component {
       <div>
         <TopNav />
 
-        <Switch>
-          <Route path='/board/:boardId' exact component={Board} />
-          <Route path='/' exact component={BoardsDashboard} />
-        </Switch>
+        <BoardsFetchedConstraint>
+          <Switch>
+            <Route path='/board/:boardId' exact component={BoardContainer} />
+          </Switch>
+        </BoardsFetchedConstraint>
+
+        <Route path='/' exact component={BoardsDashboard} />
       </div>
     );
   }
