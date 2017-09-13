@@ -33,6 +33,12 @@ const apiClient = {
       .then(unwrapData)
       .then(callback)
       .catch(logError);
+  },
+  createList: function(boardId, list, callback) {
+    return axios.post(routes.createListUrl(boardId, list))
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
   }
 };
 

@@ -173,4 +173,55 @@ describe("ApiClient", () => {
       })
     });
   });
+
+  describe("createList", () => {
+    describe("successful request", () => {
+      const newList = {
+        title: "My new list"
+      };
+
+      it("calls the callback with the new list", async () => {
+        const cb = jest.fn();
+
+        mock.onPost(routes.createListUrl(1)).reply(201, { ...newList, id: 22 });
+        client.createList(1, newList, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledWith({ ...newList,  id: 22 });
+      });
+    });
+
+    describe("failed request", () => {
+      const originalError = global.console.error;
+      const errorText = "That is not a valid record";
+
+      beforeEach(() => {
+        global.console.error = jest.fn();
+        mock.onPost(routes.createListUrl(1)).reply(422, { error: errorText });
+      });
+
+      afterEach(() => {
+        global.console.error = originalError;
+      });
+
+      it("logs the error", async () => {
+        client.createList(1, {});
+
+        await flushPromises();
+
+        expect(global.console.error).toHaveBeenCalledWith(`HTTP Error: ${errorText}`);
+      });
+
+      it("doesn't call the callback", async () => {
+        const cb = jest.fn();
+
+        client.createList(1, {}, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledTimes(0);
+      });
+    });
+  });
 });
