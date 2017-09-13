@@ -92,7 +92,7 @@ describe("ApiClient", () => {
 
       beforeEach(() => {
         global.console.error = jest.fn();
-        mock.onGet(routes.BOARDS_INDEX_URL).reply(401, { error: errorText });
+        mock.onPost(routes.CREATE_BOARD_URL).reply(422, { error: errorText });
       });
 
       afterEach(() => {
@@ -100,7 +100,6 @@ describe("ApiClient", () => {
       });
 
       it("logs the error", async () => {
-        mock.onPost(routes.CREATE_BOARD_URL).reply(422, { error: errorText });
         client.createBoard({});
 
         await flushPromises();
@@ -111,7 +110,6 @@ describe("ApiClient", () => {
       it("doesn't call the callback", async () => {
         const cb = jest.fn();
 
-        mock.onPost(routes.CREATE_BOARD_URL).reply(422, { error: errorText });
         client.createBoard({}, cb);
 
         await flushPromises();
