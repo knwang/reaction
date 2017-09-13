@@ -1,5 +1,5 @@
 import reducer from './StatusReducer';
-import * as statuses from '../constants/statuses';
+import * as statuses from '../constants/Statuses';
 import * as actions from '../constants/ActionTypes';
 import * as constants from '../actions/BoardActions';
 
@@ -17,6 +17,30 @@ describe("StatusReducer", () => {
       expect(
         reducer(undefined, { type: actions.FETCH_BOARDS_REQUEST })
       ).toEqual(statuses.FETCHING_BOARDS);
+    });
+  });
+
+  describe(actions.FETCH_BOARDS_SUCCESS, () => {
+    it("returns the correct status", () => {
+      expect(
+        reducer(undefined, { type: actions.FETCH_BOARDS_SUCCESS })
+      ).toEqual(statuses.BOARDS_FETCHED_SUCCESSFULLY);
+    });
+  });
+
+  describe(actions.FETCH_LISTS_REQUEST, () => {
+    it("returns the correct status", () => {
+      expect(
+        reducer(undefined, { type: actions.FETCH_LISTS_REQUEST })
+      ).toEqual(statuses.FETCHING_LISTS);
+    });
+  });
+
+  describe(actions.FETCH_LISTS_SUCCESS, () => {
+    it("returns the correct status", () => {
+      expect(
+        reducer(undefined, { type: actions.FETCH_LISTS_SUCCESS })
+      ).toEqual(statuses.LISTS_FETCHED_SUCCESSFULLY);
     });
   });
 });
