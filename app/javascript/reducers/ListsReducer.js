@@ -1,8 +1,18 @@
-function listsReducer(state = [], action) {
+function listsReducer(state = {}, action) {
   if (action.type === 'FETCH_LISTS_SUCCESS') {
-    return action.lists;
+    return {
+      ...state,
+      [action.boardId]: action.lists.map(
+        list => ({ ...list, id: Number(list.id)})
+      )
+    };
   } else if (action.type === 'CREATE_LIST_SUCCESS') {
-    return state.concat({ ...action.list, id: Number(action.list.id)});
+    return {
+      ...state,
+      [action.boardId]: (state[action.boardId] || []).concat(
+        { ...action.list, id: Number(action.list.id) }
+      )
+    }
   } else {
     return state;
   }

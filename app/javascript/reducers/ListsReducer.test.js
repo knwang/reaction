@@ -11,19 +11,20 @@ describe("ListsReducer", () => {
   });
 
   describe("FETCH_LISTS_SUCCESS", () => {
-    it("returns the action.lists value", () => {
+    it("returns the state value with action.lists added", () => {
       expect(
-        reducer([], {
+        reducer({}, {
           type: types.FETCH_LISTS_SUCCESS,
+          boardId: 1,
           lists: [
             { id: 1, title: "My list" },
             { id: 2, title: "My other list" }
           ]
         })
-      ).toEqual([
+      ).toEqual({"1": [
         { id: 1, title: "My list" },
         { id: 2, title: "My other list" }
-      ]);
+      ]});
     });
   });
 
@@ -33,23 +34,25 @@ describe("ListsReducer", () => {
       const list2 = { id: 2, title: "New list", };
 
       expect(
-        reducer([list1], {
+        reducer({ "1": [list1], "2": [] }, {
           type: types.CREATE_LIST_SUCCESS,
+          boardId: 1,
           list: list2,
         })
-      ).toEqual([list1, list2]);
+      ).toEqual({ "1": [list1, list2], "2": [] });
     });
 
     it("casts the new list id to a number", () => {
       const newList = { id: "22", title: "New list", };
 
-      const state = reducer([], {
+      const state = reducer({}, {
         type: types.CREATE_LIST_SUCCESS,
+        boardId: 1,
         list: newList,
       });
 
       expect(
-        state[0].id
+        state["1"][0].id
       ).toEqual(22);
     });
   });

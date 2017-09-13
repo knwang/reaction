@@ -11,7 +11,7 @@ describe("BoardsReducer", () => {
   });
 
   describe("FETCH_BOARDS_SUCCESS", () => {
-    it("adds an empty `lists` array property to each board", () => {
+    it("returns the action.boards value", () => {
       expect(
         reducer([], {
           type: types.FETCH_BOARDS_SUCCESS,
@@ -21,8 +21,8 @@ describe("BoardsReducer", () => {
           ]
         })
       ).toEqual([
-        { id: 1, title: "My board", lists: [] },
-        { id: 2, title: "My other board", lists: [] }
+        { id: 1, title: "My board" },
+        { id: 2, title: "My other board" }
       ]);
     });
   });
