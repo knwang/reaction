@@ -50,7 +50,6 @@ describe("ApiClient", () => {
       });
 
       it("logs the error", async () => {
-        mock.onGet(routes.BOARDS_INDEX_URL).reply(401, { error: errorText });
         client.getBoards((boards) => {});
 
         await flushPromises();
