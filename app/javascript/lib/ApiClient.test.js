@@ -121,4 +121,59 @@ describe("ApiClient", () => {
       });
     });
   });
+
+  describe("getLists", () => {
+    describe("successful request", () => {
+      const lists = [{
+        id: 1,
+        title: "My list"
+      }];
+
+      const newList = {
+        title: "My new list"
+      };
+
+      it("calls the callback with the lists", async () => {
+        const cb = jest.fn();
+
+        mock.onGet(routes.listsIndexUrl(1)).reply(200, lists);
+        client.getLists(1, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledWith(lists);
+      });
+    });
+
+    describe("failed request", () => {
+      const originalError = global.console.error;
+      const errorText = "You don't have access to that";
+
+      beforeEach(() => {
+        global.console.error = jest.fn();
+        mock.onGet(routes.listsIndexUrl(1)).reply(404, { error: errorText });
+      });
+
+      afterEach(() => {
+        global.console.error = originalError;
+      });
+
+      it("logs the error", async () => {
+        client.getLists(1, () => {});
+
+        await flushPromises();
+
+        expect(global.console.error).toHaveBeenCalledWith(`HTTP Error: ${errorText}`);
+      });
+
+      it("doesn't call the callback", async () => {
+        const cb = jest.fn();
+        client.getLists(1, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledTimes(0);
+      })
+    });
+  });
 });
