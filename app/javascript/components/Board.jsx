@@ -7,7 +7,7 @@ const Board = props => (
   <div>
     <BoardHeader title={props.board.title} />
     <main>
-      <ListListing lists={props.board.lists} />
+      <ListListing lists={props.lists} />
     </main>
     <div className="menu-sidebar">
         <div id="menu-main" className="main slide"><i className="back-icon icon"></i><i className="x-icon icon"></i>

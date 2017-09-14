@@ -6,16 +6,21 @@ import BoardHeader from './BoardHeader';
 import ListListing from './ListListing';
 
 describe("Board", () => {
+  const board = {
+    id: 1,
+    title: "My board",
+    lists: []
+  };
+
+  const lists = [{
+    id: 1,
+    title: "My list",
+    board_id: 1
+  }];
   let wrapper;
 
   beforeEach(() => {
-    const board = {
-      id: 1,
-      title: "My board",
-      lists: []
-    };
-
-    wrapper = shallow(<Board board={board} />);
+    wrapper = shallow(<Board board={board} lists={lists} />);
   })
 
   it("displays the board header", () => {
@@ -26,7 +31,7 @@ describe("Board", () => {
 
   it("displays the lists section", () => {
     expect(
-      wrapper.containsMatchingElement(<ListListing />)
+      wrapper.containsMatchingElement(<ListListing lists={lists} />)
     ).toBe(true);
   });
 });

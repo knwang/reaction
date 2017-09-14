@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
+import * as actions from '../actions/ListActions';
+import * as selectors from '../selectors/ListSelectors';
+
 import Board from './Board';
 
 class BoardContainer extends React.Component {
@@ -9,13 +12,38 @@ class BoardContainer extends React.Component {
     store: PropTypes.object.isRequired
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentWillMount() {
+    this.setState({
+      board: this.getBoard(),
+    });
+  }
+
   componentDidMount() {
-    console.log(this);
-    this.unsubscribe = this.context.store.subscribe(() => this.forceUpdate());
+    const store = this.context.store;
+    this.unsubscribe = store.subscribe(() => {
+      this.setState({
+        board: this.getBoard(),
+      });
+
+      this.forceUpdate()
+    });
+
+    if (this.boardExists()) {
+      store.dispatch(actions.fetchLists(this.state.board.id));
+    }
   }
 
   componentWillUnmount() {
     this.unsubscribe();
+  }
+
+  boardExists() {
+    return !!this.state.board;
   }
 
   getBoard() {
@@ -25,12 +53,15 @@ class BoardContainer extends React.Component {
     return boards.find(board => board.id === boardId);
   }
 
-  render() {
-    const board = this.getBoard();
+  getLists() {
+    const store = this.context.store;
+    return selectors.boardListsSelector(store.getState(), this.state.board.id);
+  }
 
-    if (board) {
+  render() {
+    if (this.boardExists()) {
       return (
-        <Board board={board} />
+        <Board board={this.state.board} lists={this.getLists()} />
       );
     } else {
       return (
