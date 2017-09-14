@@ -1,4 +1,10 @@
-export default function NewListFormReducer(state, action) {
+const initialState = {
+  isSaving: false,
+  display: false,
+  title: ''
+};
+
+export default function NewListFormReducer(state = initialState, action) {
   if (action.type === "SHOW_CREATE_LIST_FORM") {
     return { ...state, display: true };
   } else if (action.type === "HIDE_CREATE_LIST_FORM") {
