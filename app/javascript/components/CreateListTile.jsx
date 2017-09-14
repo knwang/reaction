@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-class ToggleableCreateListTile extends React.Component {
+class CreateListTile extends React.Component {
   render() {
     return (
       <div id="new-list" className="new-list">
@@ -15,4 +15,4 @@ class ToggleableCreateListTile extends React.Component {
   }
 }
 
-export default ToggleableCreateListTile;
+export default CreateListTile;
