@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import ListListing from './ListListing';
 import List from './List';
+import CreateListTileContainer from './CreateListTileContainer';
 
 describe("ListListing", () => {
   let wrapper;
@@ -42,7 +43,7 @@ describe("ListListing", () => {
     wrapper = shallow(<ListListing lists={[]} />);
 
     expect(
-      wrapper.find('.new-list').length
-    ).toEqual(1);
+      wrapper.containsMatchingElement(<CreateListTileContainer />)
+    ).toEqual(true);
   })
 });
