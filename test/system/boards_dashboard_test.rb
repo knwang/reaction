@@ -27,4 +27,22 @@ class BoardsDashboardTest < ApplicationSystemTestCase
     assert_selector ".board-tile", text: "My other board"
     assert_selector ".board-tile", text: "Create a new board..."
   end
+
+  class NewBoardTileTest < ApplicationSystemTestCase
+    test "it can be toggled" do
+      visit "/"
+
+      refute_selector ".board-tile .new-board-form"
+
+      find(".board-tile .new-board").click
+
+      assert_selector ".board-tile .new-board-form"
+      refute_selector ".board-tile .new-board"
+
+      find(".new-board-form .icon-close").click
+
+      refute_selector ".board-tile .new-board-form"
+      assert_selector ".board-tile .new-board"
+    end
+  end
 end
