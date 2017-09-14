@@ -30,4 +30,31 @@ describe("Form actions", () => {
       });
     });
   });
+
+  describe("showCreateListForm", () => {
+    it("returns the correct object", () => {
+      expect(
+        actions.showCreateListForm()
+      ).toEqual({ type: types.SHOW_CREATE_LIST_FORM })
+    });
+  });
+
+  describe("hideCreateListForm", () => {
+    it("returns the correct object", () => {
+      expect(
+        actions.hideCreateListForm()
+      ).toEqual({ type: types.HIDE_CREATE_LIST_FORM });
+    });
+  });
+
+  describe("updateCreateListFormInputText", () => {
+    it("returns the correct object", () => {
+      expect(
+        actions.updateCreateListFormInputText("new text")
+      ).toEqual({
+        type: types.UPDATE_CREATE_LIST_FORM_INPUT_TEXT,
+        text: "new text"
+      });
+    });
+  });
 });
