@@ -10,7 +10,17 @@ import Board from './Board';
 class BoardContainer extends React.Component {
   static contextTypes = {
     store: PropTypes.object.isRequired
-  }
+  };
+
+  static childContextTypes = {
+    currentBoardId: PropTypes.number
+  };
+
+  getChildContext() {
+    return {
+      currentBoardId: Number(this.props.match.params.boardId)
+    };
+  };
 
   constructor(props) {
     super(props);

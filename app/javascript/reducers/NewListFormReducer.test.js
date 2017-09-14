@@ -80,7 +80,7 @@ describe("NewListFormReducer", () => {
   });
 
   describe("CREATE_LIST_SUCCESS", () => {
-    const state = { some: "value", display: true };
+    const state = { some: "value", display: true, title: "New list" };
 
     it("returns the state with `display` set to false", () => {
       expect(
@@ -92,6 +92,12 @@ describe("NewListFormReducer", () => {
       expect(
         reducer(state, { type: types.CREATE_LIST_SUCCESS }).isSaving
       ).toEqual(false);
+    });
+
+    it("returns the state with the title set to an empty string", () => {
+      expect(
+        reducer(state, { type: types.CREATE_LIST_SUCCESS }).title
+      ).toEqual("");
     });
 
     it("returns the rest of the state", () => {

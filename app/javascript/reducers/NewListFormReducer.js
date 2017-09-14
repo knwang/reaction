@@ -23,7 +23,8 @@ export default function NewListFormReducer(state = initialState, action) {
     return {
       ...state,
       isSaving: false,
-      display: false
+      display: false,
+      title: ""
     }
   } else {
     return state;
