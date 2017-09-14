@@ -13,7 +13,11 @@ class ToggleableCreateBoardTile extends React.Component {
   };
 
   componentWillMount() {
-   this.context.store.subscribe(() => this.forceUpdate()) ;
+   this.unsubscribe = this.context.store.subscribe(() => this.forceUpdate()) ;
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   handleTileClick = (e) => {
