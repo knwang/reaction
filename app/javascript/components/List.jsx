@@ -20,7 +20,7 @@ const List = props => (
                   <div className="add-options"><span>...</span>
                   </div>
               </div>
-              <CardListing cards={props.list.cards} />
+              <CardListing cards={[]} />
               <div className="add-dropdown add-bottom">
                   <div className="card"></div><a className="button">Add</a><i className="x-icon icon"></i>
                   <div className="add-options"><span>...</span>
