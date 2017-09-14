@@ -1,5 +1,10 @@
 import React from 'react';
-import { createStore } from '../lib/Store';
+
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
 import apiClient from '../lib/ApiClient';
 jest.mock('../lib/ApiClient');
@@ -12,12 +17,13 @@ describe("List actions", () => {
   let store;
 
   beforeEach(() => {
-    store = createStore();
+    store = mockStore();
   });
 
   afterEach(() => {
     apiClient.getLists.mockClear();
     apiClient.createList.mockClear();
+    store.clearActions()
   });
 
   describe("fetchListsRequest", () => {
@@ -25,18 +31,6 @@ describe("List actions", () => {
       expect(
         actions.fetchListsRequest()
       ).toEqual({ type: types.FETCH_LISTS_REQUEST });
-    });
-
-    it("sets the `status` store property", () => {
-      expect(
-        store.getState().status
-      ).not.toEqual(statuses.FETCHING_LISTS);
-
-      store.dispatch(actions.fetchLists(1));
-
-      expect(
-        store.getState().status
-      ).toEqual(statuses.FETCHING_LISTS);
     });
   });
 
@@ -65,9 +59,7 @@ describe("List actions", () => {
   });
 
   describe("action creators", () => {
-    beforeEach(() => {
-      store = createStore({ lists: { "1": [], "2": [] }});
-    });
+    let storeActions;
 
     describe("fetchLists", () => {
       const lists = [{ id: "1", title: "My list" }];
@@ -79,41 +71,40 @@ describe("List actions", () => {
         const callback = invocationArgs[1];
 
         callback(lists);
+        storeActions = store.getActions();
       });
 
-      it("updates the state `lists` property", () => {
-        expect(
-          store.getState().lists
-        ).toEqual({
-          "1" : [{ id: 1, title: "My list" }],
-          "2": []
-        });
+      it("dispatches fetchListsRequest()", () => {
+        expect(storeActions[0]).toEqual(actions.fetchListsRequest())
       });
 
-      it("sets the `status` property", () => {
-        expect(
-          store.getState().status
-        ).toEqual(statuses.LISTS_FETCHED_SUCCESSFULLY)
+      it("dispatches fetchListSuccess()", () => {
+        expect(storeActions[1]).toEqual(actions.fetchListsSuccess(1, lists));
       });
     });
 
     describe("createList", () => {
+      const newList = { title: "My list" };
+      const newListWithId = { id: 1, title: "My list" }
+
       beforeEach(() => {
-        store.dispatch(actions.createList(1, { title: "My list" }));
+        store.dispatch(actions.createList(1, newList));
 
         const invocationArgs = apiClient.createList.mock.calls[0];
         const callback = invocationArgs[2];
 
-        callback({ id: 1, title: "My list" });
+        callback(newListWithId);
+        storeActions = store.getActions();
       });
 
-      it("adds the new list to the store", () => {
-        expect(
-          store.getState().lists
-        ).toEqual({
-          "1" : [{ id: 1, title: "My list" }],
-          "2": []
-        });
+      it("dispatches createListRequest()", () => {
+        expect(storeActions[0]).toEqual(actions.createListRequest());
+      });
+
+      it("dispatches createListSuccess()", () => {
+        expect(storeActions[1]).toEqual(
+          actions.createListSuccess(1, newListWithId)
+        );
       });
     });
   });

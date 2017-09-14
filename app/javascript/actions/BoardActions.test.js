@@ -1,5 +1,10 @@
 import React from 'react';
-import { createStore } from '../lib/Store';
+
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
 import apiClient from '../lib/ApiClient.js';
 jest.mock('../lib/ApiClient');
@@ -12,12 +17,13 @@ describe("Board actions", () => {
   let store;
 
   beforeEach(() => {
-    store = createStore();
+    store = mockStore();
   });
 
   afterEach(() => {
     apiClient.getBoards.mockClear();
     apiClient.createBoard.mockClear();
+    store.clearActions()
   });
 
   describe("fetchBoardsRequest", () => {
@@ -25,18 +31,6 @@ describe("Board actions", () => {
       expect(
         actions.fetchBoardsRequest()
       ).toEqual({ type: types.FETCH_BOARDS_REQUEST });
-    });
-
-    it("sets the `status` store property", () => {
-      expect(
-        store.getState().status
-      ).not.toEqual(statuses.FETCHING_BOARDS);
-
-      store.dispatch(actions.fetchBoardsRequest());
-
-      expect(
-        store.getState().status
-      ).toEqual(statuses.FETCHING_BOARDS);
     });
   });
 
@@ -69,6 +63,8 @@ describe("Board actions", () => {
   });
 
   describe("action creators", () => {
+    let storeActions;
+
     describe("fetchBoards", () => {
       const boards = [{
         id: 1,
@@ -82,19 +78,16 @@ describe("Board actions", () => {
         const callback = invocationArgs[0];
 
         callback(boards);
+        storeActions = store.getActions();
       });
 
-      it("updates state property `boards`", () => {
-        expect(
-          store.getState().boards
-        ).toEqual(boards);
+      it("dispatches fetchBoardsRequest()", () => {
+        expect(storeActions[0]).toEqual(actions.fetchBoardsRequest());
       });
 
-      it("sets the `status` store property", () => {
-        expect(
-          store.getState().status
-        ).toEqual(statuses.BOARDS_FETCHED_SUCCESSFULLY);
-      });
+      it("dispatches fetchBoardsSuccess()", () => {
+        expect(storeActions[1]).toEqual(actions.fetchBoardsSuccess(boards));
+      })
     });
 
     describe("createBoard", () => {
@@ -114,18 +107,17 @@ describe("Board actions", () => {
         const callback = invocation[1];
 
         callback(newBoardResponse);
+        storeActions = store.getActions();
       });
 
-      it("adds the new board to the store", () => {
-        expect(
-          store.getState().boards[0].title
-        ).toEqual("Awesome board");
+      it("dispatches createBoardRequest()", () => {
+        expect(storeActions[0]).toEqual(actions.createBoardRequest());
       });
 
-      it("converts the id to a number", () => {
-        expect(
-          typeof store.getState().boards[0].id
-        ).toEqual("number");
+      it("dispatches createBoardSuccess()", () => {
+        expect(storeActions[1]).toEqual(
+          actions.createBoardSuccess(newBoardResponse)
+        );
       });
     });
   });
