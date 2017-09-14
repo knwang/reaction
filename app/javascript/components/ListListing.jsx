@@ -1,6 +1,7 @@
 import React from 'react';
 
 import List from './List';
+import CreateListTileContainer from './CreateListTileContainer';
 
 const ListListing = props => (
   <div id="list-container" className="list-container">
@@ -11,12 +12,7 @@ const ListListing = props => (
           ))
         }
       </div>
-      <div id="new-list" className="new-list"><span>Add a list...</span>
-          <input type="text" placeholder="Add a list..." />
-          <div>
-              <input type="submit" className="button" value="Save" /><i className="x-icon icon"></i>
-          </div>
-      </div>
+      <CreateListTileContainer />
   </div>
 );
 
