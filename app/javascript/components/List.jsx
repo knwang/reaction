@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import CardListing from './CardListing';
 
@@ -31,5 +32,9 @@ const List = props => (
       </div>
   </div>
 );
+
+List.propTypes = {
+  list: PropTypes.object.isRequired,
+};
 
 export default List;

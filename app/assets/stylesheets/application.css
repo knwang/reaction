@@ -12,5 +12,6 @@
  *
  *= require ./meyer_reset
  *= require ./trello-clone
+ *= require ./dragula
  *= require_self
  */
