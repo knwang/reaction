@@ -35,26 +35,6 @@ describe("ListsReducer", () => {
           })
         ).toEqual([list1]);
       });
-
-      it("casts the list ids to numbers", () => {
-        expect(
-          reducer([], {
-            type: types.FETCH_LISTS_SUCCESS,
-            boardId: 1,
-            lists: [{ id: "1", board_id: 1 }, { id: "2", board_id: 2 }]
-          })
-        ).toEqual([{ id: 1, board_id: 1 }, { id: 2, board_id: 2 }]);
-      });
-
-      it("casts the list board_ids to numbers", () => {
-        expect(
-          reducer([], {
-            type: types.FETCH_LISTS_SUCCESS,
-            boardId: 1,
-            lists: [{ id: 1, board_id: "1" }, { id: 2, board_id: 2 }]
-          })
-        ).toEqual([{ id: 1, board_id: 1 }, { id: 2, board_id: 2 }]);
-      })
     });
   });
 
@@ -70,34 +50,6 @@ describe("ListsReducer", () => {
           list: list2,
         })
       ).toEqual([list1, list2]);
-    });
-
-    it("casts the new list id to a number", () => {
-      const newList = { id: "22", title: "New list", board_id: 1 };
-
-      const state = reducer([], {
-        type: types.CREATE_LIST_SUCCESS,
-        boardId: 1,
-        list: newList,
-      });
-
-      expect(
-        state[0].id
-      ).toEqual(22);
-    });
-
-    it("casts the new list board_id to a number", () => {
-      const newList = { id: 22, title: "New list", board_id: "1" };
-
-      const state = reducer([], {
-        type: types.CREATE_LIST_SUCCESS,
-        boardId: 1,
-        list: newList,
-      });
-
-      expect(
-        state[0].board_id
-      ).toEqual(1);
     });
   });
 });

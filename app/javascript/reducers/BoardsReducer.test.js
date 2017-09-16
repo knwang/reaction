@@ -39,18 +39,5 @@ describe("BoardsReducer", () => {
         })
       ).toEqual([board1, board2]);
     });
-
-    it("casts the new board id to a number", () => {
-      const newBoard = { id: "37", title: "New board", };
-
-      const state = reducer([], {
-        type: types.CREATE_BOARD_SUCCESS,
-        board: newBoard,
-      });
-
-      expect(
-        state[0].id
-      ).toEqual(37);
-    });
   });
 });
