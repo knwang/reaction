@@ -63,7 +63,7 @@ describe("ApiClient", () => {
 
         await flushPromises();
 
-        expect(cb).toHaveBeenCalledTimes(0);
+        expect(cb).not.toHaveBeenCalled();
       });
     });
   });
@@ -114,7 +114,7 @@ describe("ApiClient", () => {
 
         await flushPromises();
 
-        expect(cb).toHaveBeenCalledTimes(0);
+        expect(cb).not.toHaveBeenCalled();
       });
     });
   });
@@ -169,7 +169,7 @@ describe("ApiClient", () => {
 
         await flushPromises();
 
-        expect(cb).toHaveBeenCalledTimes(0);
+        expect(cb).not.toHaveBeenCalled();
       })
     });
   });
@@ -220,7 +220,59 @@ describe("ApiClient", () => {
 
         await flushPromises();
 
-        expect(cb).toHaveBeenCalledTimes(0);
+        expect(cb).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe("updateList", () => {
+    describe("successful request", () => {
+      const list = { id: 1, title: "My list", position: 1.0 };
+      const updatedList = { id: 1, title: "New title", position: 1.0 };
+
+      it("calls the callback with the updated list", async () => {
+        const cb = jest.fn();
+
+        mock.onPut(routes.updateListUrl(1, 1)).reply(200, updatedList);
+        client.updateList(1, 1, list, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledWith(updatedList);
+      });
+    });
+
+    describe("failed request", () => {
+      const originalError = global.console.error;
+      const errorText = "That is not a valid record";
+
+      beforeEach(() => {
+        global.console.error = jest.fn();
+        mock.onPut(routes.updateListUrl(1, 1)).reply(422, { error: errorText });
+      });
+
+      afterEach(() => {
+        global.console.error = originalError;
+      });
+
+      it("logs the error", async () => {
+        client.updateList(1, 1, {});
+
+        await flushPromises();
+
+        expect(global.console.error).toHaveBeenCalledWith(
+          `HTTP Error: ${errorText}`
+        );
+      });
+
+      it("doesn't call the callback", async () => {
+        const cb = jest.fn();
+
+        client.updateList(1, 1, {}, cb);
+
+        await flushPromises();
+
+        expect(cb).not.toHaveBeenCalled();
       });
     });
   });
