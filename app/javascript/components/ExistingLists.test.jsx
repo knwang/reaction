@@ -9,7 +9,7 @@ describe("ExistingLists", () => {
       { id: 1, title: "My first list", position: 3 },
       { id: 2, title: "My second list", position: 1 },
       { id: 3, title: "My third list", position: 2 },
-    ]
+    ];
     const wrapper = mount(<ExistingLists lists={lists} />);
     const titles = wrapper.find('.list-title').map(title => title.prop('value'));
 

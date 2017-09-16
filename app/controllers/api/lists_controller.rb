@@ -1,6 +1,6 @@
 class Api::ListsController < ApplicationController
   def index
-    board = Board.find(params[:id])
+    board = Board.find(params[:board_id])
     render json: board.lists
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid board id provided" },
@@ -8,7 +8,7 @@ class Api::ListsController < ApplicationController
   end
 
   def create
-    board = Board.find(params[:id])
+    board = Board.find(params[:board_id])
     list = List.new(list_params.merge(board: board))
 
     if list.save
@@ -18,6 +18,17 @@ class Api::ListsController < ApplicationController
              status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
+    render json: { error: "Invalid board id provided" },
+           status: :unprocessable_entity
+  end
+
+  def update
+    board = Board.find(params[:board_id])
+    list = board.lists.find(params[:id])
+
+    list.update!(list_params)
+    render json: list.to_json
+  rescue ActionController::ParameterMissing, ActiveRecord::RecordNotFound
     render json: { error: "Invalid board id provided" },
            status: :unprocessable_entity
   end

@@ -3,9 +3,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :boards, only: [:index, :create] do
-      member do
-        resources :lists, only: [:index, :create]
-      end
+      resources :lists, only: [:index, :create, :update]
     end
   end
 
