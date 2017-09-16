@@ -52,4 +52,26 @@ describe("ListsReducer", () => {
       ).toEqual([list1, list2]);
     });
   });
+
+  describe("UPDATE_LIST_SUCCESS", () => {
+    it("returns the state with the correct list updated", () => {
+      const list1 = { id: 1, title: "First list", board_id: 1 };
+      const list2 = { id: 2, title: "Second list", board_id: 1 };
+      const list3 = { id: 3, title: "Third list", board_id: 1 };
+      const updatedList = {
+        ...list2,
+        title: "updated list",
+        position: 10
+      };
+
+      expect(
+        reducer([list1, list2, list3], {
+          type: types.UPDATE_LIST_SUCCESS,
+          boardId: 1,
+          listId: 2,
+          updatedList
+        })
+      ).toEqual([list1, updatedList, list3]);
+    });
+  });
 });
