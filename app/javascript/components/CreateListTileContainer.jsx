@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 
 import * as formActions from '../actions/FormActions';
 import * as listActions from '../actions/ListActions';
+import * as listSelectors from '../selectors/ListSelectors';
+import positionCalculator from '../lib/PositionCalculator';
 
 import CreateListTile from './CreateListTile';
-
 
 class CreateListTileContainer extends React.Component {
   static contextTypes = {
@@ -35,11 +36,19 @@ class CreateListTileContainer extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault;
+
+    const currentState = this.getState()
+    const lists = listSelectors.boardListsSelector(
+      currentState, this.context.currentBoardId
+    );
+    const position = positionCalculator(lists, lists.length + 1);
+
     this.context.store.dispatch(
       listActions.createList(
         this.context.currentBoardId,
         {
-          title: this.getState().newListForm.title 
+          title: currentState.newListForm.title,
+          position
         }
       )
     );
