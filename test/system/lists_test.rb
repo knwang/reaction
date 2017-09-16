@@ -49,4 +49,18 @@ class ListsTest < ApplicationSystemTestCase
     visit "/boards/#{@board.id}"
     assert_selector ".existing-lists .list-wrapper", count: 2
   end
+
+  test "changing a list title" do
+    @board.lists.create!(title: "My list")
+    visit "/boards/#{@board.id}"
+
+    title_input = find('.list-title')
+
+    title_input.click
+    title_input.set("Updated title")
+    title_input.send_keys :enter
+
+    assert_selector ".list-title[value='Updated title']"
+    assert_equal "Updated title", @board.lists.first.title
+  end
 end

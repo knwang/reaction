@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import EditableListTitle from './EditableListTitle';
 import CardListing from './CardListing';
 
 const List = props => (
@@ -8,14 +9,7 @@ const List = props => (
       <div className="list-background">
           <div className="list">
               <a className="more-icon sm-icon" href=""></a>
-              <div>
-                  <input 
-                    type="text" 
-                    className="list-title" 
-                    value={props.list.title}
-                    onChange={() => {}}
-                  />
-              </div>
+              <EditableListTitle list={props.list} />
               <div className="add-dropdown add-top">
                   <div className="card"></div><a className="button">Add</a><i className="x-icon icon"></i>
                   <div className="add-options"><span>...</span>
