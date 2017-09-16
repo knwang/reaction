@@ -16,6 +16,11 @@ class ExistingLists extends React.Component {
     }
   };
 
+  sortedLists = () => {
+    const listCopy = this.props.lists.slice();
+    return listCopy.sort((a, b) => a.position - b.position);
+  }
+
   render() {
     return (
       <div 
@@ -24,7 +29,7 @@ class ExistingLists extends React.Component {
         ref={this.dragulaDecorator}
       >
         {
-          this.props.lists.map(list => (
+          this.sortedLists().map(list => (
             <List key={list.id} list={list} />
           ))
         }
