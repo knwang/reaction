@@ -2,9 +2,11 @@
   position: fixed !important;
   margin: 0 !important;
   z-index: 9999 !important;
-  opacity: 0.8;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);
+  -ms-transform: rotate(5deg); /* IE 9 */
+  -webkit-transform: rotate(5deg); /* Safari */
+  transform: rotate(5deg);
 }
 .gu-hide {
   display: none !important;
@@ -16,7 +18,20 @@
   user-select: none !important;
 }
 .gu-transit {
-  opacity: 0.2;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-  filter: alpha(opacity=20);
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 3px;
+}
+
+.list-wrapper.gu-transit {
+  background-color: #00629d;
+
+}
+
+.list-wrapper.gu-transit > * {
+  visibility: hidden;
+}
+
+.list-wrapper.gu-mirror > .list-background {
+  box-shadow: -2px 2px 8px rgba(0,0,0,.3), 0 0 1px rgba(0,0,0,.5);
 }
