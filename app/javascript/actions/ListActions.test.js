@@ -23,6 +23,7 @@ describe("List actions", () => {
   afterEach(() => {
     apiClient.getLists.mockClear();
     apiClient.createList.mockClear();
+    apiClient.updateList.mockClear();
     store.clearActions()
   });
 
@@ -55,6 +56,27 @@ describe("List actions", () => {
       expect(
         actions.createListSuccess(1, {})
       ).toEqual({ type: types.CREATE_LIST_SUCCESS, boardId: 1, list: {} })
+    });
+  });
+
+  describe("updateListRequest", () => {
+    it("returns the correct object", () => {
+      expect(
+        actions.updateListRequest()
+      ).toEqual({ type: types.UPDATE_LIST_REQUEST });
+    });
+  });
+
+  describe("updateListSuccess", () => {
+    it("returns the correct object", () => {
+      expect(
+        actions.updateListSuccess(1, 1, {})
+      ).toEqual({
+        type: types.UPDATE_LIST_SUCCESS,
+        boardId: 1,
+        listId: 1,
+        updatedList: {}
+      });
     });
   });
 
@@ -104,6 +126,30 @@ describe("List actions", () => {
       it("dispatches createListSuccess()", () => {
         expect(storeActions[1]).toEqual(
           actions.createListSuccess(1, newListWithId)
+        );
+      });
+    });
+
+    describe("updateList", () => {
+      const updatedList = { id: 1, title: "Updated list", position: 2.0 };
+
+      beforeEach(() => {
+        store.dispatch(actions.updateList(1, 1, updatedList));
+
+        const invocationArgs = apiClient.updateList.mock.calls[0];
+        const callback = invocationArgs[3];
+
+        callback(updatedList);
+        storeActions = store.getActions();
+      });
+
+      it("dispatches updateListRequest", () => {
+        expect(storeActions[0]).toEqual(actions.updateListRequest());
+      });
+
+      it("dispatches updateListSuccess", () => {
+        expect(storeActions[1]).toEqual(
+          actions.updateListSuccess(1, 1, updatedList)
         );
       });
     });
