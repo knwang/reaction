@@ -5,7 +5,11 @@ import EditableListTitle from './EditableListTitle';
 import CardListing from './CardListing';
 
 const List = props => (
-  <div className="list-wrapper">
+  <div
+    className="list-wrapper"
+    data-list-id={props.list.id}
+    onDrop={props.onDrop}
+  >
       <div className="list-background">
           <div className="list">
               <a className="more-icon sm-icon" href=""></a>
@@ -29,6 +33,7 @@ const List = props => (
 
 List.propTypes = {
   list: PropTypes.object.isRequired,
+  onDrop: PropTypes.func.isRequired,
 };
 
 export default List;

@@ -13,7 +13,7 @@ describe("List", () => {
   };
 
   it("displays the list title", () => {
-    wrapper = shallow(<List list={list} />);
+    wrapper = shallow(<List list={list} onDrop={() => {}}/>);
 
     expect(
       wrapper.html().match(/My list/)
@@ -21,7 +21,7 @@ describe("List", () => {
   });
 
   it("displays a CardListing", () => {
-    wrapper = shallow(<List list={list} />);
+    wrapper = shallow(<List list={list} onDrop={() => {}} />);
 
     expect(
       wrapper.containsMatchingElement(

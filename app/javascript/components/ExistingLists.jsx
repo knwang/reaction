@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dragula from 'react-dragula';
 
-import List from './List';
+import DraggableList from './DraggableList';
 
 class ExistingLists extends React.Component {
   static propTypes = {
@@ -11,8 +11,14 @@ class ExistingLists extends React.Component {
 
   dragulaDecorator = (componentBackingInstance) => {
     if (componentBackingInstance) {
+      var event = document.createEvent('Event');
+      event.initEvent('drop', true, true);
+
       let options = { direction: 'horizontal' };
-      dragula([componentBackingInstance], options);
+      dragula([componentBackingInstance], options)
+        .on('drop', function (el) {
+          el.dispatchEvent(event);
+        });
     }
   };
 
@@ -30,7 +36,7 @@ class ExistingLists extends React.Component {
       >
         {
           this.sortedLists().map(list => (
-            <List key={list.id} list={list} />
+            <DraggableList key={list.id} list={list} />
           ))
         }
       </div>
