@@ -25,11 +25,6 @@ class CreateListTileContainer extends React.Component {
     this.context.store.dispatch(formActions.hideCreateListForm());
   };
 
-  handleCloseClick = (e) => {
-    e.stopPropagation();
-    this.context.store.dispatch(formActions.hideCreateListForm());
-  };
-
   handleChange = (e) => {
     this.context.store.dispatch(formActions.updateCreateListFormInputText(e.target.value))
   };

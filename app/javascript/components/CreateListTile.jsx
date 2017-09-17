@@ -7,7 +7,8 @@ class CreateListTile extends React.Component {
     onTileClick: PropTypes.func,
     onCloseClick: PropTypes.func,
     onChange: PropTypes.func,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    onKeyPress: PropTypes.func
   };
 
   componentDidUpdate() {
@@ -15,6 +16,18 @@ class CreateListTile extends React.Component {
       this.refs.input.focus();
     }
   }
+
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      var event = new MouseEvent('click', {
+        'view': window,
+        'bubbles': true,
+        'cancelable': true
+      });
+
+      this.refs.submitButton.dispatchEvent(event);
+    }
+  };
 
   render() {
     const classes = ["new-list"];
@@ -33,12 +46,14 @@ class CreateListTile extends React.Component {
           ref="input" 
           value={this.props.title} 
           onChange={this.props.onChange}
+          onKeyPress={this.handleKeyPress}
         />
         <div>
           <input
             type="submit"
             className="button"
             value="Save"
+            ref="submitButton"
             onClick={this.props.onSubmit}
           />
           <i 

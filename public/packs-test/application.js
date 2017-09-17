@@ -34143,13 +34143,6 @@ var CreateListTileContainer = function (_React$Component) {
         e.stopPropagation();
         _this.context.store.dispatch(formActions.hideCreateListForm());
       }
-    }), Object.defineProperty(_this, 'handleCloseClick', {
-      enumerable: true,
-      writable: true,
-      value: function value(e) {
-        e.stopPropagation();
-        _this.context.store.dispatch(formActions.hideCreateListForm());
-      }
     }), Object.defineProperty(_this, 'handleChange', {
       enumerable: true,
       writable: true,
@@ -34240,9 +34233,31 @@ var CreateListTile = function (_React$Component) {
   _inherits(CreateListTile, _React$Component);
 
   function CreateListTile() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, CreateListTile);
 
-    return _possibleConstructorReturn(this, (CreateListTile.__proto__ || Object.getPrototypeOf(CreateListTile)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CreateListTile.__proto__ || Object.getPrototypeOf(CreateListTile)).call.apply(_ref, [this].concat(args))), _this), Object.defineProperty(_this, 'handleKeyPress', {
+      enumerable: true,
+      writable: true,
+      value: function value(e) {
+        if (e.key === 'Enter') {
+          var event = new MouseEvent('click', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+          });
+
+          _this.refs.submitButton.dispatchEvent(event);
+        }
+      }
+    }), _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(CreateListTile, [{
@@ -34277,7 +34292,8 @@ var CreateListTile = function (_React$Component) {
           placeholder: 'Add a list...',
           ref: 'input',
           value: this.props.title,
-          onChange: this.props.onChange
+          onChange: this.props.onChange,
+          onKeyPress: this.handleKeyPress
         }),
         _react2.default.createElement(
           'div',
@@ -34286,6 +34302,7 @@ var CreateListTile = function (_React$Component) {
             type: 'submit',
             className: 'button',
             value: 'Save',
+            ref: 'submitButton',
             onClick: this.props.onSubmit
           }),
           _react2.default.createElement('i', {
@@ -34308,7 +34325,8 @@ Object.defineProperty(CreateListTile, 'propTypes', {
     onTileClick: _propTypes2.default.func,
     onCloseClick: _propTypes2.default.func,
     onChange: _propTypes2.default.func,
-    onSubmit: _propTypes2.default.func
+    onSubmit: _propTypes2.default.func,
+    onKeyPress: _propTypes2.default.func
   }
 });
 exports.default = CreateListTile;

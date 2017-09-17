@@ -21,12 +21,24 @@ class ListsTest < ApplicationSystemTestCase
     refute_selector ".new-list input[type='text']"
   end
 
-  test "creating a list" do
+  test "creating a list using the submit button" do
     find(".new-list").click
 
     within ".new-list" do
       find("input[type='text']").set("My new list")
       click_on "Save"
+    end
+
+    assert_selector ".list-title[value='My new list']"
+  end
+
+  test "creating a list using the enter key" do
+    find(".new-list").click
+
+    within ".new-list" do
+      input = find("input[type='text']")
+      input.set("My new list")
+      input.send_keys :enter
     end
 
     assert_selector ".list-title[value='My new list']"
