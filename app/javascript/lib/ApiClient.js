@@ -29,19 +29,21 @@ const apiClient = {
       .catch(logError);
   },
   getLists: function(boardId, callback) {
-    return axios.get(routes.listsIndexUrl(boardId))
+    return axios.get(`${routes.LISTS_INDEX_URL}?board_id=${boardId}`)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   createList: function(boardId, list, callback) {
-    return axios.post(routes.createListUrl(boardId), { list })
+    return axios.post(routes.CREATE_LIST_URL, { board_id: boardId, list })
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   updateList: function(boardId, listId, updatedList, callback) {
-    return axios.put(routes.updateListUrl(boardId, listId), { list: updatedList })
+    return axios.put(
+      routes.updateListUrl(listId), { board_id: boardId, list: updatedList }
+    )
       .then(unwrapData)
       .then(callback)
       .catch(logError);

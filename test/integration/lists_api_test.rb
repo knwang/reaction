@@ -8,14 +8,14 @@ class ListsAPITest < ActionDispatch::IntegrationTest
         list = List.create!(board: board, title: "My list")
         List.create!(board: Board.create!(title: "Other list"), title: "My list")
 
-        get "/api/boards/#{board.id}/lists"
+        get "/api/lists", params: { board_id: board.id }
         assert_equal [list].to_json, response.body
       end
     end
 
     class InvalidBoardIdTest < ActionDispatch::IntegrationTest
       def setup
-        get "/api/boards/12321323123/lists"
+        get "/api/lists", params: { board_id: 'abc' }
       end
 
       test "returns a 404" do
@@ -38,22 +38,22 @@ class ListsAPITest < ActionDispatch::IntegrationTest
         test "creates a new list" do
           assert_equal 0, @board.lists.count
 
-          post "/api/boards/#{@board.id}/lists",
-              params: { list: { title: "My new list" } }
+          post "/api/lists",
+              params: { board_id: @board.id, list: { title: "My new list" } }
 
           assert_equal 1, @board.lists.count
         end
 
         test "returns a 201" do
-          post "/api/boards/#{@board.id}/lists",
-              params: { list: { title: "My new list" } }
+          post "/api/lists",
+              params: { board_id: @board.id, list: { title: "My new list" } }
 
           assert_response 201
         end
 
         test "returns the new list" do
-          post "/api/boards/#{@board.id}/lists",
-              params: { list: { title: "My new list" } }
+          post "/api/lists",
+              params: { board_id: @board.id, list: { title: "My new list" } }
 
           assert_equal @board.reload.lists.last.to_json, response.body
         end
@@ -61,10 +61,10 @@ class ListsAPITest < ActionDispatch::IntegrationTest
 
       class InvalidDataTest < ActionDispatch::IntegrationTest
         def setup
-          @board = Board.create!(title: "My board")
+          board = Board.create!(title: "My board")
 
-          post "/api/boards/#{@board.id}/lists",
-              params: { list: { title: '' } }
+          post "/api/lists",
+              params: { board_id: board.id, list: { title: '' } }
         end
 
         test "returns a 422" do
@@ -79,8 +79,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
 
     class InvalidBoardIdTest < ActionDispatch::IntegrationTest
       def setup
-        post "/api/boards/4567865467890/lists",
-            params: { list: { title: 'My new board' } }
+        post "/api/lists",
+            params: { board_id: 'abc', list: { title: 'My new board' } }
       end
 
       test "returns a 422" do
@@ -100,8 +100,11 @@ class ListsAPITest < ActionDispatch::IntegrationTest
           board = Board.create!(title: "My board")
           @list = board.lists.create!(title: "My list", position: 1.0)
 
-          put "/api/boards/#{board.id}/lists/#{@list.id}",
-              params: { list: { title: "New title", position: 10.123 } }
+          put "/api/lists/#{@list.id}",
+              params: {
+                board_id: board.id,
+                list: { title: "New title", position: 10.123 }
+              }
         end
 
         test "updates the list title" do
@@ -126,8 +129,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
           board = Board.create!(title: "My board")
           @list = board.lists.create!(title: "My list", position: 1.0)
 
-          put "/api/boards/#{board.id}/lists/#{@list.id}",
-              params: { }
+          put "/api/lists/#{@list.id}",
+              params: { board_id: board.id }
         end
 
         test "returns a 422" do
@@ -145,8 +148,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
         board = Board.create!(title: "My board")
         @list = board.lists.create!(title: "My list", position: 1.0)
 
-        put "/api/boards/1234567890876543/lists/#{@list.id}",
-            params: { list: { } }
+        put "/api/lists/#{@list.id}",
+            params: { boardId: 'abc', list: { } }
       end
 
       test "returns a 422" do

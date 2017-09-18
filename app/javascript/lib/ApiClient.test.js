@@ -133,7 +133,7 @@ describe("ApiClient", () => {
       it("calls the callback with the lists", async () => {
         const cb = jest.fn();
 
-        mock.onGet(routes.listsIndexUrl(1)).reply(200, lists);
+        mock.onGet(`${routes.LISTS_INDEX_URL}?board_id=1`).reply(200, lists);
         client.getLists(1, cb);
 
         await flushPromises();
@@ -148,7 +148,7 @@ describe("ApiClient", () => {
 
       beforeEach(() => {
         global.console.error = jest.fn();
-        mock.onGet(routes.listsIndexUrl(1)).reply(404, { error: errorText });
+        mock.onGet(`${routes.LISTS_INDEX_URL}?board_id=1`).reply(404, { error: errorText });
       });
 
       afterEach(() => {
@@ -183,7 +183,7 @@ describe("ApiClient", () => {
       it("calls the callback with the new list", async () => {
         const cb = jest.fn();
 
-        mock.onPost(routes.createListUrl(1)).reply(201, { ...newList, id: 22 });
+        mock.onPost(routes.CREATE_LIST_URL).reply(201, { ...newList, id: 22 });
         client.createList(1, newList, cb);
 
         await flushPromises();
@@ -198,7 +198,7 @@ describe("ApiClient", () => {
 
       beforeEach(() => {
         global.console.error = jest.fn();
-        mock.onPost(routes.createListUrl(1)).reply(422, { error: errorText });
+        mock.onPost(routes.CREATE_LIST_URL).reply(422, { error: errorText });
       });
 
       afterEach(() => {
@@ -233,7 +233,7 @@ describe("ApiClient", () => {
       it("calls the callback with the updated list", async () => {
         const cb = jest.fn();
 
-        mock.onPut(routes.updateListUrl(1, 1)).reply(200, updatedList);
+        mock.onPut(routes.updateListUrl(1)).reply(200, updatedList);
         client.updateList(1, 1, list, cb);
 
         await flushPromises();
@@ -248,7 +248,7 @@ describe("ApiClient", () => {
 
       beforeEach(() => {
         global.console.error = jest.fn();
-        mock.onPut(routes.updateListUrl(1, 1)).reply(422, { error: errorText });
+        mock.onPut(routes.updateListUrl(1)).reply(422, { error: errorText });
       });
 
       afterEach(() => {

@@ -13471,13 +13471,13 @@ var apiClient = {
     return _axios2.default.post(routes.CREATE_BOARD_URL, { board: board }).then(unwrapData).then(callback).catch(logError);
   },
   getLists: function getLists(boardId, callback) {
-    return _axios2.default.get(routes.listsIndexUrl(boardId)).then(unwrapData).then(callback).catch(logError);
+    return _axios2.default.get(routes.LISTS_INDEX_URL + '?board_id=' + boardId).then(unwrapData).then(callback).catch(logError);
   },
   createList: function createList(boardId, list, callback) {
-    return _axios2.default.post(routes.createListUrl(boardId), { list: list }).then(unwrapData).then(callback).catch(logError);
+    return _axios2.default.post(routes.CREATE_LIST_URL, { board_id: boardId, list: list }).then(unwrapData).then(callback).catch(logError);
   },
   updateList: function updateList(boardId, listId, updatedList, callback) {
-    return _axios2.default.put(routes.updateListUrl(boardId, listId), { list: updatedList }).then(unwrapData).then(callback).catch(logError);
+    return _axios2.default.put(routes.updateListUrl(listId), { board_id: boardId, list: updatedList }).then(unwrapData).then(callback).catch(logError);
   }
 };
 
@@ -31778,15 +31778,11 @@ Object.defineProperty(exports, "__esModule", {
 var BOARDS_INDEX_URL = exports.BOARDS_INDEX_URL = '/api/boards';
 var CREATE_BOARD_URL = exports.CREATE_BOARD_URL = '/api/boards';
 
-var listsIndexUrl = exports.listsIndexUrl = function listsIndexUrl(boardId) {
-  return '/api/boards/' + boardId + '/lists';
-};
-var createListUrl = exports.createListUrl = function createListUrl(boardId) {
-  return '/api/boards/' + boardId + '/lists';
-};
+var LISTS_INDEX_URL = exports.LISTS_INDEX_URL = '/api/lists';
+var CREATE_LIST_URL = exports.CREATE_LIST_URL = '/api/lists';
 
-var updateListUrl = exports.updateListUrl = function updateListUrl(boardId, listId) {
-  return listsIndexUrl(boardId) + '/' + listId;
+var updateListUrl = exports.updateListUrl = function updateListUrl(listId) {
+  return LISTS_INDEX_URL + '/' + listId;
 };
 
 /***/ }),
