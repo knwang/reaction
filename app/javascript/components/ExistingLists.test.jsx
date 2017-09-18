@@ -17,7 +17,7 @@ describe("ExistingLists", () => {
         <ExistingLists lists={lists} />
       </Provider>
     );
-    const titles = wrapper.find('.list-title').map(title => title.prop('value'));
+    const titles = wrapper.find('.list-title').map(title => title.text());
 
     expect(titles).toEqual(["My second list", "My third list", "My first list"]);
   });

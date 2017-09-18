@@ -11,17 +11,26 @@ class EditableListTitle extends React.Component {
   };
 
   state = {
-    title: this.props.list.title
+    title: this.props.list.title,
+    showInput: false
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({ showInput: false });
   };
 
   handleBlur = (e) => {
-    this.context.store.dispatch(
-      actions.updateList(
-        this.props.list.board_id,
-        this.props.list.id,
-        { title: e.target.value }
-      )
-    );
+    if (e.target.value !== this.props.list.title) {
+      this.context.store.dispatch(
+        actions.updateList(
+          this.props.list.board_id,
+          this.props.list.id,
+          { title: e.target.value }
+        )
+      );
+    } else {
+      this.setState({ showInput: false });
+    }
   };
 
   handleKeyPress = (e) => {
@@ -32,6 +41,10 @@ class EditableListTitle extends React.Component {
     this.setState({ title: e.target.value });
   };
 
+  handleTitleClick = (e) => {
+    this.setState({ showInput: true });
+  };
+
   render() {
     return (
       <EditableTitle 
@@ -40,6 +53,8 @@ class EditableListTitle extends React.Component {
         onBlur={this.handleBlur}
         onKeyPress={this.handleKeyPress}
         onChange={this.handleChange}
+        onTitleClick={this.handleTitleClick}
+        showInput={this.state.showInput}
       />
     );
   }
