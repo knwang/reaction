@@ -2013,6 +2013,14 @@ span.bg-random-grey {
 #labels .menu-contents {
   padding-top: 7px;
 }
+.labels-section .member-container {
+  float: left;
+  padding: 2px 0 2px 0;
+
+  & + .member-container {
+    margin-left: 4px;
+  }
+}
 .light-list {
   padding-top: 4px;
 }
@@ -2837,7 +2845,6 @@ span.bg-random-grey {
   margin: 48px 0 78px 50%;
   transform: translateX(-50%);
   width: 730px;
-  min-height: 1000px;
   box-sizing: border-box;
   background-color: #edeff0;
   border-radius: 3px;
@@ -2986,6 +2993,7 @@ span.bg-random-grey {
   vertical-align: top;
   padding-right: 12px;
   box-sizing: border-box;
+  float: right;
 }
 .modal-buttons hr {
   margin: 6px 0 6px;
@@ -3531,6 +3539,24 @@ form.description .textarea-toggle:focus {
 }
 .comment-section .comment textarea {
   height: auto;
+}
+.comment-section .member-container {
+  position: absolute;
+  left: -38px;
+  top: -1px;
+  color: #4d4d4d;
+}
+.card-member {
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  background-color: #d6dadc;
+  border-radius: 3px;
+  font-size: 9pt;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: top;
 }
 .activity-section {
   position: relative;
