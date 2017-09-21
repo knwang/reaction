@@ -10,34 +10,6 @@ describe("ListsReducer", () => {
     });
   });
 
-  describe("FETCH_LISTS_SUCCESS", () => {
-    describe("lists for the same board already exist", () => {
-      const list1 = { id: 1, title: "First list", board_id: 1 };
-      const list2 = { id: 2, title: "Second list", board_id: 1 };
-      const otherList = { id: 3, title: "Second list", board_id: 2 }
-
-      it("returns the state object with them replaced", () => {
-        expect(
-          reducer([list1, otherList], {
-            type: types.FETCH_LISTS_SUCCESS,
-            boardId: 1,
-            lists: [list2]
-          })
-        ).toEqual([otherList, list2]);
-      });
-
-      it("returns the state object with action.lists concatenated", () => {
-        expect(
-          reducer([], {
-            type: types.FETCH_LISTS_SUCCESS,
-            boardId: 1,
-            lists: [list1]
-          })
-        ).toEqual([list1]);
-      });
-    });
-  });
-
   describe("CREATE_LIST_SUCCESS", () => {
     it("returns the current state with the `list` action value concatenated", () => {
       const list1 = { id: 1, title: "Old list", board_id: 1 };
@@ -72,6 +44,47 @@ describe("ListsReducer", () => {
           updatedList
         })
       ).toEqual([list1, updatedList, list3]);
+    });
+  });
+
+  describe("FETCH_BOARD_SUCCESS", () => {
+    it("discards the 'cards' value", () => {
+      const list = { id: 1, title: "My title", cards: [] };
+
+      expect(
+        reducer([], {
+          type: types.FETCH_BOARD_SUCCESS,
+          board: { lists: [list] }
+        })
+      ).toEqual([{ id: 1, title: "My title" }]);
+    });
+
+    describe("board lists already exist in the store", () => {
+      it("replaces them", () => {
+        const oldList = { id: 1, title: "My title" };
+        const newList = { id: 1, title: "My new title" };
+
+        expect(
+          reducer([oldList], {
+            type: types.FETCH_BOARD_SUCCESS,
+            board: { lists: [newList] }
+          })
+        ).toEqual([newList]);
+      });
+    });
+
+    describe("board lists are not in the store yet", () => {
+      it("adds them", () => {
+        const list1 = { id: 1, title: "My title" };
+        const list2 = { id: 2, title: "My new title" };
+
+        expect(
+          reducer([list1], {
+            type: types.FETCH_BOARD_SUCCESS,
+            board: { lists: [list2] }
+          })
+        ).toEqual([list1, list2]);
+      });
     });
   });
 });

@@ -22,14 +22,14 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
-  createBoard: function(board, callback) {
-    return axios.post(routes.CREATE_BOARD_URL, { board })
+  getBoard: function(boardId, callback) {
+    return axios.get(routes.boardUrl(boardId))
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
-  getLists: function(boardId, callback) {
-    return axios.get(`${routes.LISTS_INDEX_URL}?board_id=${boardId}`)
+  createBoard: function(board, callback) {
+    return axios.post(routes.CREATE_BOARD_URL, { board })
       .then(unwrapData)
       .then(callback)
       .catch(logError);

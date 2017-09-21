@@ -5,7 +5,7 @@ import CreateListTileContainer from './CreateListTileContainer';
 
 const ListListing = props => (
   <div id="list-container" className="list-container">
-    <ExistingLists lists={props.lists} />
+    <ExistingLists boardId={props.boardId} />
     <CreateListTileContainer />
   </div>
 );

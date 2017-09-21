@@ -22,6 +22,7 @@ describe("Board actions", () => {
 
   afterEach(() => {
     apiClient.getBoards.mockClear();
+    apiClient.getBoard.mockClear();
     apiClient.createBoard.mockClear();
     store.clearActions()
   });
@@ -59,6 +60,24 @@ describe("Board actions", () => {
       expect(
         actions.createBoardSuccess(board)
       ).toEqual({ type: types.CREATE_BOARD_SUCCESS, board });
+    });
+  });
+
+  describe("fetchBoardRequest", () => {
+    it("returns the correct object", () => {
+      expect(
+        actions.fetchBoardRequest()
+      ).toEqual({ type: types.FETCH_BOARD_REQUEST });
+    });
+  });
+
+  describe("fetchBoardSuccess", () => {
+    const board = { id: 1, title: "My board" };
+
+    it("returns the correct object", () => {
+      expect(
+        actions.fetchBoardSuccess(board)
+      ).toEqual({ type: types.FETCH_BOARD_SUCCESS, board });
     });
   });
 
@@ -119,6 +138,28 @@ describe("Board actions", () => {
           actions.createBoardSuccess(newBoardResponse)
         );
       });
+    });
+
+    describe("fetchBoard", () => {
+      const board = { id: 1, title: "My board" };
+
+      beforeEach(() => {
+        store.dispatch(actions.fetchBoard(1));
+
+        const invocationArgs = apiClient.getBoard.mock.calls[0];
+        const callback = invocationArgs[1];
+
+        callback(board);
+        storeActions = store.getActions();
+      });
+
+      it("dispatches fetchBoardRequest()", () => {
+        expect(storeActions[0]).toEqual(actions.fetchBoardRequest());
+      });
+
+      it("dispatches fetchBoardSuccess()", () => {
+        expect(storeActions[1]).toEqual(actions.fetchBoardSuccess(board));
+      })
     });
   });
 });

@@ -68,6 +68,58 @@ describe("ApiClient", () => {
     });
   });
 
+  describe("getBoard", () => {
+    const board = {
+      id: 1,
+      title: "My board",
+      lists: [{ id: 1, title: "My list" }]
+    };
+
+    describe("valid board id", () => {
+      it("calls the callback with the board", async () => {
+        const cb = jest.fn();
+
+        mock.onGet(routes.boardUrl(1)).reply(200, board);
+        client.getBoard(1, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledWith(board);
+      });
+    });
+
+    describe("invalid board id", () => {
+      const originalError = global.console.error;
+      const errorText = "You don't have access to that";
+
+      beforeEach(() => {
+        global.console.error = jest.fn();
+        mock.onGet(routes.boardUrl(1)).reply(401, { error: errorText });
+      });
+
+      afterEach(() => {
+        global.console.error = originalError;
+      });
+
+      it("logs the error", async () => {
+        client.getBoard(1, (board) => {});
+
+        await flushPromises();
+
+        expect(global.console.error).toHaveBeenCalledWith(`HTTP Error: ${errorText}`);
+      });
+
+      it("doesn't call the callback", async () => {
+        const cb = jest.fn();
+        client.getBoard(1, cb);
+
+        await flushPromises();
+
+        expect(cb).not.toHaveBeenCalled();
+      });
+    });
+  });
+
   describe("createBoard", () => {
     describe("successful request", () => {
       const newBoard = {
@@ -116,61 +168,6 @@ describe("ApiClient", () => {
 
         expect(cb).not.toHaveBeenCalled();
       });
-    });
-  });
-
-  describe("getLists", () => {
-    describe("successful request", () => {
-      const lists = [{
-        id: 1,
-        title: "My list"
-      }];
-
-      const newList = {
-        title: "My new list"
-      };
-
-      it("calls the callback with the lists", async () => {
-        const cb = jest.fn();
-
-        mock.onGet(`${routes.LISTS_INDEX_URL}?board_id=1`).reply(200, lists);
-        client.getLists(1, cb);
-
-        await flushPromises();
-
-        expect(cb).toHaveBeenCalledWith(lists);
-      });
-    });
-
-    describe("failed request", () => {
-      const originalError = global.console.error;
-      const errorText = "You don't have access to that";
-
-      beforeEach(() => {
-        global.console.error = jest.fn();
-        mock.onGet(`${routes.LISTS_INDEX_URL}?board_id=1`).reply(404, { error: errorText });
-      });
-
-      afterEach(() => {
-        global.console.error = originalError;
-      });
-
-      it("logs the error", async () => {
-        client.getLists(1, () => {});
-
-        await flushPromises();
-
-        expect(global.console.error).toHaveBeenCalledWith(`HTTP Error: ${errorText}`);
-      });
-
-      it("doesn't call the callback", async () => {
-        const cb = jest.fn();
-        client.getLists(1, cb);
-
-        await flushPromises();
-
-        expect(cb).not.toHaveBeenCalled();
-      })
     });
   });
 

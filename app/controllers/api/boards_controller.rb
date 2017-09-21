@@ -17,6 +17,14 @@ class Api::BoardsController < ApplicationController
            status: :unprocessable_entity
   end
 
+  def show
+    board = Board.find(params[:id])
+    render json: board.as_json(include: { lists: { include: :cards }})
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Invalid board id provided" },
+           status: :not_found
+  end
+
   private
 
   def board_params

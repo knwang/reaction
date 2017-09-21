@@ -1,14 +1,6 @@
 import apiClient from '../lib/ApiClient';
 import * as types from '../constants/ActionTypes';
 
-export function fetchListsRequest() {
-  return { type: types.FETCH_LISTS_REQUEST };
-}
-
-export function fetchListsSuccess(boardId, lists) {
-  return { type: types.FETCH_LISTS_SUCCESS, boardId, lists };
-}
-
 export function createListRequest() {
   return { type: types.CREATE_LIST_REQUEST };
 }
@@ -23,15 +15,6 @@ export function updateListRequest() {
 
 export function updateListSuccess(boardId, listId, updatedList) {
   return { type: types.UPDATE_LIST_SUCCESS, boardId, listId, updatedList };
-}
-
-export function fetchLists(boardId) {
-  return function(dispatch) {
-    dispatch(fetchListsRequest());
-    apiClient.getLists(boardId, lists => {
-      dispatch(fetchListsSuccess(boardId, lists))
-    });
-  }
 }
 
 export function createList(boardId, list) {

@@ -42,4 +42,36 @@ class BoardsAPITest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  class GetBoardTest < ActionDispatch::IntegrationTest
+    class ValidBoardIdTest < ActionDispatch::IntegrationTest
+      def setup
+        @board = Board.create!(title: "My board")
+        @list1 = @board.lists.create!(title: "My list")
+        @list2 = @board.lists.create!(title: "My other list")
+        @card1 = @list1.cards.create!(title: "My card")
+      end
+
+      test "returns the board with the lists" do
+        get "/api/boards/#{@board.id}"
+
+        expected = JSON.parse(@board.to_json)
+
+        expected = @board.as_json(include: { lists: { include: :cards } })
+        assert_equal expected.to_json, response.body
+      end
+
+      test "returns a 200" do
+        get "/api/boards/#{@board.id}"
+        assert_response 200
+      end
+    end
+
+    class InvalidBoardIdTest < ActionDispatch::IntegrationTest
+      test "returns a 404" do
+        get "/api/boards/abc"
+        assert_response 404
+      end
+    end
+  end
 end

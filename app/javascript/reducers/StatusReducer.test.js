@@ -27,20 +27,4 @@ describe("StatusReducer", () => {
       ).toEqual(statuses.BOARDS_FETCHED_SUCCESSFULLY);
     });
   });
-
-  describe(actions.FETCH_LISTS_REQUEST, () => {
-    it("returns the correct status", () => {
-      expect(
-        reducer(undefined, { type: actions.FETCH_LISTS_REQUEST })
-      ).toEqual(statuses.FETCHING_LISTS);
-    });
-  });
-
-  describe(actions.FETCH_LISTS_SUCCESS, () => {
-    it("returns the correct status", () => {
-      expect(
-        reducer(undefined, { type: actions.FETCH_LISTS_SUCCESS })
-      ).toEqual(statuses.LISTS_FETCHED_SUCCESSFULLY);
-    });
-  });
 });

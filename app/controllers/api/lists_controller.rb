@@ -1,12 +1,4 @@
 class Api::ListsController < ApplicationController
-  def index
-    board = Board.find(params[:board_id])
-    render json: board.lists
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "Invalid board id provided" },
-           status: :not_found
-  end
-
   def create
     board = Board.find(params[:board_id])
     list = List.new(list_params.merge(board: board))

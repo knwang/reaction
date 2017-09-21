@@ -40,4 +40,45 @@ describe("BoardsReducer", () => {
       ).toEqual([board1, board2]);
     });
   });
+
+  describe("FETCH_BOARD_SUCCESS", () => {
+    it("does discards the 'lists' value", () => {
+      const newBoard = { id: 1, title: "My title", lists: [] };
+
+      expect(
+        reducer([], {
+          type: types.FETCH_BOARD_SUCCESS,
+          board: newBoard
+        })
+      ).toEqual([{ id: 1, title: "My title" }]);
+    });
+
+    describe("board already exists in the store", () => {
+      it("replaces the board", () => {
+        const oldBoard = { id: 1, title: "My title" };
+        const newBoard = { id: 1, title: "My new title" };
+
+        expect(
+          reducer([oldBoard], {
+            type: types.FETCH_BOARD_SUCCESS,
+            board: newBoard
+          })
+        ).toEqual([newBoard]);
+      });
+    });
+
+    describe("board does not exist in state", () => {
+      it("adds the board to the store", () => {
+        const board1 = { id: 1, title: "My title" };
+        const newBoard = { id: 2, title: "My new title" };
+
+        expect(
+          reducer([board1], {
+            type: types.FETCH_BOARD_SUCCESS,
+            board: newBoard
+          })
+        ).toEqual([board1, newBoard]);
+      });
+    });
+  });
 });

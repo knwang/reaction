@@ -6,32 +6,45 @@ import BoardHeader from './BoardHeader';
 import ListListing from './ListListing';
 
 describe("Board", () => {
-  const board = {
-    id: 1,
-    title: "My board",
-    lists: []
-  };
-
-  const lists = [{
-    id: 1,
-    title: "My list",
-    board_id: 1
-  }];
   let wrapper;
 
-  beforeEach(() => {
-    wrapper = shallow(<Board board={board} lists={lists} />);
-  })
+  describe("the board prop is falsey", () => {
+    it("doesn't render", () => {
+      wrapper = shallow(<Board board={null} />);
 
-  it("displays the board header", () => {
-    expect(
-      wrapper.containsMatchingElement(<BoardHeader />)
-    ).toBe(true);
+      expect(
+        wrapper.html()
+      ).toEqual(null);
+    });
   });
 
-  it("displays the lists section", () => {
-    expect(
-      wrapper.containsMatchingElement(<ListListing lists={lists} />)
-    ).toBe(true);
+  describe("a board prop is provided", () => {
+    const board = {
+      id: 1,
+      title: "My board",
+      lists: []
+    };
+
+    const lists = [{
+      id: 1,
+      title: "My list",
+      board_id: 1
+    }];
+
+    beforeEach(() => {
+      wrapper = shallow(<Board board={board} />);
+    });
+
+    it("displays the board header", () => {
+      expect(
+        wrapper.containsMatchingElement(<BoardHeader />)
+      ).toBe(true);
+    });
+
+    it("displays the lists section", () => {
+      expect(
+        wrapper.containsMatchingElement(<ListListing boardId={1} />)
+      ).toBe(true);
+    });
   });
 });

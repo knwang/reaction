@@ -21,26 +21,9 @@ describe("List actions", () => {
   });
 
   afterEach(() => {
-    apiClient.getLists.mockClear();
     apiClient.createList.mockClear();
     apiClient.updateList.mockClear();
     store.clearActions()
-  });
-
-  describe("fetchListsRequest", () => {
-    it("returns the correct object", () => {
-      expect(
-        actions.fetchListsRequest()
-      ).toEqual({ type: types.FETCH_LISTS_REQUEST });
-    });
-  });
-
-  describe("fetchListsSuccess", () => {
-    it("returns the correct object", () => {
-      expect (
-        actions.fetchListsSuccess()
-      ).toEqual({ type: types.FETCH_LISTS_SUCCESS });
-    });
   });
 
   describe("createListRequest", () => {
@@ -82,28 +65,6 @@ describe("List actions", () => {
 
   describe("action creators", () => {
     let storeActions;
-
-    describe("fetchLists", () => {
-      const lists = [{ id: "1", title: "My list" }];
-
-      beforeEach(() => {
-        store.dispatch(actions.fetchLists(1));
-
-        const invocationArgs = apiClient.getLists.mock.calls[0];
-        const callback = invocationArgs[1];
-
-        callback(lists);
-        storeActions = store.getActions();
-      });
-
-      it("dispatches fetchListsRequest()", () => {
-        expect(storeActions[0]).toEqual(actions.fetchListsRequest())
-      });
-
-      it("dispatches fetchListSuccess()", () => {
-        expect(storeActions[1]).toEqual(actions.fetchListsSuccess(1, lists));
-      });
-    });
 
     describe("createList", () => {
       const newList = { title: "My list" };

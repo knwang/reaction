@@ -1,33 +1,6 @@
 require 'test_helper'
 
 class ListsAPITest < ActionDispatch::IntegrationTest
-  class GetListsTest < ActionDispatch::IntegrationTest
-    class ValidBoardIdTest < ActionDispatch::IntegrationTest
-      test "returns a json array of the board's lists" do
-        board = Board.create!(title: "My board")
-        list = List.create!(board: board, title: "My list")
-        List.create!(board: Board.create!(title: "Other list"), title: "My list")
-
-        get "/api/lists", params: { board_id: board.id }
-        assert_equal [list].to_json, response.body
-      end
-    end
-
-    class InvalidBoardIdTest < ActionDispatch::IntegrationTest
-      def setup
-        get "/api/lists", params: { board_id: 'abc' }
-      end
-
-      test "returns a 404" do
-        assert_response 404
-      end
-
-      test "includes error text in response" do
-        assert JSON.parse(response.body).has_key?("error")
-      end
-    end
-  end
-
   class PostListsTest < ActionDispatch::IntegrationTest
     class ValidBoardIdTest < ActionDispatch::IntegrationTest
       class ValidDataTest < ActionDispatch::IntegrationTest
