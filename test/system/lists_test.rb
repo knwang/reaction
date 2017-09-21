@@ -29,7 +29,7 @@ class ListsTest < ApplicationSystemTestCase
       click_on "Save"
     end
 
-    assert_selector ".list-title[value='My new list']"
+    assert_selector "p.list-title", text: "My new list"
   end
 
   test "creating a list using the enter key" do
@@ -41,7 +41,7 @@ class ListsTest < ApplicationSystemTestCase
       input.send_keys :enter
     end
 
-    assert_selector ".list-title[value='My new list']"
+    assert_selector "p.list-title", text: "My new list"
   end
 
   test "displaying no lists" do
@@ -66,13 +66,14 @@ class ListsTest < ApplicationSystemTestCase
     @board.lists.create!(title: "My list")
     visit "/boards/#{@board.id}"
 
-    title_input = find('.list-title')
+    title = find('p.list-title')
 
-    title_input.click
+    title.click
+    title_input = find('input.list-title')
     title_input.set("Updated title")
     title_input.send_keys :enter
 
-    assert_selector ".list-title[value='Updated title']"
+    assert_selector "p.list-title", text: "Updated title"
     assert_equal "Updated title", @board.lists.first.title
   end
 end

@@ -30384,10 +30384,6 @@ var _BoardContainer = __webpack_require__(318);
 
 var _BoardContainer2 = _interopRequireDefault(_BoardContainer);
 
-var _BoardsFetchedConstraint = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./BoardsFetchedConstraint\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-var _BoardsFetchedConstraint2 = _interopRequireDefault(_BoardsFetchedConstraint);
-
 var _BoardActions = __webpack_require__(69);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
