@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import * as actions from '../actions/BoardActions';
-import * as selectors from '../selectors/ListSelectors';
+import * as boardSelectors from '../selectors/BoardSelectors';
+import * as cardSelectors from '../selectors/CardSelectors';
+
+import * as statuses from '../constants/Statuses';
 
 import Board from './Board';
 
@@ -18,7 +21,7 @@ class BoardContainer extends React.Component {
 
   getChildContext() {
     return {
-      currentBoardId: Number(this.props.match.params.boardId)
+      currentBoardId: this.getBoardId()
     };
   };
 
@@ -30,27 +33,57 @@ class BoardContainer extends React.Component {
   componentDidMount() {
     const store = this.context.store;
     this.unsubscribe = store.subscribe(() => {
-      this.setState({
-        board: this.getBoard(),
-      });
+      this.updateBoardInState();
     });
-
-    store.dispatch(actions.fetchBoard(Number(this.props.match.params.boardId)));
+    
+    // We need to set the board during the initial render.
+    this.updateBoardInState();
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
 
-  boardExists() {
-    return !!this.state.board;
+  updateBoardInState = () => {
+    this.setState({ board: this.getBoard() });
   }
 
-  getBoard() {
-    const { boards } = this.context.store.getState();
-    const boardId = Number(this.props.match.params.boardId);
+  fetchBoard = () => {
+    const store = this.context.store;
+    store.dispatch(actions.fetchBoard(this.state.board.id));
+  }
 
-    return boards.find(board => board.id === boardId);
+  getBoardId = () => {
+    if (this.props.match.params.boardId) {
+      return Number(this.props.match.params.boardId);
+    } else {
+      const store = this.context.store;
+      const card = cardSelectors.getCardById(
+        store.getState(),
+        Number(this.props.match.params.cardId)
+      );
+
+      if (card) {
+        return card.board_id;
+      } else {
+        return null;
+      }
+    }
+  };
+
+  getBoard = () => {
+    const store = this.context.store;
+    const boardId = this.getBoardId();
+
+    if (!boardId) { return null; }
+
+    const board = boardSelectors.getBoardById(store.getState(), boardId);
+
+    if (!board && store.getState().status !== statuses.FETCHING_BOARD) {
+      store.dispatch(actions.fetchBoard(boardId));
+    }
+
+    return board;
   }
 
   render() {

@@ -13,7 +13,8 @@ function reducer(state = {}, action) {
     lists: listsReducer(state.lists, action),
     newBoardForm: newBoardFormReducer(state.newBoardForm, action),
     newListForm: newListFormReducer(state.newListForm, action),
-    status: statusReducer(state.status, action)
+    status: statusReducer(state.status, action),
+    cards: [{ id: 1, title: "My card", list_id: 4, board_id: 1 }]
   };
 }
 
