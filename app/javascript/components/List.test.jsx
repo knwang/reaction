@@ -10,8 +10,8 @@ describe("List", () => {
   const list = {
     id: 1,
     title: "My list",
-    cards: []
   };
+  const cards = [];
 
   it("displays the list title", () => {
     wrapper = shallow(
@@ -22,6 +22,7 @@ describe("List", () => {
         onNewCardFormChange = {() => {}}
         onNewCardFormSubmit = {() => {}}
         addCardActive={false}
+        cards={[]}
       />
     );
 
@@ -39,12 +40,13 @@ describe("List", () => {
         onNewCardFormChange ={() => {}}
         onNewCardFormSubmit = {() => {}}
         addCardActive={false}
+        cards={cards}
       />
     );
 
     expect(
       wrapper.containsMatchingElement(
-        <CardListing cards={list.cards} />
+        <CardListing cards={cards} />
       )
     ).toEqual(true);
   });

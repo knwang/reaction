@@ -6,6 +6,7 @@ import newListFormReducer from '../reducers/NewListFormReducer';
 import boardsReducer from '../reducers/BoardsReducer';
 import listsReducer from '../reducers/ListsReducer';
 import statusReducer from '../reducers/StatusReducer';
+import cardsReducer from '../reducers/CardsReducer';
 
 function reducer(state = {}, action) {
   return {
@@ -14,7 +15,7 @@ function reducer(state = {}, action) {
     newBoardForm: newBoardFormReducer(state.newBoardForm, action),
     newListForm: newListFormReducer(state.newListForm, action),
     status: statusReducer(state.status, action),
-    cards: [{ id: 1, title: "My card", list_id: 4, board_id: 1 }]
+    cards: cardsReducer(state.cards, action)
   };
 }
 

@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions/ListActions';
-import * as selectors from '../selectors/ListSelectors';
+import * as listSelectors from '../selectors/ListSelectors';
+import * as cardSelectors from '../selectors/CardSelectors';
 import calculatePosition from '../lib/PositionCalculator';
 
 import List from './List';
@@ -16,6 +17,7 @@ function mapStateToProps(state, ownProps) {
     onNewCardFormClose: ownProps.onNewCardFormClose,
     onNewCardFormSubmit: ownProps.onNewCardFormSubmit,
     newCardFormText: ownProps.newCardFormText,
+    cards: cardSelectors.listCards(state, ownProps.list.id),
     state
   };
 }
@@ -32,7 +34,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
       const droppedEl = e.target;
       const listId = Number(droppedEl.dataset.listId);
       const siblings = Array.prototype.slice.call(droppedEl.parentNode.childNodes);
-      const lists = selectors.boardListsSelector(stateProps.state, ownProps.list.board_id);
+      const lists = listSelectors.boardListsSelector(stateProps.state, ownProps.list.board_id);
       const targetIndex = siblings.indexOf(droppedEl);
       const sortedStartingList = lists
         .slice()

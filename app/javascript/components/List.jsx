@@ -5,6 +5,8 @@ import EditableListTitle from './EditableListTitle';
 import CardListing from './CardListing';
 import NewCardForm from './NewCardForm';
 
+import * as selectors from '../selectors/CardSelectors';
+
 const List = props => (
   <div
     className={`list-wrapper ${props.addCardActive ? 'add-dropdown-active' : ''}`}
@@ -21,7 +23,7 @@ const List = props => (
                   <div className="add-options"><span>...</span>
                   </div>
               </div>
-              <CardListing cards={[]} />
+              <CardListing cards={props.cards} />
               {
                 props.addCardActive ?
                 <NewCardForm 
