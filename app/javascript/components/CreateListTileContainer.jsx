@@ -15,6 +15,14 @@ class CreateListTileContainer extends React.Component {
     currentBoardId: PropTypes.number
   };
 
+  componentDidMount() {
+    this.unsubscribe = this.context.store.subscribe(() => this.forceUpdate());
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   handleTileClick = (e) => {
     e.stopPropagation();
     this.context.store.dispatch(formActions.showCreateListForm());
