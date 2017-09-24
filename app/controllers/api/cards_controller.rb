@@ -14,6 +14,14 @@ class Api::CardsController < ApplicationController
            status: :unprocessable_entity
   end
 
+  def show
+    card = Card.find(params[:id])
+    render json: card.as_json
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Invalid card id provided" },
+           status: :not_found
+  end
+
   private
 
   def card_params

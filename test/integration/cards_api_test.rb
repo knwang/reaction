@@ -67,4 +67,33 @@ class CardsAPITest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  class GetCardTest < ActionDispatch::IntegrationTest
+    class ValidCardIdTest < ActionDispatch::IntegrationTest
+      test "returns the card as json" do
+        board = Board.create!(title: "My board")
+        list = board.lists.create!(title: "My list")
+        card = list.cards.create!(title: "My card")
+
+        get "/api/cards/#{card.id}"
+        assert_equal card.as_json, JSON.parse(response.body)
+      end
+
+      test "returns a 200" do
+        board = Board.create!(title: "My board")
+        list = board.lists.create!(title: "My list")
+        card = list.cards.create!(title: "My card")
+
+        get "/api/cards/#{card.id}"
+        assert_response 200
+      end
+    end
+
+    class InvalidCardIdTest < ActionDispatch::IntegrationTest
+      test "returns a 404" do
+        get "/api/cards/abc"
+        assert_response 404
+      end
+    end
+  end
 end
