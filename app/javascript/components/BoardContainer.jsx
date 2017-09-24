@@ -21,20 +21,21 @@ class BoardContainer extends React.Component {
 
   getChildContext() {
     return {
-      currentBoardId: this.getBoardId()
+      currentBoardId: this.boardId()
     };
   };
 
   constructor(props) {
     super(props);
-    this.state = { board: null };
+    this.state = {
+      board: null,
+      isFetching: false
+    };
   }
 
   componentDidMount() {
     const store = this.context.store;
-    this.unsubscribe = store.subscribe(() => {
-      this.updateBoardInState();
-    });
+    this.unsubscribe = store.subscribe(() => this.updateBoardInState());
     
     // We need to set the board during the initial render.
     this.updateBoardInState();
@@ -44,16 +45,7 @@ class BoardContainer extends React.Component {
     this.unsubscribe();
   }
 
-  updateBoardInState = () => {
-    this.setState({ board: this.getBoard() });
-  }
-
-  fetchBoard = () => {
-    const store = this.context.store;
-    store.dispatch(actions.fetchBoard(this.state.board.id));
-  }
-
-  getBoardId = () => {
+  boardId = () => {
     if (this.props.match.params.boardId) {
       return Number(this.props.match.params.boardId);
     } else {
@@ -71,20 +63,32 @@ class BoardContainer extends React.Component {
     }
   };
 
-  getBoard = () => {
+  updateBoardInState = () => {
     const store = this.context.store;
-    const boardId = this.getBoardId();
+    const boardId = this.boardId();
 
     if (!boardId) { return null; }
 
-    const board = boardSelectors.getBoardById(store.getState(), boardId);
-
-    if (!board && store.getState().status !== statuses.FETCHING_BOARD) {
-      store.dispatch(actions.fetchBoard(boardId));
+    if (!this.state.board && !this.state.isFetching) {
+      this.fetchBoard(boardId);
     }
-
-    return board;
   }
+
+  fetchBoard = (id) => {
+    const store = this.context.store;
+    this.setState({
+      isFetching: true,
+    }, () => {
+      store.dispatch(actions.fetchBoard(id, this.doneFetchingBoard));
+    });
+  }
+
+  doneFetchingBoard = (board) => {
+    this.setState({
+      isFetching: false,
+      board
+    });
+  };
 
   render() {
     return (

@@ -39,9 +39,13 @@ export function createBoard(board) {
   }
 }
 
-export function fetchBoard(boardId) {
+export function fetchBoard(boardId, callback) {
   return function(dispatch) {
     dispatch(fetchBoardRequest());
-    apiClient.getBoard(boardId, board => dispatch(fetchBoardSuccess(board)));
+    apiClient.getBoard(boardId, (board) => {
+      dispatch(fetchBoardSuccess(board));
+
+      if (callback) { callback(board); }
+    });
   }
 }

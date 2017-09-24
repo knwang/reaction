@@ -142,9 +142,10 @@ describe("Board actions", () => {
 
     describe("fetchBoard", () => {
       const board = { id: 1, title: "My board" };
+      const cb = jest.fn();
 
       beforeEach(() => {
-        store.dispatch(actions.fetchBoard(1));
+        store.dispatch(actions.fetchBoard(1, cb));
 
         const invocationArgs = apiClient.getBoard.mock.calls[0];
         const callback = invocationArgs[1];
@@ -159,7 +160,11 @@ describe("Board actions", () => {
 
       it("dispatches fetchBoardSuccess()", () => {
         expect(storeActions[1]).toEqual(actions.fetchBoardSuccess(board));
-      })
+      });
+
+      it("calls the callback if provided", () => {
+        expect(cb).toHaveBeenCalledWith(board);
+      });
     });
   });
 });
