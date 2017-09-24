@@ -10,6 +10,7 @@ const NewCardForm = (props) => (
         autoFocus={true}
         value={props.value}
         onChange={props.onChange}
+        onKeyPress={props.onKeyPress}
       ></textarea>
       <div className="members"></div>
     </div>
@@ -30,6 +31,7 @@ NewCardForm.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onKeyPress: PropTypes.func
 }
 
 export default NewCardForm

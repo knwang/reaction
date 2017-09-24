@@ -31,6 +31,7 @@ const List = props => (
                   onChange={props.onNewCardFormChange}
                   onSubmit={props.onNewCardFormSubmit}
                   onClose={props.onNewCardFormClose}
+                  onKeyPress={props.onNewCardFormKeyPress}
                 /> : null
               }
               <div
@@ -49,7 +50,8 @@ List.propTypes = {
   onDrop: PropTypes.func.isRequired,
   onAddCardClick: PropTypes.func.isRequired,
   onNewCardFormChange: PropTypes.func.isRequired,
-  onNewCardFormSubmit: PropTypes.func.isRequired
+  onNewCardFormSubmit: PropTypes.func.isRequired,
+  onNewCardFormKeyPress: PropTypes.func
 };
 
 export default List;

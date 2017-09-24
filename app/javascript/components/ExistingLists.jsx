@@ -74,6 +74,18 @@ class ExistingLists extends React.Component {
     });
   };
 
+  handleNewCardFormKeyPress = (e) => {
+    const store = this.context.store;
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+
+      store.dispatch(cardActions.createCard(this.state.addCardActiveListId, {
+        title: this.state.newCardFormText
+      }, this.setState({ newCardFormText: '' })));
+    }
+  };
+
   handleNewCardFormSubmit = (e) => {
     const store = this.context.store;
 
@@ -107,6 +119,7 @@ class ExistingLists extends React.Component {
               onNewCardFormChange={this.handleNewCardFormChange}
               onNewCardFormClose={this.handleNewCardFormClose}
               onNewCardFormSubmit={this.handleNewCardFormSubmit}
+              onNewCardFormKeyPress={this.handleNewCardFormKeyPress}
               newCardFormText={this.state.newCardFormText}
             />
           ))

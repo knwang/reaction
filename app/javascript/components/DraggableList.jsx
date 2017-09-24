@@ -16,6 +16,7 @@ function mapStateToProps(state, ownProps) {
     onNewCardFormChange: ownProps.onNewCardFormChange,
     onNewCardFormClose: ownProps.onNewCardFormClose,
     onNewCardFormSubmit: ownProps.onNewCardFormSubmit,
+    onNewCardFormKeyPress: ownProps.onNewCardFormKeyPress,
     newCardFormText: ownProps.newCardFormText,
     cards: cardSelectors.listCards(state, ownProps.list.id),
     state
