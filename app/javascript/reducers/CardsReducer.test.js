@@ -64,4 +64,17 @@ describe("CardsReducer", () => {
       ).toEqual([otherCard, newCard1]);
     });
   });
+
+  describe("CREATE_CARD_SUCCESS", () => {
+    it("returns the state with the new card added", () => {
+      const newCard = { id: 1 };
+
+      expect(
+        reducer(['other stuff'], {
+          type: types.CREATE_CARD_SUCCESS,
+          card: newCard
+        })
+      ).toEqual(['other stuff', newCard]);
+    });
+  });
 });

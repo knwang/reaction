@@ -8,6 +8,8 @@ export default function cardsReducer(state = [], action) {
     const otherCards = state.filter(card => newCardIds.indexOf(card.id) === -1);
 
     return otherCards.concat(cards);
+  } else if (action.type === 'CREATE_CARD_SUCCESS') {
+    return state.concat(action.card);
   } else {
     return state;
   }
