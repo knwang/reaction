@@ -94,4 +94,13 @@ class CardsTest < ApplicationSystemTestCase
     visit "/boards/#{@board.id}"
     assert_selector "#cards-container .card", count: 2
   end
+
+  test "clicking on a card shows it" do
+    card = @list.cards.create!(title: "My title")
+
+    visit "/boards/#{@board.id}"
+    find("#cards-container .card").click
+
+    assert_equal "/cards/#{card.id}", current_path
+  end
 end

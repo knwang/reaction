@@ -1421,6 +1421,9 @@ p.list-title {
   margin: 0 8px 7px 8px;
   border-radius: 3px;
 }
+a:-webkit-any-link {
+  text-decoration: none;
+}
 .card {
   background-color: #fff;
   border-radius: 3px;
