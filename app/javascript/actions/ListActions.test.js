@@ -11,7 +11,6 @@ jest.mock('../lib/ApiClient');
 
 import * as actions from './ListActions';
 import * as types from '../constants/ActionTypes';
-import * as statuses from '../constants/Statuses';
 
 describe("List actions", () => {
   let store;
@@ -21,8 +20,7 @@ describe("List actions", () => {
   });
 
   afterEach(() => {
-    apiClient.createList.mockClear();
-    apiClient.updateList.mockClear();
+    jest.clearAllMocks();
     store.clearActions()
   });
 

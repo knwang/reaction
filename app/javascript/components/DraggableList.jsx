@@ -10,6 +10,12 @@ import List from './List';
 function mapStateToProps(state, ownProps) {
   return {
     list: ownProps.list,
+    onAddCardClick: ownProps.onAddCardClick,
+    addCardActive: ownProps.addCardActive,
+    onNewCardFormChange: ownProps.onNewCardFormChange,
+    onNewCardFormClose: ownProps.onNewCardFormClose,
+    onNewCardFormSubmit: ownProps.onNewCardFormSubmit,
+    newCardFormText: ownProps.newCardFormText,
     state
   };
 }

@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import dragula from 'react-dragula';
 
 import * as selectors from '../selectors/ListSelectors';
+import * as cardActions from '../actions/CardActions';
 
 import DraggableList from './DraggableList';
 
 class ExistingLists extends React.Component {
   state = {
-    lists: []
+    lists: [],
+    addCardActiveListId: null,
+    newCardFormText: ''
   };
 
   static propTypes = {
@@ -59,6 +62,34 @@ class ExistingLists extends React.Component {
     return listCopy.sort((a, b) => a.position - b.position);
   }
 
+  handleAddCardClick = (e, id) => {
+    this.setState({
+      addCardActiveListId: id
+    });
+  };
+
+  handleNewCardFormChange = (e) => {
+    this.setState({
+      newCardFormText: e.target.value
+    });
+  };
+
+  handleNewCardFormSubmit = (e) => {
+    const store = this.context.store;
+
+    e.preventDefault();
+    store.dispatch(cardActions.createCard(this.state.addCardActiveListId, {
+      title: this.state.newCardFormText
+    }, this.handleNewCardFormClose));
+  };
+
+  handleNewCardFormClose = () => {
+    this.setState({
+      addCardActiveListId: null,
+      newCardFormText: ''
+    });
+  };
+
   render() {
     return (
       <div 
@@ -68,7 +99,16 @@ class ExistingLists extends React.Component {
       >
         {
           this.sortedLists().map(list => (
-            <DraggableList key={list.id} list={list} />
+            <DraggableList
+              key={list.id}
+              list={list}
+              onAddCardClick={this.handleAddCardClick}
+              addCardActive={this.state.addCardActiveListId === list.id}
+              onNewCardFormChange={this.handleNewCardFormChange}
+              onNewCardFormClose={this.handleNewCardFormClose}
+              onNewCardFormSubmit={this.handleNewCardFormSubmit}
+              newCardFormText={this.state.newCardFormText}
+            />
           ))
         }
       </div>

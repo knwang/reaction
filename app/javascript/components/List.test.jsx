@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import List from './List';
 import CardListing from './CardListing';
+import NewCardForm from './NewCardForm';
 
 describe("List", () => {
   let wrapper;
@@ -13,7 +14,16 @@ describe("List", () => {
   };
 
   it("displays the list title", () => {
-    wrapper = shallow(<List list={list} onDrop={() => {}}/>);
+    wrapper = shallow(
+      <List 
+        list={list} 
+        onDrop={() => {}}
+        onAddCardClick={() => {}}
+        onNewCardFormChange = {() => {}}
+        onNewCardFormSubmit = {() => {}}
+        addCardActive={false}
+      />
+    );
 
     expect(
       wrapper.html().match(/My list/)
@@ -21,12 +31,65 @@ describe("List", () => {
   });
 
   it("displays a CardListing", () => {
-    wrapper = shallow(<List list={list} onDrop={() => {}} />);
+    wrapper = shallow(
+      <List 
+        list={list} 
+        onDrop={() => {}}
+        onAddCardClick={() => {}}
+        onNewCardFormChange ={() => {}}
+        onNewCardFormSubmit = {() => {}}
+        addCardActive={false}
+      />
+    );
 
     expect(
       wrapper.containsMatchingElement(
         <CardListing cards={list.cards} />
       )
     ).toEqual(true);
+  });
+
+  describe("addCardActive prop is false", () => {
+    beforeEach(() => {
+      wrapper = shallow(
+        <List 
+          list={list} 
+          onDrop={() => {}}
+          onAddCardClick={() => {}}
+          onNewCardFormChange={() => {}}
+          onNewCardFormSubmit={() => {}}
+          newCardFormText={''}
+          addCardActive={false}
+        />
+      );
+    });
+
+    it("doesn't render a NewCardForm", () => {
+      expect(
+        wrapper.find(NewCardForm).length
+      ).toEqual(0);
+    });
+  });
+
+  describe("addCardActive prop is true", () => {
+    beforeEach(() => {
+      wrapper = shallow(
+        <List 
+          list={list} 
+          onDrop={() => {}}
+          onAddCardClick={() => {}}
+          onNewCardFormChange={() => {}}
+          onNewCardFormSubmit={() => {}}
+          newCardFormText={''}
+          addCardActive={true}
+        />
+      );
+    });
+
+    it("renders a NewCardForm", () => {
+      expect(
+        wrapper.find(NewCardForm).length
+      ).toEqual(1);
+    })
   });
 });
