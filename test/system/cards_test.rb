@@ -103,4 +103,14 @@ class CardsTest < ApplicationSystemTestCase
 
     assert_equal "/cards/#{card.id}", current_path
   end
+
+  test "user navigates directly to card" do
+    card = @list.cards.create!(title: "My title")
+
+    visit "/cards/#{card.id}"
+
+    assert has_content?(@list.board.title)
+    assert has_content?(@list.title)
+    assert has_content?(card.title)
+  end
 end

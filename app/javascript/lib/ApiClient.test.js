@@ -322,4 +322,57 @@ describe("ApiClient", () => {
       });
     });
   });
+
+  describe("getCard", () => {
+    const card = {
+      id: 1,
+      title: "My card"
+    };
+
+    describe("valid card id", () => {
+      it("calls the callback with the board", async () => {
+        const cb = jest.fn();
+
+        mock.onGet(routes.cardUrl(1)).reply(200, card);
+        client.getCard(1, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledWith(card);
+      });
+    });
+
+    describe("invalid board id", async () => {
+      const originalError = global.console.error;
+      const errorText = "You don't have access to that";
+
+      beforeEach(() => {
+        global.console.error = jest.fn();
+        mock.onGet(routes.cardUrl(1)).reply(401, { error: errorText });
+      });
+
+      afterEach(() => {
+        global.console.error = originalError;
+      });
+
+      it("logs the error", async () => {
+        client.getCard(1, (card) => {});
+
+        await flushPromises();
+
+        expect(
+          global.console.error
+        ).toHaveBeenCalledWith(`HTTP Error: ${errorText}`);
+      });
+
+      it("doesn't call the callback", async () => {
+        const cb = jest.fn();
+        client.getCard(1, cb);
+
+        await flushPromises();
+
+        expect(cb).not.toHaveBeenCalled();
+      });
+    });
+  });
 });

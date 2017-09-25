@@ -77,4 +77,30 @@ describe("CardsReducer", () => {
       ).toEqual(['other stuff', newCard]);
     });
   });
+
+  describe("FETCH_CARD_SUCCESS", () => {
+    const card = { id: 1 };
+
+    describe("the card already exists", () => {
+      it("is replaced", () => {
+        expect (
+          reducer([{ id: 1, title: "old card" }], {
+            type: types.FETCH_CARD_SUCCESS,
+            card
+          })
+        ).toEqual([card]);
+      });
+    });
+
+    describe("the card doesn't exist", () => {
+      it("is added", () => {
+        expect (
+          reducer([], {
+            type: types.FETCH_CARD_SUCCESS,
+            card
+          })
+        ).toEqual([card]);
+      });
+    });
+  });
 });
