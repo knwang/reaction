@@ -103,7 +103,7 @@ class ListsAPITest < ActionDispatch::IntegrationTest
           @list = board.lists.create!(title: "My list", position: 1.0)
 
           put "/api/lists/#{@list.id}",
-              params: { board_id: board.id }
+              params: { board_id: board.id, list: { title: "" } }
         end
 
         test "returns a 422" do
@@ -125,8 +125,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
             params: { boardId: 'abc', list: { } }
       end
 
-      test "returns a 422" do
-        assert_response 422
+      test "returns a 404" do
+        assert_response 404
       end
 
       test "includes error text in response" do
