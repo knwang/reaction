@@ -25,13 +25,22 @@
 
 .list-wrapper.gu-transit {
   background-color: #00629d;
-
 }
 
-.list-wrapper.gu-transit > * {
+#cards-container > a.gu-transit {
+  background-color: #C4C9CC;
+  display: block;
+  margin: 0 8px 7px 8px
+}
+
+.gu-transit > * {
   visibility: hidden;
 }
 
 .list-wrapper.gu-mirror > .list-background {
   box-shadow: -2px 2px 8px rgba(0,0,0,.3), 0 0 1px rgba(0,0,0,.5);
+}
+
+#cards-container:empty {
+  padding-top: 1px;
 }

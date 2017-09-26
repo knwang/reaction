@@ -33,6 +33,12 @@ class ExistingLists extends React.Component {
 
     this.unsubscribe = store.subscribe(() => this.updateLists());
     this.updateLists();
+
+    const cardDrake = dragula({
+      isContainer: function (el) {
+        return el.id === 'cards-container';
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -44,7 +50,16 @@ class ExistingLists extends React.Component {
       var event = document.createEvent('Event');
       event.initEvent('drop', true, true);
 
-      let options = { direction: 'horizontal' };
+      let options = {
+        direction: 'horizontal',
+        moves: function (el, source, handle, sibling) {
+          return !handle.closest("#cards-container");
+        },
+        accepts: function (el, target, source, sibling) {
+          return !el.closest("#cards-container");
+        },
+      };
+
       dragula([componentBackingInstance], options)
         .on('drop', function (el) {
           el.dispatchEvent(event);
