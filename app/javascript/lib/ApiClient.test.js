@@ -375,4 +375,56 @@ describe("ApiClient", () => {
       });
     });
   });
+
+  describe("updateCard", () => {
+    describe("successful request", () => {
+      const card = { id: 1, title: "My card" };
+      const updatedCard = { id: 1, title: "New title" };
+
+      it("calls the callback with the updated list", async () => {
+        const cb = jest.fn();
+
+        mock.onPut(routes.updateCardUrl(1)).reply(200, updatedCard);
+        client.updateCard(1, card, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledWith(updatedCard);
+      });
+    });
+
+    describe("failed request", () => {
+      const originalError = global.console.error;
+      const errorText = "That is not a valid record";
+
+      beforeEach(() => {
+        global.console.error = jest.fn();
+        mock.onPut(routes.updateCardUrl(1)).reply(422, { error: errorText });
+      });
+
+      afterEach(() => {
+        global.console.error = originalError;
+      });
+
+      it("logs the error", async () => {
+        client.updateCard(1, {});
+
+        await flushPromises();
+
+        expect(global.console.error).toHaveBeenCalledWith(
+          `HTTP Error: ${errorText}`
+        );
+      });
+
+      it("doesn't call the callback", async () => {
+        const cb = jest.fn();
+
+        client.updateCard(1, {}, cb);
+
+        await flushPromises();
+
+        expect(cb).not.toHaveBeenCalled();
+      });
+    });
+  });
 });
