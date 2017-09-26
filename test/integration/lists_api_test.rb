@@ -56,8 +56,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
             params: { board_id: 'abc', list: { title: 'My new board' } }
       end
 
-      test "returns a 422" do
-        assert_response 422
+      test "returns a 404" do
+        assert_response 404
       end
 
       test "includes error text in response" do
@@ -67,7 +67,7 @@ class ListsAPITest < ActionDispatch::IntegrationTest
   end
 
   class PutListsTest < ActionDispatch::IntegrationTest
-    class ValidBoardIdTest < ActionDispatch::IntegrationTest
+    class ValidListIdTest < ActionDispatch::IntegrationTest
       class ValidDataTest < ActionDispatch::IntegrationTest
         def setup
           board = Board.create!(title: "My board")
@@ -75,7 +75,6 @@ class ListsAPITest < ActionDispatch::IntegrationTest
 
           put "/api/lists/#{@list.id}",
               params: {
-                board_id: board.id,
                 list: { title: "New title", position: 10.123 }
               }
         end
@@ -103,7 +102,7 @@ class ListsAPITest < ActionDispatch::IntegrationTest
           @list = board.lists.create!(title: "My list", position: 1.0)
 
           put "/api/lists/#{@list.id}",
-              params: { board_id: board.id, list: { title: "" } }
+              params: { list: { title: "" } }
         end
 
         test "returns a 422" do
@@ -116,13 +115,13 @@ class ListsAPITest < ActionDispatch::IntegrationTest
       end
     end
 
-    class InvalidBoardIdTest < ActionDispatch::IntegrationTest
+    class InvalidListIdTest < ActionDispatch::IntegrationTest
       def setup
         board = Board.create!(title: "My board")
         @list = board.lists.create!(title: "My list", position: 1.0)
 
-        put "/api/lists/#{@list.id}",
-            params: { boardId: 'abc', list: { } }
+        put "/api/lists/abc",
+            params: { list: { title: "My list" } }
       end
 
       test "returns a 404" do

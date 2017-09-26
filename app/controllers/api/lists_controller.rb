@@ -11,12 +11,11 @@ class Api::ListsController < ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid board id provided" },
-           status: :unprocessable_entity
+           status: :not_found
   end
 
   def update
-    board = Board.find(params[:board_id])
-    list = board.lists.find(params[:id])
+    list = List.find(params[:id])
 
     if list.update(list_params)
       render json: list.to_json
@@ -25,7 +24,7 @@ class Api::ListsController < ApplicationController
              status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Invalid board id provided" },
+    render json: { error: "Invalid list id provided" },
            status: :not_found
   end
 

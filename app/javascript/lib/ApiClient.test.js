@@ -231,7 +231,7 @@ describe("ApiClient", () => {
         const cb = jest.fn();
 
         mock.onPut(routes.updateListUrl(1)).reply(200, updatedList);
-        client.updateList(1, 1, list, cb);
+        client.updateList(1, list, cb);
 
         await flushPromises();
 
@@ -253,7 +253,7 @@ describe("ApiClient", () => {
       });
 
       it("logs the error", async () => {
-        client.updateList(1, 1, {});
+        client.updateList(1, {});
 
         await flushPromises();
 
@@ -265,7 +265,7 @@ describe("ApiClient", () => {
       it("doesn't call the callback", async () => {
         const cb = jest.fn();
 
-        client.updateList(1, 1, {}, cb);
+        client.updateList(1, {}, cb);
 
         await flushPromises();
 
