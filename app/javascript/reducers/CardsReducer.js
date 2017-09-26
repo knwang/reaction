@@ -13,6 +13,11 @@ export default function cardsReducer(state = [], action) {
   } else if (action.type === 'FETCH_CARD_SUCCESS') {
     const excludedCards = state.filter(card => card.id !== action.card.id);
     return excludedCards.concat(action.card);
+  } else if (action.type === 'UPDATE_CARD_SUCCESS') {
+    return state.map(card => {
+      if (card.id === action.card.id) return action.card;
+      else return card;
+    });
   } else {
     return state;
   }

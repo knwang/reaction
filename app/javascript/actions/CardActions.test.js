@@ -54,6 +54,24 @@ describe("CardActions", () => {
     });
   });
 
+  describe("updateCardRequest", () => {
+    it("returns the correct object", () => {
+      expect(
+        actions.updateCardRequest()
+      ).toEqual({ type: types.UPDATE_CARD_REQUEST });
+    });
+  });
+
+  describe("updateCardSuccess", () => {
+    it("returns the correct object", () => {
+      const card = { id: 1, title: "Card title" };
+
+      expect(
+        actions.updateCardSuccess(card)
+      ).toEqual({ type: types.UPDATE_CARD_SUCCESS, card });
+    });
+  });
+
   describe("action creators", () => {
     let storeActions;
 
@@ -129,6 +147,38 @@ describe("CardActions", () => {
 
       it("calls the callback if one is provided", () => {
         expect(cb).toHaveBeenCalledWith(card);
+      });
+    });
+
+    describe("updateCard", () => {
+      const card = { id: 1, title: "My title" };
+      const updatedCard = { id: 1, title: "New title" };
+      const cb = jest.fn();
+
+      beforeEach(() => {
+        store.dispatch(actions.updateCard(1, updatedCard, cb));
+
+        const invocationArgs = apiClient.updateCard.mock.calls[0];
+        const callback = invocationArgs[2];
+
+        callback(updatedCard);
+        storeActions = store.getActions();
+      });
+
+      it("dispatches updateCardRequest()", () => {
+        expect(
+          storeActions[0]
+        ).toEqual(actions.updateCardRequest());
+      });
+
+      it("dispatches updateCardSuccess()", () => {
+        expect(
+          storeActions[1]
+        ).toEqual(actions.updateCardSuccess(updatedCard));
+      });
+
+      it("calls the callback if one is provided", () => {
+        expect(cb).toHaveBeenCalledWith(updatedCard);
       });
     });
   });

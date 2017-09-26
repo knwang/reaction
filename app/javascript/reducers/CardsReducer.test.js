@@ -103,4 +103,31 @@ describe("CardsReducer", () => {
       });
     });
   });
+
+  describe("UPDATE_CARD_SUCCESS", () => {
+    const card = { id: 1, title: "My title" };
+    const updatedCard = { id: 1, title: "New title" };
+
+    describe("the card exists", () => {
+      it("is updated", () => {
+        expect(
+          reducer([card], {
+            type: types.UPDATE_CARD_SUCCESS,
+            card: updatedCard
+          })
+        ).toEqual([updatedCard]);
+      });
+    });
+
+    describe("the card does not exist", () => {
+      it("is not added", () => {
+        expect(
+          reducer([], {
+            type: types.UPDATE_CARD_SUCCESS,
+            card: updatedCard
+          })
+        ).toEqual([]);
+      });
+    });
+  });
 });
