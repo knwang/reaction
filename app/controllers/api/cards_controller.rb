@@ -22,6 +22,20 @@ class Api::CardsController < ApplicationController
            status: :not_found
   end
 
+  def update
+    card = Card.find(params[:id])
+
+    if card.update(card_params)
+      render json: card.as_json
+    else
+      render json: { error: card.errors.full_messages.join(', ') },
+             status: :unprocessable_entity
+    end
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Invalid card id provided" },
+           status: :not_found
+  end
+
   private
 
   def card_params

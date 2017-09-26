@@ -96,4 +96,61 @@ class CardsAPITest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  class PutCardTest < ActionDispatch::IntegrationTest
+    class ValidCardIdTest < ActionDispatch::IntegrationTest
+      class ValidDataTest < ActionDispatch::IntegrationTest
+        def setup
+          board = Board.create!(title: "My board")
+          list = board.lists.create!(title: "My list")
+          @card = list.cards.create!(title: "My card")
+
+          put "/api/cards/#{@card.id}",
+              params: { card: { title: "New card title" } }
+        end
+
+        test "returns 200" do
+          assert_response 200
+        end
+
+        test "returns the card as json" do
+          assert_equal @card.reload.as_json, JSON.parse(response.body)
+        end
+      end
+
+      class InvalidDataTest < ActionDispatch::IntegrationTest
+        def setup
+          board = Board.create!(title: "My board")
+          list = board.lists.create!(title: "My list")
+          card = list.cards.create!(title: "My card")
+
+          put "/api/cards/#{card.id}",
+              params: { card: { title: "" } }
+        end
+
+        test "returns a 422" do
+          assert_response 422
+        end
+
+        test "includes error text in response" do
+          assert JSON.parse(response.body).has_key?("error")
+        end
+      end
+    end
+
+    class InvalidCardIdTest < ActionDispatch::IntegrationTest
+      def setup
+        put "/api/cards/abc",
+            params: { card: { title: "New title" } }
+      end
+
+      test "returns a 404" do
+        assert_response 404
+      end
+
+      test "includes error text in response" do
+        assert JSON.parse(response.body).has_key?("error")
+      end
+    end
+  end
 end
