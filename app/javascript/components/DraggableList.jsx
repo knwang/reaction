@@ -47,7 +47,6 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
       dispatchProps.dispatch(
         actions.updateList(
-          ownProps.list.board_id,
           ownProps.list.id,
           { position: newPosition }
         )
