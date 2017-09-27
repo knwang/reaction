@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import * as boardSelectors from '../selectors/BoardSelectors';
 
@@ -10,7 +11,9 @@ const Card = (props) => {
         <div id="modal-container">
           <div className="screen"></div>
           <div id="modal">
-            <i className="x-icon icon"></i>
+            <Link to={`/boards/${props.card.board_id}`}>
+              <i className="x-icon icon close-modal"></i>
+            </Link>
             <header>
               <i className="card-icon icon"></i>
               <textarea className="list-title" style={{height: '45px'}} value="Cards do many cool things. Click on this card to open it and learn more..."></textarea>
