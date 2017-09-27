@@ -2,7 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ListCard = props => (
-  <Link to={`/cards/${props.card.id}`}>
+  <Link 
+    to={`/cards/${props.card.id}`}
+    data-card-id={props.card.id}
+  >
     <div className="card-background">
         <div className="card "><i className="edit-toggle edit-icon sm-icon"></i>
             <div className="card-info">

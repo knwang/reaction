@@ -50,7 +50,7 @@ export function updateCard(cardId, attrs, callback) {
     dispatch(updateCardRequest());
     apiClient.updateCard(cardId, attrs, (updatedCard) => {
       dispatch(updateCardSuccess(updatedCard));
-      callback(updatedCard);
+      if (callback) callback(updatedCard);
     });
   }
 }

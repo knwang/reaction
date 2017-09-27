@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dragula from 'react-dragula';
 
-import * as selectors from '../selectors/ListSelectors';
+import * as listSelectors from '../selectors/ListSelectors';
+import * as cardSelectors from '../selectors/CardSelectors';
 import * as cardActions from '../actions/CardActions';
+import calculatePosition from '../lib/PositionCalculator';
 
 import DraggableList from './DraggableList';
 
@@ -39,6 +41,37 @@ class ExistingLists extends React.Component {
         return el.id === 'cards-container';
       }
     });
+
+    cardDrake.on('drop', (el) => {
+      const store = this.context.store;
+      const state = store.getState();
+      const droppedEl = el;
+      const cardId = Number(el.dataset.cardId);
+      const list = el.closest('.list-wrapper');
+      const listId = Number(list.dataset.listId);
+      const siblings = Array.prototype.slice.call(droppedEl.parentNode.childNodes);
+      const cards = cardSelectors.listCards(state, listId);
+      const targetIndex = siblings.indexOf(droppedEl);
+      const sortedStartingCards = cards
+        .slice()
+        .sort((a, b) => a.position - b.position);
+      let sourceIndex = sortedStartingCards.findIndex(card => card.id === cardId);
+      if (sourceIndex === -1) sourceIndex = null;
+
+      const newPosition = calculatePosition(cards, targetIndex, sourceIndex);
+
+      cardDrake.cancel(true)
+
+      store.dispatch(
+        cardActions.updateCard(
+          cardId,
+          { 
+            position: newPosition,
+            list_id: listId
+          }
+        )
+      );
+    });
   }
 
   componentWillUnmount() {
@@ -47,9 +80,6 @@ class ExistingLists extends React.Component {
 
   dragulaDecorator = (componentBackingInstance) => {
     if (componentBackingInstance) {
-      var event = document.createEvent('Event');
-      event.initEvent('drop', true, true);
-
       let options = {
         direction: 'horizontal',
         moves: function (el, source, handle, sibling) {
@@ -58,18 +88,21 @@ class ExistingLists extends React.Component {
         accepts: function (el, target, source, sibling) {
           return !el.closest("#cards-container");
         },
+        invalid: function(el, handle) {
+          return el.classList.contains(".cards-container");
+        }
       };
 
       dragula([componentBackingInstance], options)
         .on('drop', function (el) {
-          el.dispatchEvent(event);
+          el.dispatchEvent(new Event("drop", { "bubbles": true }));
         });
     }
   };
 
   getLists = () => {
     const store = this.context.store;
-    return selectors.boardListsSelector(store.getState(), this.props.boardId);
+    return listSelectors.boardListsSelector(store.getState(), this.props.boardId);
   }
 
   sortedLists = () => {
