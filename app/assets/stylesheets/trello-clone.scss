@@ -2924,17 +2924,17 @@ span.bg-random-grey {
   left: -33px;
   top: -7px;
 }
-#modal > i {
+#modal .close-modal {
   position: absolute;
   top: 4px;
   right: 9px;
 }
-#modal > i:before {
+#modal .close-modal:before {
   font-size: 20px;
   color: rgba(0,0,0,0.3);
   transition: color 0.2s;
 }
-#modal > i:hover:before {
+#modal .close-modal:hover:before {
   color: rgba(0,0,0,0.65);
   transition: color 0.2s;
 }
