@@ -65,13 +65,12 @@ class ExistingLists extends React.Component {
       cardDrake.cancel(true)
 
       store.dispatch(
-        cardActions.updateCard(
-          cardId,
-          { 
-            position: newPosition,
-            list_id: listId
-          }
-        )
+        cardActions.updateCard(cardId, { 
+          position: newPosition,
+          list_id: listId
+        }, () => {
+          el.setAttribute("style", el.style.cssText.replace('display: none;', ''));
+        })
       );
     });
   }
