@@ -66,7 +66,7 @@ describe("PositionCalculator", () => {
           { position: 4 }
         ];
 
-        expect(positionCalculator(list, 2, 5)).toEqual(1.5);
+        expect(positionCalculator(list, 2, 4)).toEqual(1.5);
       });
     });
   });
