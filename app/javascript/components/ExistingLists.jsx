@@ -60,6 +60,8 @@ class ExistingLists extends React.Component {
 
       const newPosition = calculatePosition(cards, targetIndex, sourceIndex);
 
+      el.setAttribute("style", `${el.style.cssText};display: none;`);
+
       cardDrake.cancel(true)
 
       store.dispatch(
