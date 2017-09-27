@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import ListCard from './ListCard';
 
@@ -11,17 +12,17 @@ describe("ListCard", () => {
     labels: ["red", "green", "blue", "striped"]
   };
 
-  it("displays the card title", () => {
-    wrapper = shallow(<ListCard card={card} />);
+  beforeEach(() => {
+    wrapper = mount(<Router><ListCard card={card} /></Router>);
+  });
 
+  it("displays the card title", () => {
     expect(
       wrapper.html().match(card.title)
     ).not.toBeNull();
   });
 
   it("displays the card labels", () => {
-    wrapper = shallow(<ListCard card={card} />);
-
     card.labels.forEach(label => {
       expect(
         wrapper.find(`.card-label.${label}`).length
