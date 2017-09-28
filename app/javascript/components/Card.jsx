@@ -16,7 +16,14 @@ const Card = (props) => {
             </Link>
             <header>
               <i className="card-icon icon"></i>
-              <textarea className="list-title" style={{height: '45px'}} value="Cards do many cool things. Click on this card to open it and learn more..."></textarea>
+              <textarea
+                className="list-title"
+                style={{height: '45px'}}
+                value={props.title}
+                onChange={props.onTitleChange}
+                onBlur={props.onTitleBlur}
+                onKeyPress={props.onTitleKeyPress}
+              ></textarea>
               <p>in list <a className="link">Stuff to try (this is a list)</a><i className="sub-icon sm-icon"></i>
               </p>
             </header>
