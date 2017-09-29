@@ -23,7 +23,6 @@ class EditableListTitle extends React.Component {
     if (e.target.value !== this.props.list.title) {
       this.context.store.dispatch(
         actions.updateList(
-          this.props.list.board_id,
           this.props.list.id,
           { title: e.target.value }
         )

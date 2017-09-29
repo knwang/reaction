@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import EditableCardDescription from './EditableCardDescription';
+
 import * as boardSelectors from '../../selectors/BoardSelectors';
 
 const Card = (props) => {
@@ -61,18 +63,10 @@ const Card = (props) => {
                       </div>
                     </li>
                   </ul>
-                  <form className="description">
-                    <p>Description</p>
-                    <span id="description-edit" className="link">Edit</span>
-                    <p className="textarea-overlay" value="Cards have a symbol to indicate if they contain a description."></p>
-                    <textarea className="textarea-toggle" rows="1" value="Cards have a symbol to indicate if they contain a description."></textarea>
-                    <div>
-                      <div className="button" value="Save">Save</div>
-                      <i className="x-icon icon"></i>
-                    </div>
-                    <p id="description-edit-options" className="hidden">You have unsaved edits on this field. <span className="link">View edits</span> - <span className="link">Discard</span>
-                    </p>
-                  </form>
+                  <EditableCardDescription
+                    description={props.card.description}
+                    id={props.card.id}
+                  />
                 </li>
                 <li className="comment-section">
                   <h2 className="comment-icon icon">Add Comment</h2>
@@ -96,7 +90,6 @@ const Card = (props) => {
                     </div>
                   </div>
                 </li>
-                <li className="activity-section">
                 <li className="activity-section">
                   <h2 className="activity-icon icon">Activity</h2>
                   <ul className="horiz-list">
@@ -157,7 +150,6 @@ const Card = (props) => {
                       </div>
                     </li>
                   </ul>
-                </li>
                 </li>
               </ul>
             </section>

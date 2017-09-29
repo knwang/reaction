@@ -112,4 +112,28 @@ class CardsTest < ApplicationSystemTestCase
     assert has_content?(@list.title)
     assert has_content?(card.title)
   end
+
+  test "user edits card" do
+    card = create(:card, list: @list)
+
+    visit "/cards/#{card.id}"
+
+    input = find("#modal-container .list-title")
+    input.click
+    input.set("My new title")
+    input.send_keys :enter
+
+    find("#description-edit").click
+    input = find(".description .textarea-overlay")
+    input.set("My description")
+    submit = find(".description .button[value='Save']")
+    submit.trigger('mousedown')
+
+    refute_selector ".description .description-edit-options"
+
+    card.reload
+
+    assert_equal "My new title", card.title
+    assert_equal "My description", card.description
+  end
 end

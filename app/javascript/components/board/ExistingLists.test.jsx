@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import { createStore } from '../lib/Store';
+import { createStore } from '../../lib/Store';
 
 import ExistingLists from './ExistingLists';
 

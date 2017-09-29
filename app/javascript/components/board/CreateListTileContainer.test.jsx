@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { createStore } from '../lib/Store';
+import { createStore } from '../../lib/Store';
 
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -10,11 +10,11 @@ const mockStore = configureStore(middlewares);
 
 import CreateListTileContainer from './CreateListTileContainer';
 
-import apiClient from '../lib/ApiClient';
-jest.mock('../lib/ApiClient');
+import apiClient from '../../lib/ApiClient';
+jest.mock('../../lib/ApiClient');
 
-import * as listActions from '../actions/ListActions';
-jest.mock('../actions/ListActions');
+import * as listActions from '../../actions/ListActions';
+jest.mock('../../actions/ListActions');
 
 describe("CreateListTileContainer", () => {
   let wrapper;
