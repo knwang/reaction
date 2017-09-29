@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from '../actions/ListActions';
-import * as listSelectors from '../selectors/ListSelectors';
-import * as cardSelectors from '../selectors/CardSelectors';
-import calculatePosition from '../lib/PositionCalculator';
+import * as actions from '../../actions/ListActions';
+import * as listSelectors from '../../selectors/ListSelectors';
+import * as cardSelectors from '../../selectors/CardSelectors';
+import calculatePosition from '../../lib/PositionCalculator';
 
 import List from './List';
 

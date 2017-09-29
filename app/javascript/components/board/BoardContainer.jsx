@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import * as actions from '../actions/BoardActions';
-import * as boardSelectors from '../selectors/BoardSelectors';
-import * as cardSelectors from '../selectors/CardSelectors';
+import * as actions from '../../actions/BoardActions';
+import * as boardSelectors from '../../selectors/BoardSelectors';
+import * as cardSelectors from '../../selectors/CardSelectors';
 
-import * as statuses from '../constants/Statuses';
+import * as statuses from '../../constants/Statuses';
 
 import Board from './Board';
 

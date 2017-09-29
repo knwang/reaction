@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 
-import * as cardSelectors from '../selectors/CardSelectors';
-import * as boardSelectors from '../selectors/BoardSelectors';
-import * as actions from '../actions/CardActions';
+import * as cardSelectors from '../../selectors/CardSelectors';
+import * as boardSelectors from '../../selectors/BoardSelectors';
+import * as actions from '../../actions/CardActions';
 
 import Card from './Card';
 

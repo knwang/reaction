@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dragula from 'react-dragula';
 
-import * as listSelectors from '../selectors/ListSelectors';
-import * as cardSelectors from '../selectors/CardSelectors';
-import * as cardActions from '../actions/CardActions';
-import calculatePosition from '../lib/PositionCalculator';
+import * as listSelectors from '../../selectors/ListSelectors';
+import * as cardSelectors from '../../selectors/CardSelectors';
+import * as cardActions from '../../actions/CardActions';
+import calculatePosition from '../../lib/PositionCalculator';
 
-import DraggableList from './DraggableList';
+import DraggableList from './../list/DraggableList';
 
 class ExistingLists extends React.Component {
   state = {

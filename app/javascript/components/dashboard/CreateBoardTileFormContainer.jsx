@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import CreateBoardTileForm from './CreateBoardTileForm';
 
-import * as boardActions from '../actions/BoardActions';
-import * as formActions from '../actions/FormActions';
+import * as boardActions from '../../actions/BoardActions';
+import * as formActions from '../../actions/FormActions';
 
 const mapStateToProps = function(state) {
   return {

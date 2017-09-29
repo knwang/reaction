@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import BoardsDashboardDisplay from './BoardsDashboardDisplay';
 import PropTypes from 'prop-types';
 
-import * as actions from '../actions/BoardActions';
+import * as actions from '../../actions/BoardActions';
 
 class BoardsDashboard extends React.Component {
   static contextTypes = {

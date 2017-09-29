@@ -5,7 +5,7 @@ import EditableListTitle from './EditableListTitle';
 import CardListing from './CardListing';
 import NewCardForm from './NewCardForm';
 
-import * as selectors from '../selectors/CardSelectors';
+import * as selectors from '../../selectors/CardSelectors';
 
 const List = props => (
   <div

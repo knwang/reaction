@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import EditableTitle from './EditableTitle';
 
-import * as actions from '../actions/ListActions';
+import * as actions from '../../actions/ListActions';
 
 class EditableListTitle extends React.Component {
   static contextTypes = {

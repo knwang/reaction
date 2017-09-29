@@ -5,7 +5,7 @@ import CreateBoardTile from './CreateBoardTile';
 import CreateBoardTileForm from './CreateBoardTileForm';
 import CreateBoardTileFormContainer from './CreateBoardTileFormContainer';
 
-import * as formActions from '../actions/FormActions';
+import * as formActions from '../../actions/FormActions';
 
 class ToggleableCreateBoardTile extends React.Component {
   static contextTypes = {

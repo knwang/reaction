@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import * as boardSelectors from '../selectors/BoardSelectors';
+import * as boardSelectors from '../../selectors/BoardSelectors';
 
 const Card = (props) => {
   if (props.card) {

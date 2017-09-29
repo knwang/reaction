@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import TopNav from './TopNav';
-import BoardsDashboard from './BoardsDashboard';
-import BoardContainer from './BoardContainer';
-import CardContainer from './CardContainer';
+import TopNav from './shared/TopNav';
+import BoardsDashboard from './dashboard/BoardsDashboard';
+import BoardContainer from './board/BoardContainer';
+import CardContainer from './card/CardContainer';
 
 import { fetchBoards } from '../actions/BoardActions';
 

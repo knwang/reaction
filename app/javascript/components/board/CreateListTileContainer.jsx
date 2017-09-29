@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as formActions from '../actions/FormActions';
-import * as listActions from '../actions/ListActions';
-import * as listSelectors from '../selectors/ListSelectors';
-import positionCalculator from '../lib/PositionCalculator';
+import * as formActions from '../../actions/FormActions';
+import * as listActions from '../../actions/ListActions';
+import * as listSelectors from '../../selectors/ListSelectors';
+import positionCalculator from '../../lib/PositionCalculator';
 
 import CreateListTile from './CreateListTile';
 
