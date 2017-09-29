@@ -10,27 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170927015636) do
+ActiveRecord::Schema.define(version: 20170929214105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
-    t.string "title"
+    t.string "title", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "cards", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
+    t.string "title", default: "", null: false
+    t.text "description", default: "", null: false
     t.string "labels", default: [], array: true
     t.integer "list_id"
     t.float "position", default: 65535.0, null: false
   end
 
   create_table "lists", force: :cascade do |t|
-    t.string "title"
+    t.string "title", default: "", null: false
     t.integer "board_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

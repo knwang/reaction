@@ -46,10 +46,10 @@ class BoardsAPITest < ActionDispatch::IntegrationTest
   class GetBoardTest < ActionDispatch::IntegrationTest
     class ValidBoardIdTest < ActionDispatch::IntegrationTest
       def setup
-        @board = Board.create!(title: "My board")
-        @list1 = @board.lists.create!(title: "My list")
-        @list2 = @board.lists.create!(title: "My other list")
-        @card1 = @list1.cards.create!(title: "My card")
+        @board = create(:board)
+        list1 = create(:list, board: @board)
+        create(:list, board: @board)
+        create(:card, list: list1)
       end
 
       test "returns the board with the lists" do

@@ -5,7 +5,7 @@ class ListsAPITest < ActionDispatch::IntegrationTest
     class ValidBoardIdTest < ActionDispatch::IntegrationTest
       class ValidDataTest < ActionDispatch::IntegrationTest
         def setup
-          @board = Board.create!(title: "My board")
+          @board = create(:board)
         end
 
         test "creates a new list" do
@@ -34,7 +34,7 @@ class ListsAPITest < ActionDispatch::IntegrationTest
 
       class InvalidDataTest < ActionDispatch::IntegrationTest
         def setup
-          board = Board.create!(title: "My board")
+          board = create(:board)
 
           post "/api/lists",
               params: { board_id: board.id, list: { title: '' } }
@@ -70,8 +70,7 @@ class ListsAPITest < ActionDispatch::IntegrationTest
     class ValidListIdTest < ActionDispatch::IntegrationTest
       class ValidDataTest < ActionDispatch::IntegrationTest
         def setup
-          board = Board.create!(title: "My board")
-          @list = board.lists.create!(title: "My list", position: 1.0)
+          @list = create(:list, position: 1.0)
 
           put "/api/lists/#{@list.id}",
               params: {
@@ -98,8 +97,7 @@ class ListsAPITest < ActionDispatch::IntegrationTest
 
       class InvalidDataTest < ActionDispatch::IntegrationTest
         def setup
-          board = Board.create!(title: "My board")
-          @list = board.lists.create!(title: "My list", position: 1.0)
+          @list = create(:list, position: 1.0)
 
           put "/api/lists/#{@list.id}",
               params: { list: { title: "" } }
@@ -117,8 +115,7 @@ class ListsAPITest < ActionDispatch::IntegrationTest
 
     class InvalidListIdTest < ActionDispatch::IntegrationTest
       def setup
-        board = Board.create!(title: "My board")
-        @list = board.lists.create!(title: "My list", position: 1.0)
+        @list = create(:list, position: 1.0)
 
         put "/api/lists/abc",
             params: { list: { title: "My list" } }

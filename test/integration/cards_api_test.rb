@@ -5,8 +5,7 @@ class CardsAPITest < ActionDispatch::IntegrationTest
     class ValidListIdTest < ActionDispatch::IntegrationTest
       class ValidDataTest < ActionDispatch::IntegrationTest
         def setup
-          board = Board.create!(title: "My board")
-          @list = board.lists.create!(title: "My list")
+          @list = create(:list)
         end
 
         test "creates a new card" do
@@ -35,8 +34,7 @@ class CardsAPITest < ActionDispatch::IntegrationTest
 
       class InvalidDataTest < ActionDispatch::IntegrationTest
         def setup
-          board = Board.create!(title: "My board")
-          list = board.lists.create!(title: "My list")
+          list = create(:list)
 
           post "/api/cards",
               params: { list_id: list.id, card: { title: '' } }
@@ -71,18 +69,14 @@ class CardsAPITest < ActionDispatch::IntegrationTest
   class GetCardTest < ActionDispatch::IntegrationTest
     class ValidCardIdTest < ActionDispatch::IntegrationTest
       test "returns the card as json" do
-        board = Board.create!(title: "My board")
-        list = board.lists.create!(title: "My list")
-        card = list.cards.create!(title: "My card")
+        card = create(:card)
 
         get "/api/cards/#{card.id}"
         assert_equal card.as_json, JSON.parse(response.body)
       end
 
       test "returns a 200" do
-        board = Board.create!(title: "My board")
-        list = board.lists.create!(title: "My list")
-        card = list.cards.create!(title: "My card")
+        card = create(:card)
 
         get "/api/cards/#{card.id}"
         assert_response 200
@@ -101,9 +95,7 @@ class CardsAPITest < ActionDispatch::IntegrationTest
     class ValidCardIdTest < ActionDispatch::IntegrationTest
       class ValidDataTest < ActionDispatch::IntegrationTest
         def setup
-          board = Board.create!(title: "My board")
-          list = board.lists.create!(title: "My list")
-          @card = list.cards.create!(title: "My card")
+          @card = create(:card)
 
           put "/api/cards/#{@card.id}",
               params: { card: { title: "New card title" } }
@@ -120,9 +112,7 @@ class CardsAPITest < ActionDispatch::IntegrationTest
 
       class InvalidDataTest < ActionDispatch::IntegrationTest
         def setup
-          board = Board.create!(title: "My board")
-          list = board.lists.create!(title: "My list")
-          card = list.cards.create!(title: "My card")
+          card = create(:card)
 
           put "/api/cards/#{card.id}",
               params: { card: { title: "" } }

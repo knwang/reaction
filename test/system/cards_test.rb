@@ -2,8 +2,8 @@ require "application_system_test_case"
 
 class CardsTest < ApplicationSystemTestCase
   def setup
-    @board = Board.create!(title: "My board")
-    @list = @board.lists.create!(title: "My List")
+    @board = create(:board)
+    @list = create(:list, board: @board)
     visit "/boards/#{@board.id}"
   end
 
@@ -20,7 +20,7 @@ class CardsTest < ApplicationSystemTestCase
   end
 
   test "new card form can only be visible on one list at a time" do
-    list2 = @board.lists.create!(title: "My other list")
+    create(:list, board: @board)
     visit "/boards/#{@board.id}"
 
     toggles = all(".add-card-toggle")
@@ -44,7 +44,7 @@ class CardsTest < ApplicationSystemTestCase
   end
 
   test "new card form retains value when moving between lists" do
-    list2 = @board.lists.create!(title: "My other list")
+    create(:list, board: @board)
     visit "/boards/#{@board.id}"
 
     toggles = all(".add-card-toggle")
@@ -82,21 +82,20 @@ class CardsTest < ApplicationSystemTestCase
   end
 
   test "displaying one list" do
-    @list.cards.create!(title: "My title")
+    create(:card, list: @list)
     visit "/boards/#{@board.id}"
     assert_selector "#cards-container .card", count: 1
   end
 
   test "displaying more than one list" do
-    @list.cards.create!(title: "My title")
-    @list.cards.create!(title: "My title")
+    2.times { create(:card, list: @list) }
 
     visit "/boards/#{@board.id}"
     assert_selector "#cards-container .card", count: 2
   end
 
   test "clicking on a card shows it" do
-    card = @list.cards.create!(title: "My title")
+    card = create(:card, list: @list)
 
     visit "/boards/#{@board.id}"
     find("#cards-container .card").click
@@ -105,7 +104,7 @@ class CardsTest < ApplicationSystemTestCase
   end
 
   test "user navigates directly to card" do
-    card = @list.cards.create!(title: "My title")
+    card = create(:card, list: @list)
 
     visit "/cards/#{card.id}"
 

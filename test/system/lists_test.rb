@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class ListsTest < ApplicationSystemTestCase
   def setup
-    @board = Board.create!(title: "My board")
+    @board = create(:board)
     visit "/boards/#{@board.id}"
   end
 
@@ -50,20 +50,19 @@ class ListsTest < ApplicationSystemTestCase
   end
 
   test "displaying one list" do
-    @board.lists.create!(title: "My list")
+    create(:list, board: @board)
     visit "/boards/#{@board.id}"
     assert_selector ".existing-lists .list-wrapper", count: 1
   end
 
   test "displaying more than one list" do
-    @board.lists.create!(title: "My list")
-    @board.lists.create!(title: "My other list")
+    2.times { create(:list, board: @board) }
     visit "/boards/#{@board.id}"
     assert_selector ".existing-lists .list-wrapper", count: 2
   end
 
   test "changing a list title" do
-    @board.lists.create!(title: "My list")
+    create(:list, board: @board)
     visit "/boards/#{@board.id}"
 
     title = find('p.list-title')

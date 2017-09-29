@@ -9,7 +9,7 @@ class BoardsDashboardTest < ApplicationSystemTestCase
   end
 
   test "displaying one board tile" do
-    Board.create!(title: "My board")
+    create(:board, title: "My board")
     visit root_path
 
     assert_selector ".board-tile", count: 2
@@ -18,8 +18,8 @@ class BoardsDashboardTest < ApplicationSystemTestCase
   end
 
   test "displaying more than one board tile" do
-    Board.create!(title: "My board")
-    Board.create!(title: "My other board")
+    create(:board, title: "My board")
+    create(:board, title: "My other board")
     visit root_path
 
     assert_selector ".board-tile", count: 3
