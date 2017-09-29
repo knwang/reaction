@@ -7,7 +7,7 @@
 
   <p style="margin-top: 1em;">
     <% files.each do |file| %>
-      <%= link_to file.sub(/\..*$/, '').sub('_', ' ').capitalize, "/ui/" + file.sub(/\..*$/, ''), style: 'color: white; margin-bottom: 5px; display: inline-block; text-decoration: none' %>
+      <%= link_to file.gsub(/\..*$/, '').gsub('_', ' ').capitalize, "/ui/" + file.gsub(/\..*$/, ''), style: 'color: white; margin-bottom: 5px; display: inline-block; text-decoration: none' %>
       <br>
     <% end %>
   </p>

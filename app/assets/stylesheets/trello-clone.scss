@@ -3145,24 +3145,10 @@ form.description p + .link:hover {
   color: #111;
 }
 form.description textarea {
-  display: none;
+  display: block;
 }
 form.description textarea + div {
-  display: none;
-}
-form.description.editing textarea {
   display: block;
-}
-form.description.editing textarea + div {
-  display: block;
-}
-form.description.editing textarea + div + p {
-  display: none;
-}
-form.description.editing p:first-child + span,
-form.description.editing p:last-child,
-form.description.editing .textarea-overlay {
-  display: none;
 }
 form.description .textarea-overlay {
   color: #4d4d4d;
