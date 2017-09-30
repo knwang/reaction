@@ -52828,7 +52828,8 @@ var EditableCardDescription = function (_React$Component) {
       writable: true,
       value: {
         description: '',
-        showForm: false
+        showForm: false,
+        isSaving: false
       }
     }), Object.defineProperty(_this, 'toggleForm', {
       enumerable: true,
@@ -52844,9 +52845,13 @@ var EditableCardDescription = function (_React$Component) {
       enumerable: true,
       writable: true,
       value: function value(e) {
-        _this.setState({
-          showForm: false
-        });
+        e.preventDefault();
+
+        setTimeout(function () {
+          if (!_this.state.isSaving) {
+            _this.setState({ showForm: false });
+          }
+        }, 100);
       }
     }), Object.defineProperty(_this, 'handleChange', {
       enumerable: true,
@@ -52868,15 +52873,25 @@ var EditableCardDescription = function (_React$Component) {
       enumerable: true,
       writable: true,
       value: function value(e) {
-        var dispatch = _this.context.store.dispatch;
+        if (_this.state.isSaving) {
+          return;
+        }
 
-        dispatch(actions.updateCard(_this.props.id, {
-          description: _this.state.description
-        }), function (updatedCard) {
-          _this.setState({
-            description: updatedCard.description
-          });
-        });
+        if (_this.props.description === _this.state.description) {
+          _this.setState({ showForm: false });
+        } else {
+          _this.setState({ isSaving: true });
+
+          _this.context.store.dispatch(actions.updateCard(_this.props.id, {
+            description: _this.state.description
+          }, function (updatedCard) {
+            _this.setState({
+              description: updatedCard.description,
+              isSaving: false,
+              showForm: false
+            });
+          }));
+        }
       }
     }), _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -52903,6 +52918,7 @@ var EditableCardDescription = function (_React$Component) {
         onDiscardChangeClick: this.handleDiscardChangeClick,
         onSaveClick: this.handleSaveClick,
         showForm: this.state.showForm,
+        isSaving: this.state.isSaving,
         edited: this.props.description !== this.state.description
       });
     }
@@ -52989,9 +53005,9 @@ var CardDescription = function CardDescription(props) {
           {
             className: 'button',
             value: 'Save',
-            onMouseDown: props.onSaveClick
+            onClick: props.onSaveClick
           },
-          'Save'
+          props.isSaving ? "Saving..." : "Save"
         ),
         _react2.default.createElement('i', { className: 'x-icon icon' })
       )

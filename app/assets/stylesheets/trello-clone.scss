@@ -3155,8 +3155,16 @@ form.description .textarea-overlay {
   padding-bottom: 8px;
   display: block;
 }
-form.description .textarea-toggle:focus {
+form.description .textarea-toggle {
+  min-height: 110px;
+  width: 100%;
+  background-color: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: inset 0 1px 6px rgba(0,0,0,0.1);
+  padding: 7px;
   margin-bottom: 6px;
+  box-sizing: border-box;
+  border-radius: 3px;
 }
 .attachment-list {
   padding: 8px 0 6px;

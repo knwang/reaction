@@ -18,6 +18,7 @@ class EditableCardDescription extends React.Component {
   state = {
     description: '',
     showForm: false,
+    isSaving: false
   };
 
   componentWillMount() {
@@ -35,9 +36,13 @@ class EditableCardDescription extends React.Component {
   };
 
   handleBlur = (e) => {
-    this.setState({
-      showForm: false
-    });
+    e.preventDefault();
+
+    setTimeout(() => {
+      if (!this.state.isSaving) {
+        this.setState({ showForm: false });
+      }
+    }, 100);
   };
 
   handleChange = (e) => {
@@ -53,17 +58,25 @@ class EditableCardDescription extends React.Component {
   };
 
   handleSaveClick = (e) => {
-    const dispatch = this.context.store.dispatch;
+    if (this.state.isSaving) { return; }
 
-    dispatch(
-      actions.updateCard(this.props.id, {
-        description: this.state.description
-      }), (updatedCard) => {
-        this.setState({
-          description: updatedCard.description
-        });
-      }
-    );
+    if (this.props.description === this.state.description) {
+      this.setState({ showForm: false });
+    } else {
+      this.setState({ isSaving: true });
+
+      this.context.store.dispatch(
+        actions.updateCard(this.props.id, {
+          description: this.state.description
+        }, (updatedCard) => {
+          this.setState({
+            description: updatedCard.description,
+            isSaving: false,
+            showForm: false
+          });
+        })
+      );
+    }
   };
 
   render() {
@@ -76,6 +89,7 @@ class EditableCardDescription extends React.Component {
         onDiscardChangeClick={this.handleDiscardChangeClick}
         onSaveClick={this.handleSaveClick}
         showForm={this.state.showForm}
+        isSaving={this.state.isSaving}
         edited={this.props.description !== this.state.description}
       />
     );

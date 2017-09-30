@@ -31,8 +31,8 @@ const CardDescription = (props) => (
             <div
               className="button"
               value="Save"
-              onMouseDown={props.onSaveClick}
-            >Save</div>
+              onClick={props.onSaveClick}
+            >{props.isSaving ? "Saving..." : "Save"}</div>
             <i className="x-icon icon"></i>
           </div>
         </div>
