@@ -19,7 +19,16 @@ class Api::BoardsController < ApplicationController
 
   def show
     board = Board.find(params[:id])
-    render json: board.as_json(include: { lists: { include: :cards }})
+    board_json = board.as_json
+    board_json["lists"] = []
+
+    board.lists.each do |list|
+      list_json = list.as_json
+      list_json["cards"] = list.cards.where(archived: false).as_json
+      board_json["lists"] << list_json
+    end
+
+    render json: board_json
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid board id provided" },
            status: :not_found
