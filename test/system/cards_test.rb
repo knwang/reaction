@@ -124,11 +124,12 @@ class CardsTest < ApplicationSystemTestCase
     input.send_keys :enter
 
     find("#description-edit").click
-    input = find(".description .textarea-overlay")
+    input = find(".description .textarea-toggle")
     input.set("My description")
-    submit = find(".description .button[value='Save']")
-    submit.trigger('mousedown')
 
+    find(".description .button[value='Save']").click
+
+    refute_selector ".description .button[value='Save']"
     refute_selector ".description .description-edit-options"
 
     card.reload

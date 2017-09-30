@@ -53001,7 +53001,7 @@ var CardDescription = function CardDescription(props) {
     props.edited && !props.showForm ? _react2.default.createElement(
       "p",
       { id: "description-edit-options" },
-      "You have unsaved edits on this field.",
+      "You have unsaved edits on this field. ",
       _react2.default.createElement(
         "span",
         {
@@ -53010,7 +53010,7 @@ var CardDescription = function CardDescription(props) {
         },
         "View edits"
       ),
-      "-",
+      " - ",
       _react2.default.createElement(
         "span",
         {
