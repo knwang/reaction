@@ -11,7 +11,7 @@ class Api::CardsController < ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid list id provided" },
-           status: :unprocessable_entity
+           status: :not_found
   end
 
   def show

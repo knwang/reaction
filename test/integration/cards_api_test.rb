@@ -56,8 +56,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
             params: { list_id: 'abc', card: { title: 'My new card' } }
       end
 
-      test "returns a 422" do
-        assert_response 422
+      test "returns a 404" do
+        assert_response 404
       end
 
       test "includes error text in response" do
