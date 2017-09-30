@@ -3,5 +3,5 @@ export function getCardById(state, id) {
 }
 
 export function listCards(state, listId) {
-  return state.cards.filter(card => card.list_id === listId);
+  return state.cards.filter(card => !card.archived && card.list_id === listId);
 }

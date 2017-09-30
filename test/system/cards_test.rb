@@ -137,4 +137,32 @@ class CardsTest < ApplicationSystemTestCase
     assert_equal "My new title", card.title
     assert_equal "My description", card.description
   end
+
+  test "user archives and unarchives card" do
+    card = create(:card, list: @list)
+
+    visit "/cards/#{card.id}"
+
+    find(".archive-button").click
+
+    assert has_content?("This card is archived.")
+    refute_selector ".archive-button"
+    assert_selector ".unarchive-button"
+    assert_selector ".red-button", text: "Delete"
+
+    card.reload
+
+    assert card.archived
+
+    find(".unarchive-button").click
+
+    refute has_content?("This card is archived.")
+    assert_selector ".archive-button"
+    refute_selector ".unarchive-button"
+    refute_selector ".red-button", text: "Delete"
+
+    card.reload
+
+    refute card.archived
+  end
 end

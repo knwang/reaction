@@ -35150,6 +35150,26 @@ var CardContainer = function (_React$Component) {
           e.target.blur();
         }
       }
+    }), Object.defineProperty(_this, 'toggleArchive', {
+      enumerable: true,
+      writable: true,
+      value: function value(archived) {
+        var store = _this.context.store;
+
+        store.dispatch(actions.updateCard(_this.state.card.id, { archived: archived }));
+      }
+    }), Object.defineProperty(_this, 'handleArchiveClick', {
+      enumerable: true,
+      writable: true,
+      value: function value(e) {
+        _this.toggleArchive(true);
+      }
+    }), Object.defineProperty(_this, 'handleUnarchiveClick', {
+      enumerable: true,
+      writable: true,
+      value: function value(e) {
+        _this.toggleArchive(false);
+      }
     }), _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -35177,7 +35197,9 @@ var CardContainer = function (_React$Component) {
         title: this.state.title,
         onTitleChange: this.handleTitleChange,
         onTitleBlur: this.handleTitleBlur,
-        onTitleKeyPress: this.handleTitleKeyPress
+        onTitleKeyPress: this.handleTitleKeyPress,
+        onArchiveClick: this.handleArchiveClick,
+        onUnarchiveClick: this.handleUnarchiveClick
       });
     }
   }]);
@@ -52336,6 +52358,12 @@ var Card = function Card(props) {
             { to: '/boards/' + props.card.board_id },
             _react2.default.createElement('i', { className: 'x-icon icon close-modal' })
           ),
+          props.card.archived ? _react2.default.createElement(
+            'div',
+            { className: 'archived-banner' },
+            _react2.default.createElement('i', { className: 'file-icon icon' }),
+            'This card is archived.'
+          ) : null,
           _react2.default.createElement(
             'header',
             null,
@@ -52748,9 +52776,30 @@ var Card = function Card(props) {
                 _react2.default.createElement('i', { className: 'check-icon sm-icon' })
               ),
               _react2.default.createElement('hr', null),
-              _react2.default.createElement(
+              props.card.archived ? _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  'li',
+                  {
+                    className: 'unarchive-button',
+                    onClick: props.onUnarchiveClick
+                  },
+                  _react2.default.createElement('i', { className: 'send-icon sm-icon' }),
+                  'Send to board'
+                ),
+                _react2.default.createElement(
+                  'li',
+                  { className: 'red-button' },
+                  _react2.default.createElement('i', { className: 'minus-icon sm-icon' }),
+                  'Delete'
+                )
+              ) : _react2.default.createElement(
                 'li',
-                { className: 'archive-button' },
+                {
+                  className: 'archive-button',
+                  onClick: props.onArchiveClick
+                },
                 _react2.default.createElement('i', { className: 'file-icon sm-icon ' }),
                 'Archive'
               )

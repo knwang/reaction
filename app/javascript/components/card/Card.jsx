@@ -16,6 +16,14 @@ const Card = (props) => {
             <Link to={`/boards/${props.card.board_id}`}>
               <i className="x-icon icon close-modal"></i>
             </Link>
+            {
+              props.card.archived ? (
+                <div className="archived-banner">
+                  <i className="file-icon icon"></i>
+                  This card is archived.
+                </div>
+              ) : null
+            }
             <header>
               <i className="card-icon icon"></i>
               <textarea
@@ -169,7 +177,22 @@ const Card = (props) => {
                 <li className="subscribe-button"><i className="sub-icon sm-icon"></i>Subscribe<i className="check-icon sm-icon"></i>
                 </li>
                 <hr />
-                <li className="archive-button"><i className="file-icon sm-icon "></i>Archive</li>
+                {
+                  props.card.archived ? (
+                    <div>
+                      <li 
+                        className="unarchive-button"
+                        onClick={props.onUnarchiveClick}
+                      ><i className="send-icon sm-icon"></i>Send to board</li>
+                      <li className="red-button"><i className="minus-icon sm-icon"></i>Delete</li>
+                    </div>
+                  ) :  (
+                    <li 
+                      className="archive-button"
+                      onClick={props.onArchiveClick}
+                    ><i className="file-icon sm-icon "></i>Archive</li>
+                  )
+                }
               </ul>
               <ul className="light-list">
                 <li className="not-implemented">Share and more...</li>

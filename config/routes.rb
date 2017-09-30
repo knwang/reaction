@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   get '/ui/create_board', to: 'ui#create_board'
   get '/ui/card', to: 'ui#card'
   get '/ui/card_editing_description', to: 'ui#card_editing_description'
+  get '/ui/card_archived', to: 'ui#card_archived'
   get '/ui', to: 'ui#index'
 end

@@ -69,6 +69,23 @@ class CardContainer extends React.Component {
     }
   };
 
+  toggleArchive = (archived) => {
+    const store = this.context.store;
+
+    store.dispatch(actions.updateCard(
+      this.state.card.id,
+      { archived }
+    ));
+  };
+
+  handleArchiveClick = (e) => {
+    this.toggleArchive(true);
+  };
+
+  handleUnarchiveClick = (e) => {
+    this.toggleArchive(false);
+  };
+
   render() {
     return (
       <Card 
@@ -77,6 +94,8 @@ class CardContainer extends React.Component {
         onTitleChange={this.handleTitleChange}
         onTitleBlur={this.handleTitleBlur}
         onTitleKeyPress={this.handleTitleKeyPress}
+        onArchiveClick={this.handleArchiveClick}
+        onUnarchiveClick={this.handleUnarchiveClick}
       />
     );
   };

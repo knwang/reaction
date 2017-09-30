@@ -26,12 +26,24 @@ describe("CardSelectors", () => {
   });
 
   describe("listCards", () => {
-    const state = { cards: [
-      { id: 1, list_id: 1,title: "My card"},
-      { id: 2, list_id: 2, title: "My card"},
-      { id: 3, list_id: 2, title: "My card"},
-      { id: 4, list_id: 3, title: "My card"},
-    ]};
+    let state;
+
+    beforeEach(() => {
+      state = { cards: [
+        { id: 1, list_id: 1,title: "My card"},
+        { id: 2, list_id: 2, title: "My card"},
+        { id: 3, list_id: 2, title: "My card"},
+        { id: 4, list_id: 3, title: "My card"},
+      ]};
+    });
+
+    it("doesn't include archived cards", () => {
+      state.cards[1].archived = true;
+
+      expect(
+        selectors.listCards(state, 2)
+      ).toEqual([state.cards[2]]);
+    });
 
     describe("matches exist", () => {
       it("returns them", () => {
