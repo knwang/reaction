@@ -17,11 +17,13 @@ export function updateListSuccess(boardId, listId, updatedList) {
   return { type: types.UPDATE_LIST_SUCCESS, boardId, listId, updatedList };
 }
 
-export function createList(boardId, list) {
+export function createList(boardId, list, callback) {
   return function(dispatch) {
     dispatch(createListRequest());
     apiClient.createList(boardId, list, newList => {
       dispatch(createListSuccess(boardId, newList))
+
+      if (callback) { callback(newList); }
     });
   }
 }

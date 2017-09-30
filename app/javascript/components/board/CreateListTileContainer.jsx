@@ -10,37 +10,42 @@ import positionCalculator from '../../lib/PositionCalculator';
 import CreateListTile from './CreateListTile';
 
 class CreateListTileContainer extends React.Component {
+  state = {
+    showForm: false,
+    title: ''
+  };
+
   static contextTypes = {
     store: PropTypes.object,
     currentBoardId: PropTypes.number
   };
 
-  componentDidMount() {
-    this.unsubscribe = this.context.store.subscribe(() => this.forceUpdate());
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   handleTileClick = (e) => {
     e.stopPropagation();
-    this.context.store.dispatch(formActions.showCreateListForm());
+
+    this.setState({
+      showForm: true
+    });
   };
 
   handleCloseClick = (e) => {
     e.stopPropagation();
-    this.context.store.dispatch(formActions.hideCreateListForm());
+
+    this.setState({
+      showForm: false
+    });
   };
 
   handleChange = (e) => {
-    this.context.store.dispatch(formActions.updateCreateListFormInputText(e.target.value))
+    this.setState({
+      title: e.target.value
+    });
   };
 
   handleSubmit = (e) => {
     e.preventDefault;
 
-    const currentState = this.getState()
+    const currentState = this.context.store.getState();
     const lists = listSelectors.boardListsSelector(
       currentState, this.context.currentBoardId
     );
@@ -48,24 +53,24 @@ class CreateListTileContainer extends React.Component {
 
     this.context.store.dispatch(
       listActions.createList(
-        this.context.currentBoardId,
-        {
-          title: currentState.newListForm.title,
+        this.context.currentBoardId, {
+          title: this.state.title,
           position
+        }, () => {
+          this.setState({
+            showForm: false,
+            title: ''
+          });
         }
       )
     );
   };
 
-  getState = () => {
-    return this.context.store.getState();
-  };
-
   render() {
     return (
       <CreateListTile
-        showForm={this.getState().newListForm.display}
-        title={this.getState().newListForm.title}
+        showForm={this.state.showForm}
+        title={this.state.title}
         onTileClick={this.handleTileClick}
         onCloseClick={this.handleCloseClick}
         onChange={this.handleChange}

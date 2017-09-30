@@ -67,9 +67,10 @@ describe("List actions", () => {
     describe("createList", () => {
       const newList = { title: "My list" };
       const newListWithId = { id: 1, title: "My list" }
+      const cb = jest.fn();
 
       beforeEach(() => {
-        store.dispatch(actions.createList(1, newList));
+        store.dispatch(actions.createList(1, newList, cb));
 
         const invocationArgs = apiClient.createList.mock.calls[0];
         const callback = invocationArgs[2];
@@ -86,6 +87,10 @@ describe("List actions", () => {
         expect(storeActions[1]).toEqual(
           actions.createListSuccess(1, newListWithId)
         );
+      });
+
+      it("calls the callback if one is provided", () => {
+        expect(cb).toHaveBeenCalledWith(newListWithId);
       });
     });
 

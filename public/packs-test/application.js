@@ -1168,7 +1168,7 @@ module.exports = invariant;
 
 
 var bind = __webpack_require__(130);
-var isBuffer = __webpack_require__(303);
+var isBuffer = __webpack_require__(302);
 
 /*global toString:true*/
 
@@ -8086,11 +8086,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _axios = __webpack_require__(301);
+var _axios = __webpack_require__(300);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _ApiRoutes = __webpack_require__(320);
+var _ApiRoutes = __webpack_require__(319);
 
 var routes = _interopRequireWildcard(_ApiRoutes);
 
@@ -8161,7 +8161,7 @@ exports.default = apiClient;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(12);
-var normalizeHeaderName = __webpack_require__(305);
+var normalizeHeaderName = __webpack_require__(304);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -8491,11 +8491,15 @@ function updateListSuccess(boardId, listId, updatedList) {
   return { type: types.UPDATE_LIST_SUCCESS, boardId: boardId, listId: listId, updatedList: updatedList };
 }
 
-function createList(boardId, list) {
+function createList(boardId, list, callback) {
   return function (dispatch) {
     dispatch(createListRequest());
     _ApiClient2.default.createList(boardId, list, function (newList) {
       dispatch(createListSuccess(boardId, newList));
+
+      if (callback) {
+        callback(newList);
+      }
     });
   };
 }
@@ -13628,57 +13632,68 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(3);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CreateBoardTileForm = function CreateBoardTileForm(props) {
   return _react2.default.createElement(
-    "section",
-    { className: "new-board-form" },
+    'section',
+    { className: 'new-board-form' },
     _react2.default.createElement(
-      "header",
+      'header',
       null,
       _react2.default.createElement(
-        "span",
+        'span',
         null,
-        "Create Board"
+        'Create Board'
       ),
-      _react2.default.createElement("a", {
-        href: "#",
-        className: "icon-sm icon-close",
+      _react2.default.createElement('a', {
+        href: '#',
+        className: 'icon-sm icon-close',
         onClick: props.onCloseClick
       })
     ),
     _react2.default.createElement(
-      "form",
+      'form',
       {
         onSubmit: props.onSubmit
       },
       _react2.default.createElement(
-        "dl",
+        'dl',
         null,
         _react2.default.createElement(
-          "dt",
+          'dt',
           null,
-          "Title"
+          'Title'
         ),
         _react2.default.createElement(
-          "dd",
+          'dd',
           null,
-          _react2.default.createElement("input", {
-            type: "text",
-            placeholder: "Like \"Publishing Calendar\"...",
+          _react2.default.createElement('input', {
+            type: 'text',
+            placeholder: 'Like "Publishing Calendar"...',
             value: props.title,
             onChange: props.onTextChange
           })
         )
       ),
       _react2.default.createElement(
-        "button",
-        { type: "submit" },
-        "Create"
+        'button',
+        { type: 'submit' },
+        'Create'
       )
     )
   );
+};
+
+CreateBoardTileForm.propTypes = {
+  onCloseClick: _propTypes2.default.func.isRequired,
+  onTextChange: _propTypes2.default.func.isRequired,
+  onSubmit: _propTypes2.default.func.isRequired,
+  title: _propTypes2.default.string.isRequired
 };
 
 exports.default = CreateBoardTileForm;
@@ -13709,12 +13724,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(12);
-var settle = __webpack_require__(306);
-var buildURL = __webpack_require__(308);
-var parseHeaders = __webpack_require__(309);
-var isURLSameOrigin = __webpack_require__(310);
+var settle = __webpack_require__(305);
+var buildURL = __webpack_require__(307);
+var parseHeaders = __webpack_require__(308);
+var isURLSameOrigin = __webpack_require__(309);
 var createError = __webpack_require__(132);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(311);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(310);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -13808,7 +13823,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(312);
+      var cookies = __webpack_require__(311);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -13892,7 +13907,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(307);
+var enhanceError = __webpack_require__(306);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -14033,7 +14048,7 @@ var _reactRedux = __webpack_require__(34);
 
 var _Store = __webpack_require__(286);
 
-var _application = __webpack_require__(293);
+var _application = __webpack_require__(292);
 
 var _application2 = _interopRequireDefault(_application);
 
@@ -30229,23 +30244,19 @@ var _reduxThunk = __webpack_require__(287);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _NewListFormReducer = __webpack_require__(288);
-
-var _NewListFormReducer2 = _interopRequireDefault(_NewListFormReducer);
-
-var _BoardsReducer = __webpack_require__(289);
+var _BoardsReducer = __webpack_require__(288);
 
 var _BoardsReducer2 = _interopRequireDefault(_BoardsReducer);
 
-var _ListsReducer = __webpack_require__(290);
+var _ListsReducer = __webpack_require__(289);
 
 var _ListsReducer2 = _interopRequireDefault(_ListsReducer);
 
-var _StatusReducer = __webpack_require__(291);
+var _StatusReducer = __webpack_require__(290);
 
 var _StatusReducer2 = _interopRequireDefault(_StatusReducer);
 
-var _CardsReducer = __webpack_require__(292);
+var _CardsReducer = __webpack_require__(291);
 
 var _CardsReducer2 = _interopRequireDefault(_CardsReducer);
 
@@ -30260,7 +30271,6 @@ function reducer() {
   return {
     boards: (0, _BoardsReducer2.default)(state.boards, action),
     lists: (0, _ListsReducer2.default)(state.lists, action),
-    newListForm: (0, _NewListFormReducer2.default)(state.newListForm, action),
     status: (0, _StatusReducer2.default)(state.status, action),
     cards: (0, _CardsReducer2.default)(state.cards, action)
   };
@@ -30312,61 +30322,6 @@ exports['default'] = thunk;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
-
-exports.default = NewListFormReducer;
-var initialState = {
-  isSaving: false,
-  display: false,
-  title: ''
-};
-
-function NewListFormReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-  var action = arguments[1];
-
-  if (action.type === "SHOW_CREATE_LIST_FORM") {
-    return _extends({}, state, { display: true });
-  } else if (action.type === "HIDE_CREATE_LIST_FORM") {
-    return _extends({}, state, { display: false });
-  } else if (action.type === "UPDATE_CREATE_LIST_FORM_INPUT_TEXT") {
-    return _extends({}, state, {
-      title: action.text
-    });
-  } else if (action.type === "CREATE_LIST_REQUEST") {
-    return _extends({}, state, {
-      isSaving: true
-    });
-  } else if (action.type === "CREATE_LIST_SUCCESS") {
-    return _extends({}, state, {
-      isSaving: false,
-      display: false,
-      title: ""
-    });
-  } else {
-    return state;
-  }
-}
-
-/***/ }),
-/* 289 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports.default = boardsReducer;
 
 function _objectWithoutProperties(obj, keys) {
@@ -30402,7 +30357,7 @@ function boardsReducer() {
 }
 
 /***/ }),
-/* 290 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30459,7 +30414,7 @@ function listsReducer() {
 exports.default = listsReducer;
 
 /***/ }),
-/* 291 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30484,7 +30439,7 @@ function statusReducer(state, action) {
 };
 
 /***/ }),
-/* 292 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30530,7 +30485,7 @@ function cardsReducer() {
 };
 
 /***/ }),
-/* 293 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30552,19 +30507,19 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _TopNav = __webpack_require__(294);
+var _TopNav = __webpack_require__(293);
 
 var _TopNav2 = _interopRequireDefault(_TopNav);
 
-var _BoardsDashboard = __webpack_require__(295);
+var _BoardsDashboard = __webpack_require__(294);
 
 var _BoardsDashboard2 = _interopRequireDefault(_BoardsDashboard);
 
-var _BoardContainer = __webpack_require__(321);
+var _BoardContainer = __webpack_require__(320);
 
 var _BoardContainer2 = _interopRequireDefault(_BoardContainer);
 
-var _CardContainer = __webpack_require__(348);
+var _CardContainer = __webpack_require__(347);
 
 var _CardContainer2 = _interopRequireDefault(_CardContainer);
 
@@ -30615,7 +30570,7 @@ Object.defineProperty(Application, 'contextTypes', {
 exports.default = Application;
 
 /***/ }),
-/* 294 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30692,7 +30647,7 @@ var TopNav = function TopNav() {
 exports.default = TopNav;
 
 /***/ }),
-/* 295 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30710,7 +30665,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(34);
 
-var _BoardsDashboardDisplay = __webpack_require__(296);
+var _BoardsDashboardDisplay = __webpack_require__(295);
 
 var _BoardsDashboardDisplay2 = _interopRequireDefault(_BoardsDashboardDisplay);
 
@@ -30792,7 +30747,7 @@ Object.defineProperty(BoardsDashboard, 'contextTypes', {
 exports.default = BoardsDashboard;
 
 /***/ }),
-/* 296 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30810,11 +30765,11 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _BoardTile = __webpack_require__(297);
+var _BoardTile = __webpack_require__(296);
 
 var _BoardTile2 = _interopRequireDefault(_BoardTile);
 
-var _ToggleableCreateBoardTile = __webpack_require__(298);
+var _ToggleableCreateBoardTile = __webpack_require__(297);
 
 var _ToggleableCreateBoardTile2 = _interopRequireDefault(_ToggleableCreateBoardTile);
 
@@ -30869,7 +30824,7 @@ BoardsDashboard.contextTypes = {
 exports.default = BoardsDashboard;
 
 /***/ }),
-/* 297 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30914,7 +30869,7 @@ BoardTile.propTypes = {
 exports.default = BoardTile;
 
 /***/ }),
-/* 298 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30930,7 +30885,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _CreateBoardTile = __webpack_require__(299);
+var _CreateBoardTile = __webpack_require__(298);
 
 var _CreateBoardTile2 = _interopRequireDefault(_CreateBoardTile);
 
@@ -30938,7 +30893,7 @@ var _CreateBoardTileForm = __webpack_require__(129);
 
 var _CreateBoardTileForm2 = _interopRequireDefault(_CreateBoardTileForm);
 
-var _CreateBoardTileFormContainer = __webpack_require__(300);
+var _CreateBoardTileFormContainer = __webpack_require__(299);
 
 var _CreateBoardTileFormContainer2 = _interopRequireDefault(_CreateBoardTileFormContainer);
 
@@ -31037,7 +30992,7 @@ var ToggleableCreateBoardTile = function (_React$Component) {
 exports.default = ToggleableCreateBoardTile;
 
 /***/ }),
-/* 299 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31075,7 +31030,7 @@ var CreateBoardTile = function CreateBoardTile(props) {
 exports.default = CreateBoardTile;
 
 /***/ }),
-/* 300 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31182,16 +31137,24 @@ Object.defineProperty(CreateBoardTileFormContainer, 'contextTypes', {
     store: _propTypes2.default.object
   }
 });
+Object.defineProperty(CreateBoardTileFormContainer, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    onCloseClick: _propTypes2.default.func.isRequired,
+    onSave: _propTypes2.default.func.isRequired
+  }
+});
 exports.default = CreateBoardTileFormContainer;
 
 /***/ }),
-/* 301 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(302);
+module.exports = __webpack_require__(301);
 
 /***/ }),
-/* 302 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31199,7 +31162,7 @@ module.exports = __webpack_require__(302);
 
 var utils = __webpack_require__(12);
 var bind = __webpack_require__(130);
-var Axios = __webpack_require__(304);
+var Axios = __webpack_require__(303);
 var defaults = __webpack_require__(73);
 
 /**
@@ -31234,14 +31197,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(134);
-axios.CancelToken = __webpack_require__(318);
+axios.CancelToken = __webpack_require__(317);
 axios.isCancel = __webpack_require__(133);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(319);
+axios.spread = __webpack_require__(318);
 
 module.exports = axios;
 
@@ -31250,7 +31213,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 303 */
+/* 302 */
 /***/ (function(module, exports) {
 
 /*!
@@ -31277,7 +31240,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 304 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31285,10 +31248,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(73);
 var utils = __webpack_require__(12);
-var InterceptorManager = __webpack_require__(313);
-var dispatchRequest = __webpack_require__(314);
-var isAbsoluteURL = __webpack_require__(316);
-var combineURLs = __webpack_require__(317);
+var InterceptorManager = __webpack_require__(312);
+var dispatchRequest = __webpack_require__(313);
+var isAbsoluteURL = __webpack_require__(315);
+var combineURLs = __webpack_require__(316);
 
 /**
  * Create a new instance of Axios
@@ -31370,7 +31333,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 305 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31389,7 +31352,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 306 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31422,7 +31385,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 307 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31450,7 +31413,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 308 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31525,7 +31488,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 309 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31569,7 +31532,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 310 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31644,7 +31607,7 @@ module.exports = (
 
 
 /***/ }),
-/* 311 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31687,7 +31650,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 312 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31747,7 +31710,7 @@ module.exports = (
 
 
 /***/ }),
-/* 313 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31806,14 +31769,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 314 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(12);
-var transformData = __webpack_require__(315);
+var transformData = __webpack_require__(314);
 var isCancel = __webpack_require__(133);
 var defaults = __webpack_require__(73);
 
@@ -31892,7 +31855,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 315 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31919,7 +31882,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 316 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31940,7 +31903,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 317 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31961,7 +31924,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 318 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32025,7 +31988,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 319 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32059,7 +32022,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 320 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32091,7 +32054,7 @@ var updateCardUrl = exports.updateCardUrl = function updateCardUrl(cardId) {
 };
 
 /***/ }),
-/* 321 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32125,11 +32088,11 @@ var _CardSelectors = __webpack_require__(27);
 
 var cardSelectors = _interopRequireWildcard(_CardSelectors);
 
-var _Statuses = __webpack_require__(322);
+var _Statuses = __webpack_require__(321);
 
 var statuses = _interopRequireWildcard(_Statuses);
 
-var _Board = __webpack_require__(323);
+var _Board = __webpack_require__(322);
 
 var _Board2 = _interopRequireDefault(_Board);
 
@@ -32271,7 +32234,7 @@ Object.defineProperty(BoardContainer, 'childContextTypes', {
 exports.default = BoardContainer;
 
 /***/ }),
-/* 322 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32286,7 +32249,7 @@ var FETCHING_BOARD = exports.FETCHING_BOARD = 'FETCHING_BOARD';
 var BOARD_FETCHED_SUCCESSFULLY = exports.BOARD_FETCHED_SUCCESSFULLY = 'FETCHED_BOARD_SUCCESSFULLY';
 
 /***/ }),
-/* 323 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32300,11 +32263,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _BoardHeader = __webpack_require__(324);
+var _BoardHeader = __webpack_require__(323);
 
 var _BoardHeader2 = _interopRequireDefault(_BoardHeader);
 
-var _ListListing = __webpack_require__(325);
+var _ListListing = __webpack_require__(324);
 
 var _ListListing2 = _interopRequireDefault(_ListListing);
 
@@ -32565,7 +32528,7 @@ var Board = function Board(props) {
 exports.default = Board;
 
 /***/ }),
-/* 324 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32618,7 +32581,7 @@ var BoardHeader = function BoardHeader(props) {
 exports.default = BoardHeader;
 
 /***/ }),
-/* 325 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32632,11 +32595,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ExistingLists = __webpack_require__(326);
+var _ExistingLists = __webpack_require__(325);
 
 var _ExistingLists2 = _interopRequireDefault(_ExistingLists);
 
-var _CreateListTileContainer = __webpack_require__(346);
+var _CreateListTileContainer = __webpack_require__(345);
 
 var _CreateListTileContainer2 = _interopRequireDefault(_CreateListTileContainer);
 
@@ -32654,7 +32617,7 @@ var ListListing = function ListListing(props) {
 exports.default = ListListing;
 
 /***/ }),
-/* 326 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32674,7 +32637,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDragula = __webpack_require__(327);
+var _reactDragula = __webpack_require__(326);
 
 var _reactDragula2 = _interopRequireDefault(_reactDragula);
 
@@ -32694,7 +32657,7 @@ var _PositionCalculator = __webpack_require__(76);
 
 var _PositionCalculator2 = _interopRequireDefault(_PositionCalculator);
 
-var _DraggableList = __webpack_require__(339);
+var _DraggableList = __webpack_require__(338);
 
 var _DraggableList2 = _interopRequireDefault(_DraggableList);
 
@@ -32934,13 +32897,13 @@ Object.defineProperty(ExistingLists, 'contextTypes', {
 exports.default = ExistingLists;
 
 /***/ }),
-/* 327 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var dragula = __webpack_require__(328);
+var dragula = __webpack_require__(327);
 var atoa = __webpack_require__(136);
 
 function reactDragula () {
@@ -32960,15 +32923,15 @@ module.exports = reactDragula;
 
 
 /***/ }),
-/* 328 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var emitter = __webpack_require__(329);
-var crossvent = __webpack_require__(335);
-var classes = __webpack_require__(338);
+var emitter = __webpack_require__(328);
+var crossvent = __webpack_require__(334);
+var classes = __webpack_require__(337);
 var doc = document;
 var documentElement = doc.documentElement;
 
@@ -33576,14 +33539,14 @@ module.exports = dragula;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
-/* 329 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var atoa = __webpack_require__(136);
-var debounce = __webpack_require__(330);
+var debounce = __webpack_require__(329);
 
 module.exports = function emitter (thing, options) {
   var opts = options || {};
@@ -33637,13 +33600,13 @@ module.exports = function emitter (thing, options) {
 
 
 /***/ }),
-/* 330 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var ticky = __webpack_require__(331);
+var ticky = __webpack_require__(330);
 
 module.exports = function debounce (fn, args, ctx) {
   if (!fn) { return; }
@@ -33654,7 +33617,7 @@ module.exports = function debounce (fn, args, ctx) {
 
 
 /***/ }),
-/* 331 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate) {var si = typeof setImmediate === 'function', tick;
@@ -33665,10 +33628,10 @@ if (si) {
 }
 
 module.exports = tick;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(332).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(331).setImmediate))
 
 /***/ }),
-/* 332 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -33721,14 +33684,14 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(333);
-var global = __webpack_require__(334);
+__webpack_require__(332);
+var global = __webpack_require__(333);
 exports.setImmediate = global.setImmediate;
 exports.clearImmediate = global.clearImmediate;
 
 
 /***/ }),
-/* 333 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -33921,7 +33884,7 @@ exports.clearImmediate = global.clearImmediate;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(23)))
 
 /***/ }),
-/* 334 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var win;
@@ -33941,14 +33904,14 @@ module.exports = win;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
-/* 335 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var customEvent = __webpack_require__(336);
-var eventmap = __webpack_require__(337);
+var customEvent = __webpack_require__(335);
+var eventmap = __webpack_require__(336);
 var doc = global.document;
 var addEvent = addEventEasy;
 var removeEvent = removeEventEasy;
@@ -34050,7 +34013,7 @@ function find (el, type, fn) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
-/* 336 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -34105,7 +34068,7 @@ function CustomEvent (type, params) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
-/* 337 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34126,7 +34089,7 @@ module.exports = eventmap;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
-/* 338 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34166,7 +34129,7 @@ module.exports = {
 
 
 /***/ }),
-/* 339 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34200,7 +34163,7 @@ var _PositionCalculator = __webpack_require__(76);
 
 var _PositionCalculator2 = _interopRequireDefault(_PositionCalculator);
 
-var _List = __webpack_require__(340);
+var _List = __webpack_require__(339);
 
 var _List2 = _interopRequireDefault(_List);
 
@@ -34252,7 +34215,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, mergeProps)(_List2.default);
 
 /***/ }),
-/* 340 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34270,15 +34233,15 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _EditableListTitle = __webpack_require__(341);
+var _EditableListTitle = __webpack_require__(340);
 
 var _EditableListTitle2 = _interopRequireDefault(_EditableListTitle);
 
-var _CardListing = __webpack_require__(343);
+var _CardListing = __webpack_require__(342);
 
 var _CardListing2 = _interopRequireDefault(_CardListing);
 
-var _NewCardForm = __webpack_require__(345);
+var _NewCardForm = __webpack_require__(344);
 
 var _NewCardForm2 = _interopRequireDefault(_NewCardForm);
 
@@ -34363,7 +34326,7 @@ List.propTypes = {
 exports.default = List;
 
 /***/ }),
-/* 341 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34383,7 +34346,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _EditableTitle = __webpack_require__(342);
+var _EditableTitle = __webpack_require__(341);
 
 var _EditableTitle2 = _interopRequireDefault(_EditableTitle);
 
@@ -34491,7 +34454,7 @@ Object.defineProperty(EditableListTitle, 'contextTypes', {
 exports.default = EditableListTitle;
 
 /***/ }),
-/* 342 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34553,7 +34516,7 @@ EditableTitle.propTypes = {
 exports.default = EditableTitle;
 
 /***/ }),
-/* 343 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34567,7 +34530,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ListCard = __webpack_require__(344);
+var _ListCard = __webpack_require__(343);
 
 var _ListCard2 = _interopRequireDefault(_ListCard);
 
@@ -34593,7 +34556,7 @@ var CardListing = function CardListing(props) {
 exports.default = CardListing;
 
 /***/ }),
-/* 344 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34659,7 +34622,7 @@ var ListCard = function ListCard(props) {
 exports.default = ListCard;
 
 /***/ }),
-/* 345 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34730,7 +34693,7 @@ NewCardForm.propTypes = {
 exports.default = NewCardForm;
 
 /***/ }),
-/* 346 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34768,7 +34731,7 @@ var _PositionCalculator = __webpack_require__(76);
 
 var _PositionCalculator2 = _interopRequireDefault(_PositionCalculator);
 
-var _CreateListTile = __webpack_require__(347);
+var _CreateListTile = __webpack_require__(346);
 
 var _CreateListTile2 = _interopRequireDefault(_CreateListTile);
 
@@ -34796,25 +34759,40 @@ var CreateListTileContainer = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CreateListTileContainer.__proto__ || Object.getPrototypeOf(CreateListTileContainer)).call.apply(_ref, [this].concat(args))), _this), Object.defineProperty(_this, 'handleTileClick', {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CreateListTileContainer.__proto__ || Object.getPrototypeOf(CreateListTileContainer)).call.apply(_ref, [this].concat(args))), _this), Object.defineProperty(_this, 'state', {
+      enumerable: true,
+      writable: true,
+      value: {
+        showForm: false,
+        title: ''
+      }
+    }), Object.defineProperty(_this, 'handleTileClick', {
       enumerable: true,
       writable: true,
       value: function value(e) {
         e.stopPropagation();
-        _this.context.store.dispatch(formActions.showCreateListForm());
+
+        _this.setState({
+          showForm: true
+        });
       }
     }), Object.defineProperty(_this, 'handleCloseClick', {
       enumerable: true,
       writable: true,
       value: function value(e) {
         e.stopPropagation();
-        _this.context.store.dispatch(formActions.hideCreateListForm());
+
+        _this.setState({
+          showForm: false
+        });
       }
     }), Object.defineProperty(_this, 'handleChange', {
       enumerable: true,
       writable: true,
       value: function value(e) {
-        _this.context.store.dispatch(formActions.updateCreateListFormInputText(e.target.value));
+        _this.setState({
+          title: e.target.value
+        });
       }
     }), Object.defineProperty(_this, 'handleSubmit', {
       enumerable: true,
@@ -34822,44 +34800,29 @@ var CreateListTileContainer = function (_React$Component) {
       value: function value(e) {
         e.preventDefault;
 
-        var currentState = _this.getState();
+        var currentState = _this.context.store.getState();
         var lists = listSelectors.boardListsSelector(currentState, _this.context.currentBoardId);
         var position = (0, _PositionCalculator2.default)(lists, lists.length + 1);
 
         _this.context.store.dispatch(listActions.createList(_this.context.currentBoardId, {
-          title: currentState.newListForm.title,
+          title: _this.state.title,
           position: position
+        }, function () {
+          _this.setState({
+            showForm: false,
+            title: ''
+          });
         }));
-      }
-    }), Object.defineProperty(_this, 'getState', {
-      enumerable: true,
-      writable: true,
-      value: function value() {
-        return _this.context.store.getState();
       }
     }), _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(CreateListTileContainer, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      this.unsubscribe = this.context.store.subscribe(function () {
-        return _this2.forceUpdate();
-      });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.unsubscribe();
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(_CreateListTile2.default, {
-        showForm: this.getState().newListForm.display,
-        title: this.getState().newListForm.title,
+        showForm: this.state.showForm,
+        title: this.state.title,
         onTileClick: this.handleTileClick,
         onCloseClick: this.handleCloseClick,
         onChange: this.handleChange,
@@ -34882,7 +34845,7 @@ Object.defineProperty(CreateListTileContainer, 'contextTypes', {
 exports.default = CreateListTileContainer;
 
 /***/ }),
-/* 347 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35013,7 +34976,7 @@ Object.defineProperty(CreateListTile, 'propTypes', {
 exports.default = CreateListTile;
 
 /***/ }),
-/* 348 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35035,7 +34998,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _lodash = __webpack_require__(349);
+var _lodash = __webpack_require__(348);
 
 var _ = _interopRequireWildcard(_lodash);
 
@@ -35051,7 +35014,7 @@ var _CardActions = __webpack_require__(75);
 
 var actions = _interopRequireWildcard(_CardActions);
 
-var _Card = __webpack_require__(350);
+var _Card = __webpack_require__(349);
 
 var _Card2 = _interopRequireDefault(_Card);
 
@@ -35200,7 +35163,7 @@ Object.defineProperty(CardContainer, 'contextTypes', {
 exports.default = CardContainer;
 
 /***/ }),
-/* 349 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -52292,7 +52255,7 @@ exports.default = CardContainer;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(124)(module)))
 
 /***/ }),
-/* 350 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52312,7 +52275,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRouterDom = __webpack_require__(26);
 
-var _EditableCardDescription = __webpack_require__(351);
+var _EditableCardDescription = __webpack_require__(350);
 
 var _EditableCardDescription2 = _interopRequireDefault(_EditableCardDescription);
 
@@ -52808,7 +52771,7 @@ var Card = function Card(props) {
 exports.default = Card;
 
 /***/ }),
-/* 351 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52824,7 +52787,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _CardDescription = __webpack_require__(352);
+var _CardDescription = __webpack_require__(351);
 
 var _CardDescription2 = _interopRequireDefault(_CardDescription);
 
@@ -52966,7 +52929,7 @@ Object.defineProperty(EditableCardDescription, 'contextTypes', {
 exports.default = EditableCardDescription;
 
 /***/ }),
-/* 352 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52980,7 +52943,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _showdown = __webpack_require__(353);
+var _showdown = __webpack_require__(352);
 
 var _showdown2 = _interopRequireDefault(_showdown);
 
@@ -53061,7 +53024,7 @@ var CardDescription = function CardDescription(props) {
 exports.default = CardDescription;
 
 /***/ }),
-/* 353 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;;/*! showdown v 1.7.4 - 08-09-2017 */
