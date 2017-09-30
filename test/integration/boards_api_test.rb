@@ -61,15 +61,6 @@ class BoardsAPITest < ActionDispatch::IntegrationTest
         assert_equal expected.to_json, response.body
       end
 
-      test "does not retrieve archived cards" do
-        create(:card, list: @board.lists.first, archived: true)
-
-        get "/api/boards/#{@board.id}"
-
-        cards = JSON.parse(response.body)["lists"][0]["cards"]
-        assert_equal 1, cards.length
-      end
-
       test "returns a 200" do
         get "/api/boards/#{@board.id}"
         assert_response 200
