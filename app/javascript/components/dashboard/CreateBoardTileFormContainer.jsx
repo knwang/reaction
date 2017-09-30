@@ -16,7 +16,7 @@ class CreateBoardTileFormContainer extends React.Component {
 
   static propTypes = {
     onCloseClick: PropTypes.func.isRequired,
-    onSave: PropTypes.finc.isRequired
+    onSave: PropTypes.func.isRequired
   };
 
   handleTextChange = (e) => {
