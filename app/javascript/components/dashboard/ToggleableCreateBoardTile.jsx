@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import CreateBoardTile from './CreateBoardTile';
 import CreateBoardTileForm from './CreateBoardTileForm';
@@ -8,36 +7,39 @@ import CreateBoardTileFormContainer from './CreateBoardTileFormContainer';
 import * as formActions from '../../actions/FormActions';
 
 class ToggleableCreateBoardTile extends React.Component {
-  static contextTypes = {
-    store: PropTypes.object
+  state = {
+    showForm: false
   };
-
-  componentWillMount() {
-   this.unsubscribe = this.context.store.subscribe(() => this.forceUpdate()) ;
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
 
   handleTileClick = (e) => {
     e.preventDefault();
 
-    this.context.store.dispatch(formActions.showCreateBoardForm());
+    this.setState({
+      showForm: true
+    });
   }
 
   handleFormCloseClick = (e) => {
     e.preventDefault();
 
-    this.context.store.dispatch(formActions.hideCreateBoardForm());
+    this.setState({
+      showForm: false
+    });
   }
 
+  handleSave = () => {
+    this.setState({
+      showForm: false
+    });
+  };
+
   render() {
-    if (this.context.store.getState().newBoardForm.display) {
+    if (this.state.showForm) {
       return (
         <li className="board-tile">
           <CreateBoardTileFormContainer
             onCloseClick={this.handleFormCloseClick}
+            onSave={this.handleSave}
           />
         </li>
       );

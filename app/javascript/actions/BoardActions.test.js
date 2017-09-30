@@ -119,8 +119,10 @@ describe("Board actions", () => {
         title: "Awesome board"
       };
 
+      const cb = jest.fn();
+
       beforeEach(() => {
-        store.dispatch(actions.createBoard(newBoard));
+        store.dispatch(actions.createBoard(newBoard, cb));
 
         const invocation = apiClient.createBoard.mock.calls[0];
         const callback = invocation[1];
@@ -137,6 +139,10 @@ describe("Board actions", () => {
         expect(storeActions[1]).toEqual(
           actions.createBoardSuccess(newBoardResponse)
         );
+      });
+
+      it("calls the callback if provided", () => {
+        expect(cb).toHaveBeenCalledWith(newBoardResponse);
       });
     });
 

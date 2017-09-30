@@ -12,6 +12,8 @@ describe("CreateBoardTileForm", () => {
       <CreateBoardTileForm
         title="This is my title!!"
         onTextChange={() => {}}
+        onCloseClick={() => {}}
+        onSubmit={() => {}}
       />
     );
 

@@ -1,45 +1,56 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import CreateBoardTileForm from './CreateBoardTileForm';
 
-import * as boardActions from '../../actions/BoardActions';
-import * as formActions from '../../actions/FormActions';
+import * as actions from '../../actions/BoardActions';
 
-const mapStateToProps = function(state) {
-  return {
-    title: state.newBoardForm.title
+class CreateBoardTileFormContainer extends React.Component {
+  state = {
+    title: ''
   };
-};
 
-const mapDispatchToProps = function(dispatch, ownProps) {
-  return {
-    onCloseClick: ownProps.onCloseClick,
-    onTextChange: function(e) {
-      dispatch(formActions.updateCreateBoardFormInputText(e.target.value));
-    },
-    dispatch
+  static contextTypes = {
+    store: PropTypes.object
   };
-};
 
-const mergeProps = function(stateProps, dispatchProps) {
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    onSubmit: function(e) {
-      e.preventDefault();
+  static propTypes = {
+    onCloseClick: PropTypes.func.isRequired,
+    onSave: PropTypes.finc.isRequired
+  };
 
-      const newBoard = { title: stateProps.title };
+  handleTextChange = (e) => {
+    this.setState({
+      title: e.target.value
+    });
+  };
 
-      dispatchProps.dispatch(boardActions.createBoard(newBoard));
-    }
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newBoard = { title: this.state.title };
+
+    this.context.store.dispatch(
+      actions.createBoard(newBoard, () => {
+        this.setState({
+          title: ''
+        });
+
+        this.props.onSave();
+      })
+    );
+  };
+
+  render() {
+    return (
+      <CreateBoardTileForm
+        onCloseClick={this.props.onCloseClick}
+        onTextChange={this.handleTextChange}
+        onSubmit={this.handleSubmit}
+        title={this.state.title}
+      />
+    );
   };
 }
-
-const CreateBoardTileFormContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
-)(CreateBoardTileForm);
 
 export default CreateBoardTileFormContainer;
