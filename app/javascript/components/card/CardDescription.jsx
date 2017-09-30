@@ -1,4 +1,8 @@
 import React from 'react';
+import showdown from 'showdown';
+
+const converter = new showdown.Converter();
+converter.setFlavor('github');
 
 const CardDescription = (props) => (
   <form className="description">
@@ -33,7 +37,7 @@ const CardDescription = (props) => (
           </div>
         </div>
       ) : (
-        <p className="textarea-overlay">{props.description}</p>
+        <p className="textarea-overlay" dangerouslySetInnerHTML={{__html: converter.makeHtml(props.description)}}></p>
       )
     }
     {
