@@ -4157,3 +4157,11 @@ main.dashboard .board-group {
 .new-board-form button:focus {
   background-image: linear-gradient(to bottom,#5AAC44 0,#519839 100%);
 }
+
+.button.disabled, .button.disabled:active, .button.disabled:hover, button.disabled, button.disabled:active, button.disabled:hover, input[type=button].disabled, input[type=button].disabled:active, input[type=button].disabled:hover, input[type=submit].disabled, input[type=submit].disabled:active, input[type=submit].disabled:hover, input[type=submit]:disabled, input[type=submit]:disabled:hover {
+  background: #F8F9F9;
+  box-shadow: none;
+  color: #B6BBBF;
+  cursor: default;
+  font-weight: 700;
+}

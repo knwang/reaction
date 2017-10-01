@@ -70,9 +70,11 @@ class CardsAPITest < ActionDispatch::IntegrationTest
     class ValidCardIdTest < ActionDispatch::IntegrationTest
       test "returns the card as json" do
         card = create(:card)
+        create(:comment, card: card)
 
         get "/api/cards/#{card.id}"
-        assert_equal card.as_json, JSON.parse(response.body)
+        expected = card.as_json(include: :comments)
+        assert_equal expected, JSON.parse(response.body)
       end
 
       test "returns a 200" do

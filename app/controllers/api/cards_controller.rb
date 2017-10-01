@@ -16,7 +16,7 @@ class Api::CardsController < ApplicationController
 
   def show
     card = Card.find(params[:id])
-    render json: card.as_json
+    render json: card.as_json(include: :comments)
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid card id provided" },
            status: :not_found

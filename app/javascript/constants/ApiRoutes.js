@@ -11,3 +11,5 @@ export const CREATE_CARD_URL = '/api/cards';
 
 export const cardUrl = (cardId) => `/api/cards/${cardId}`;
 export const updateCardUrl = (cardId) => `/api/cards/${cardId}`;
+
+export const CREATE_COMMENT_URL = '/api/comments';

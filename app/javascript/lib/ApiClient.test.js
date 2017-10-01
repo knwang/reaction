@@ -427,4 +427,53 @@ describe("ApiClient", () => {
       });
     });
   });
+
+  describe("createComment", () => {
+    describe("successful request", () => {
+      const newComment = { text: "My comment" };
+
+      it("calls the callback with the new list", async () => {
+        const cb = jest.fn();
+
+        mock.onPost(routes.CREATE_COMMENT_URL).reply(201, { ...newComment, id: 1 });
+        client.createComment(1, newComment, cb);
+
+        await flushPromises();
+
+        expect(cb).toHaveBeenCalledWith({ ... newComment, id: 1 });
+      });
+    });
+
+    describe("failed request", () => {
+      const originalError = global.console.error;
+      const errorText = "That is not a valid record";
+
+      beforeEach(() => {
+        global.console.error = jest.fn();
+        mock.onPost(routes.CREATE_COMMENT_URL).reply(422, { error: errorText });
+      });
+
+      afterEach(() => {
+        global.console.error = originalError;
+      });
+
+      it("logs the error", async () => {
+        client.createComment(1, {});
+
+        await flushPromises();
+
+        expect(global.console.error).toHaveBeenCalledWith(`HTTP Error: ${errorText}`);
+      });
+
+      it("doesn't call the callback", async () => {
+        const cb = jest.fn();
+
+        client.createComment(1, {}, cb);
+
+        await flushPromises();
+
+        expect(cb).not.toHaveBeenCalled();
+      });
+    });
+  });
 });

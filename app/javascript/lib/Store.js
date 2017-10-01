@@ -5,13 +5,15 @@ import boardsReducer from '../reducers/BoardsReducer';
 import listsReducer from '../reducers/ListsReducer';
 import statusReducer from '../reducers/StatusReducer';
 import cardsReducer from '../reducers/CardsReducer';
+import commentsReducer from '../reducers/CommentsReducer';
 
 function reducer(state = {}, action) {
   return {
     boards: boardsReducer(state.boards, action),
     lists: listsReducer(state.lists, action),
     status: statusReducer(state.status, action),
-    cards: cardsReducer(state.cards, action)
+    cards: cardsReducer(state.cards, action),
+    comments: commentsReducer(state.comments, action),
   };
 }
 
