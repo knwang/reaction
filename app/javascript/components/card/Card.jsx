@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import EditableCardDescription from './EditableCardDescription';
 import NewCommentFormContainer from './NewCommentFormContainer';
@@ -9,6 +10,33 @@ import * as boardSelectors from '../../selectors/BoardSelectors';
 
 const Card = (props) => {
   if (props.card) {
+    const comments = props.comments.map((comment) => (
+      <li key={comment.id}>
+        <div className="member-container">
+          <div className="card-member">TP</div>
+        </div>
+        <h3>Taylor Peat</h3>
+        <div className="comment static-comment">
+          <span>{comment.text}</span>
+        </div>
+        <small>{moment(comment.created_at).fromNow()} - <span className="link">Edit</span> - <span className="link">Delete</span></small>
+        <div className="comment">
+          <label>
+            <textarea required="" rows="1" value={comment.text}></textarea>
+            <div>
+              <a className="light-button card-icon sm-icon"></a>
+              <a className="light-button smiley-icon sm-icon"></a>
+              <a className="light-button email-icon sm-icon"></a>
+            </div>
+            <div>
+              <p>You haven't typed anything!</p>
+              <input type="submit" className="button not-implemented" value="Save" /><i className="x-icon icon"></i>
+            </div>
+          </label>
+        </div>
+      </li>
+    ));
+
     return (
       <div>
         <div id="modal-container">
@@ -86,59 +114,7 @@ const Card = (props) => {
                     <li className="not-implemented">Show Details</li>
                   </ul>
                   <ul className="modal-activity-list">
-                    <li>
-                      <div className="member-container">
-                        <div className="card-member">TP</div>
-                      </div>
-                      <h3>Taylor Peat</h3>
-                      <div className="comment static-comment"><span>The activities are not functional.</span>
-                      </div>
-                      <small>22 minutes ago - <span className="link">Edit</span> - <span className="link">Delete</span></small>
-                      <div className="comment">
-                        <label>
-                          <textarea required="" rows="1" value="The activities have not been implemented yet."></textarea>
-                          <div>
-                            <a className="light-button card-icon sm-icon"></a>
-                            <a className="light-button smiley-icon sm-icon"></a>
-                            <a className="light-button email-icon sm-icon"></a>
-                          </div>
-                          <div>
-                            <p>You haven't typed anything!</p>
-                            <input type="submit" className="button not-implemented" value="Send" /><i className="x-icon icon"></i>
-                          </div>
-                        </label>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="member-container">
-                        <div className="card-member small-size">VR</div>
-                      </div>
-                      <p><span className="member-name">Victor Reyes</span> changed the background of this board <small>yesterday at 4:53 PM</small>
-                      </p>
-                    </li>
-                    <li className="activity-comment">
-                      <div className="member-container">
-                        <div className="card-member">VR</div>
-                      </div>
-                      <h3>Victor Reyes</h3>
-                      <div className="comment static-comment"><span>Example of a comment.</span>
-                      </div>
-                      <small>22 minutes ago - <span className="link">Edit</span> - <span className="link">Delete</span></small>
-                      <div className="comment">
-                        <label>
-                          <textarea required="" rows="1" value="Example of a comment."></textarea>
-                          <div>
-                            <a className="light-button card-icon sm-icon"></a>
-                            <a className="light-button smiley-icon sm-icon"></a>
-                            <a className="light-button email-icon sm-icon"></a>
-                          </div>
-                          <div>
-                            <p>You haven't typed anything!</p>
-                            <input type="submit" className="button not-implemented" value="Send" /><i className="x-icon icon"></i>
-                          </div>
-                        </label>
-                      </div>
-                    </li>
+                    {comments}
                   </ul>
                 </li>
               </ul>

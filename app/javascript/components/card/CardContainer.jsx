@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 
 import * as cardSelectors from '../../selectors/CardSelectors';
 import * as boardSelectors from '../../selectors/BoardSelectors';
+import * as commentSelectors from '../../selectors/CommentSelectors';
 import * as actions from '../../actions/CardActions';
 
 import Card from './Card';
@@ -21,7 +22,10 @@ class CardContainer extends React.Component {
 
   componentDidMount() {
     const store = this.context.store;
-    this.unsubscribe = store.subscribe(() => this.updateCardInState());
+    this.unsubscribe = store.subscribe(() => {
+      this.updateCardInState();
+      this.forceUpdate();
+    });
     store.dispatch(actions.fetchCard(this.getCardId()));
   };
 
@@ -86,6 +90,16 @@ class CardContainer extends React.Component {
     this.toggleArchive(false);
   };
 
+  gatherComments = (e) => {
+    if (!this.state.card) { return []; }
+
+    const store = this.context.store;
+
+    return commentSelectors.cardComments(store.getState(), this.state.card.id, (a, b) => (
+      new Date(b.created_at) - new Date(a.created_at)
+    ));
+  }
+
   render() {
     return (
       <Card 
@@ -96,6 +110,7 @@ class CardContainer extends React.Component {
         onTitleKeyPress={this.handleTitleKeyPress}
         onArchiveClick={this.handleArchiveClick}
         onUnarchiveClick={this.handleUnarchiveClick}
+        comments={this.gatherComments()}
       />
     );
   };
