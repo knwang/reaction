@@ -6,6 +6,7 @@ import listsReducer from '../reducers/ListsReducer';
 import statusReducer from '../reducers/StatusReducer';
 import cardsReducer from '../reducers/CardsReducer';
 import commentsReducer from '../reducers/CommentsReducer';
+import actionsReducer from '../reducers/ActionsReducer';
 
 function reducer(state = {}, action) {
   return {
@@ -14,6 +15,7 @@ function reducer(state = {}, action) {
     status: statusReducer(state.status, action),
     cards: cardsReducer(state.cards, action),
     comments: commentsReducer(state.comments, action),
+    actions: actionsReducer(state.actions, action),
   };
 }
 

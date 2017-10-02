@@ -59,30 +59,27 @@ const dueStatus = (card) => {
 const Card = (props) => {
   if (props.card) {
     const comments = props.comments.map((comment) => (
-      <li key={comment.id}>
-        <div className="member-container">
-          <div className="card-member">TP</div>
-        </div>
-        <h3>Taylor Peat</h3>
-        <div className="comment static-comment">
-          <span>{comment.text}</span>
-        </div>
-        <small>{moment(comment.created_at).fromNow()} - <span className="link">Edit</span> - <span className="link">Delete</span></small>
-        <div className="comment">
-          <label>
-            <textarea required="" rows="1" value={comment.text}></textarea>
-            <div>
-              <a className="light-button card-icon sm-icon"></a>
-              <a className="light-button smiley-icon sm-icon"></a>
-              <a className="light-button email-icon sm-icon"></a>
-            </div>
-            <div>
-              <p>You haven't typed anything!</p>
-              <input type="submit" className="button not-implemented" value="Save" /><i className="x-icon icon"></i>
-            </div>
-          </label>
-        </div>
-      </li>
+      comment.isAction ? (
+        <li key={`action_${comment.id}`}>
+          <div className="member-container">
+            <div className="card-member small-size">VR</div>
+          </div>
+          <p>
+            <span className="member-name">Victor Reyes</span> {comment.description} <small>{moment(comment.created_at).fromNow()}</small>
+          </p>
+        </li>
+      ) : (
+        <li key={`comment_${comment.id}`}>
+          <div className="member-container">
+            <div className="card-member">TP</div>
+          </div>
+          <h3>Taylor Peat</h3>
+          <div className="comment static-comment">
+            <span>{comment.text}</span>
+          </div>
+          <small>{moment(comment.created_at).fromNow()} - <span className="link">Edit</span> - <span className="link">Delete</span></small>
+        </li>
+      )
     ));
 
     return (

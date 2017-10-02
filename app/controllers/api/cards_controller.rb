@@ -7,7 +7,7 @@ class Api::CardsController < ApplicationController
       render json: card.to_json, status: :created
     else
       render json: { error: card.errors.full_messages.join(', ') },
-             status: :unprocessable_entity
+            status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid list id provided" },
@@ -16,7 +16,7 @@ class Api::CardsController < ApplicationController
 
   def show
     card = Card.find(params[:id])
-    render json: card.as_json(include: :comments)
+    render json: card.as_json(include: [:comments, :actions])
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid card id provided" },
            status: :not_found
@@ -24,12 +24,17 @@ class Api::CardsController < ApplicationController
 
   def update
     card = Card.find(params[:id])
+    card.assign_attributes(card_params)
 
-    if card.update(card_params)
-      render json: card.as_json
-    else
-      render json: { error: card.errors.full_messages.join(', ') },
-             status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      create_actions(card) if card.valid?
+
+      if card.save
+        render json: card.as_json(include: :actions)
+      else
+        render json: { error: card.errors.full_messages.join(', ') },
+              status: :unprocessable_entity
+      end
     end
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid card id provided" },
@@ -43,5 +48,16 @@ class Api::CardsController < ApplicationController
       :title, :list_id, :position, :description, :archived, :due_date,
       :completed, labels: []
     )
+  end
+
+  def create_actions(card)
+    if card.due_date_changed?
+      card.actions.create!(description: " changed the due date of this card")
+    end
+
+    if card.completed_changed?
+      completion = card.completed ? "complete" : "incomplete"
+      card.actions.create!(description: " marked the due date #{completion}")
+    end
   end
 end

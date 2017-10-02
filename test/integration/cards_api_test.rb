@@ -71,9 +71,10 @@ class CardsAPITest < ActionDispatch::IntegrationTest
       test "returns the card as json" do
         card = create(:card)
         create(:comment, card: card)
+        create(:action, actionable: card)
 
         get "/api/cards/#{card.id}"
-        expected = card.as_json(include: :comments)
+        expected = JSON.parse(card.as_json(include: [:comments, :actions]).to_json)
         assert_equal expected, JSON.parse(response.body)
       end
 
@@ -96,28 +97,68 @@ class CardsAPITest < ActionDispatch::IntegrationTest
   class PutCardTest < ActionDispatch::IntegrationTest
     class ValidCardIdTest < ActionDispatch::IntegrationTest
       class ValidDataTest < ActionDispatch::IntegrationTest
-        def setup
-          @card = create(:card)
-
-          put "/api/cards/#{@card.id}",
-              params: { card: { title: "New card title" } }
-        end
-
         test "returns 200" do
+          card = create(:card)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { title: "New card title" } }
+
           assert_response 200
         end
 
         test "returns the card as json" do
-          assert_equal @card.reload.as_json, JSON.parse(response.body)
+          card = create(:card)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { title: "New card title" } }
+
+          expected = JSON.parse(card.reload.as_json(include: :actions).to_json)
+          assert_equal expected, JSON.parse(response.body)
+        end
+
+        test "creates an action if due date is changed" do
+          card = create(:card, due_date: Date.yesterday)
+
+          assert_equal 0, card.reload.actions.count
+
+          put "/api/cards/#{card.id}",
+              params: { card: { due_date: Date.today.iso8601 } }
+
+          assert_equal 1, card.reload.actions.count
+        end
+
+        test "creates an action if completed status is changed" do
+          card = create(:card, completed: false)
+
+          assert_equal 0, card.reload.actions.count
+
+          put "/api/cards/#{card.id}",
+              params: { card: { completed: true } }
+
+          assert_equal 1, card.reload.actions.count
+        end
+
+        test "creates more than one action" do
+          card = create(:card, completed: false)
+
+          assert_equal 0, card.reload.actions.count
+
+          put "/api/cards/#{card.id}",
+              params: { card: {
+                due_date: Date.today.iso8601,
+                completed: true
+              } }
+
+          assert_equal 2, card.reload.actions.count
         end
       end
 
       class InvalidDataTest < ActionDispatch::IntegrationTest
         def setup
-          card = create(:card)
+          @card = create(:card, completed: false)
 
-          put "/api/cards/#{card.id}",
-              params: { card: { title: "" } }
+          put "/api/cards/#{@card.id}",
+              params: { card: { title: "", completed: true } }
         end
 
         test "returns a 422" do
@@ -126,6 +167,10 @@ class CardsAPITest < ActionDispatch::IntegrationTest
 
         test "includes error text in response" do
           assert JSON.parse(response.body).has_key?("error")
+        end
+
+        test "doesn't create any actions" do
+          assert_equal 0, @card.reload.actions.count
         end
       end
     end

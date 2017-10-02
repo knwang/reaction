@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171002004209) do
+ActiveRecord::Schema.define(version: 20171002062101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actions", force: :cascade do |t|
+    t.string "description", default: ""
+    t.string "actionable_type"
+    t.bigint "actionable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actionable_type", "actionable_id"], name: "index_actions_on_actionable_type_and_actionable_id"
+  end
 
   create_table "boards", force: :cascade do |t|
     t.string "title", default: "", null: false
