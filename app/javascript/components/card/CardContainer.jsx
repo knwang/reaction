@@ -143,11 +143,22 @@ class CardContainer extends React.Component {
     const store = this.context.store;
 
     store.dispatch(actions.updateCard(this.state.card.id, {
-      due_date: null
+      due_date: null,
+      completed: false
     }, () => {
       this.closePopover();
     }));
   };
+
+  handleToggleCompleted = (e) => {
+    e.stopPropagation();
+
+    const store = this.context.store;
+
+    store.dispatch(actions.updateCard(this.state.card.id, {
+      completed: !this.state.card.completed
+    }));
+  }
 
   closePopover = () => {
     this.setState({
@@ -189,6 +200,7 @@ class CardContainer extends React.Component {
             onTitleKeyPress={this.handleTitleKeyPress}
             onArchiveClick={this.handleArchiveClick}
             onUnarchiveClick={this.handleUnarchiveClick}
+            onToggleCompleted={this.handleToggleCompleted}
             showPopover={this.handleShowPopover}
             comments={this.gatherComments()}
           />
