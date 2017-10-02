@@ -45,7 +45,9 @@ class Popover extends React.Component {
       targetLocation.left -= 20;
     }
 
-    targetLocation.top += attachedHeight + 3;
+    if (!this.props.coverTarget) {
+      targetLocation.top += attachedHeight + 3;
+    }
 
     this.setState(targetLocation);
   }

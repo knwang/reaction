@@ -1,15 +1,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import CreateBoardTileForm from './CreateBoardTileForm';
+import NewBoardForm from './NewBoardForm';
 
 import apiClient from '../../lib/ApiClient';
 jest.mock('../../lib/ApiClient');
 
-describe("CreateBoardTileForm", () => {
+describe("NewBoardForm", () => {
   it("displays the `title` prop", () => {
     const wrapper = mount(
-      <CreateBoardTileForm
+      <NewBoardForm
         title="This is my title!!"
         onTextChange={() => {}}
         onCloseClick={() => {}}

@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const CreateBoardTile = (props) => (
-  <a 
-    className="new-board"
+  <li 
+    className="board-tile"
     onClick={props.onClick}
   >
-    <span className="board-title">Create a new board...</span>
-  </a>
+    <a className="new-board">
+      <span className="board-title">Create a new board...</span>
+    </a>
+  </li>
 );
 
 export default CreateBoardTile;

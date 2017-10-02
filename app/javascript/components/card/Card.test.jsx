@@ -11,7 +11,7 @@ describe("Card", () => {
 
   describe("no card is provided", () => {
     it("renders an empty div", () => {
-      wrapper = shallow(<Card card={undefined} />);
+      wrapper = shallow(<Card card={undefined} comments={[]} />);
 
       expect(
         wrapper.html()
@@ -25,7 +25,7 @@ describe("Card", () => {
       wrapper = shallow(
         <Provider store={createStore()}>
           <Router>
-            <Card card={card} />
+            <Card card={card} comments={[]}/>
           </Router>
         </Provider>
       );

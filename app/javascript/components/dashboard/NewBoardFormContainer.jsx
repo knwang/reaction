@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CreateBoardTileForm from './CreateBoardTileForm';
+import NewBoardForm from './NewBoardForm';
 
 import * as actions from '../../actions/BoardActions';
 
-class CreateBoardTileFormContainer extends React.Component {
+class NewBoardFormContainer extends React.Component {
   state = {
     title: ''
   };
@@ -16,7 +16,6 @@ class CreateBoardTileFormContainer extends React.Component {
 
   static propTypes = {
     onCloseClick: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired
   };
 
   handleTextChange = (e) => {
@@ -36,14 +35,14 @@ class CreateBoardTileFormContainer extends React.Component {
           title: ''
         });
 
-        this.props.onSave();
+        this.props.onCloseClick(new Event("click"));
       })
     );
   };
 
   render() {
     return (
-      <CreateBoardTileForm
+      <NewBoardForm
         onCloseClick={this.props.onCloseClick}
         onTextChange={this.handleTextChange}
         onSubmit={this.handleSubmit}
@@ -53,4 +52,4 @@ class CreateBoardTileFormContainer extends React.Component {
   };
 }
 
-export default CreateBoardTileFormContainer;
+export default NewBoardFormContainer;

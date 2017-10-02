@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BoardTile from './BoardTile';
-import ToggleableCreateBoardTile from './ToggleableCreateBoardTile';
+import CreateBoardTile from './CreateBoardTile';
 
 const BoardsDashboard = props => {
   let boards = props.boards.map((board) => (
@@ -12,12 +12,6 @@ const BoardsDashboard = props => {
       key={board.id}
     />
   ));
-
-  boards.push(
-    <ToggleableCreateBoardTile 
-      key={'new-board'}
-    />
-  );
 
   return (
     <main className="dashboard">
@@ -31,6 +25,7 @@ const BoardsDashboard = props => {
 
         <ul className="dashboard-board-tiles">
           {boards}
+          <CreateBoardTile onClick={props.onNewBoardClick} />
         </ul>
       </section>
     </main>

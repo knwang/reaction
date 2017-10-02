@@ -7,13 +7,13 @@ class BoardsTest < ApplicationSystemTestCase
 
       find(".board-tile").click
 
-      within ".board-tile" do
+      within ".popover.new-board" do
         find("input[type='text']").set("")
         click_on "Create"
       end
 
       assert_equal Board.count, 0
-      assert_selector ".board-tile input[type='text']"
+      assert_selector ".popover.new-board input[type='text']"
     end
 
     test "creating a board successfully" do
@@ -21,12 +21,12 @@ class BoardsTest < ApplicationSystemTestCase
 
       find(".board-tile").click
 
-      within ".board-tile" do
+      within ".popover.new-board" do
         find("input[type='text']").set("My board")
         click_on "Create"
       end
 
-      refute_selector ".board-tile input[type='text']"
+      refute_selector ".popover.new-board input[type='text']"
       assert_equal 1, Board.count
     end
   end

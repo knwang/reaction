@@ -209,8 +209,6 @@ class CardContainer extends React.Component {
     }
   }
 
-
-
   render() {
     if (this.state.card) {
       return (

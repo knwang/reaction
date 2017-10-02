@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const CreateBoardTileForm = (props) => (
-  <section className="new-board-form">
+  <div>
     <header>
       <span>Create Board</span>
       <a 
@@ -11,23 +11,25 @@ const CreateBoardTileForm = (props) => (
         onClick={props.onCloseClick}
       ></a>
     </header>
-    <form
-      onSubmit={props.onSubmit}
-    >
-      <dl>
-        <dt>Title</dt>
-        <dd>
-          <input 
-            type="text" 
-            placeholder='Like "Publishing Calendar"...' 
-            value={props.title}
-            onChange={props.onTextChange}
-          />
-        </dd>
-      </dl>
-      <button type="submit">Create</button>
-    </form>
-  </section>
+    <div className="content">
+      <form
+        onSubmit={props.onSubmit}
+      >
+        <dl>
+          <dt>Title</dt>
+          <dd>
+            <input 
+              type="text" 
+              placeholder='Like "Publishing Calendar"...' 
+              value={props.title}
+              onChange={props.onTextChange}
+            />
+          </dd>
+        </dl>
+        <button className="button" type="submit">Create</button>
+      </form>
+    </div>
+  </div>
 );
 
 CreateBoardTileForm.propTypes = {

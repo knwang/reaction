@@ -1,11 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BoardsDashboardDisplay from './BoardsDashboardDisplay';
 import PropTypes from 'prop-types';
+
+import BoardsDashboardDisplay from './BoardsDashboardDisplay';
+import NewBoardFormContainer from './NewBoardFormContainer';
+import Popover from '../shared/Popover';
 
 import * as actions from '../../actions/BoardActions';
 
 class BoardsDashboard extends React.Component {
+  state = {
+    popover: {
+      visible: false,
+      attachedTo: null,
+      type: null
+    }
+  };
+
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
@@ -25,9 +36,39 @@ class BoardsDashboard extends React.Component {
     return store.getState().boards;
   }
 
+  handleNewBoardClick = (e) => {
+    this.setState({
+      popover: {
+        visible: true,
+        attachedTo: e.currentTarget,
+        type: 'new-board'
+      }
+    });
+  };
+
+  handleClosePopoverClick = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      popover: {
+        visible: false,
+        attachedTo: null,
+        type: null
+      }
+    });
+  };
+
   render() {
     return (
-      <BoardsDashboardDisplay boards={this.allBoards()} />
+      <div>
+        <BoardsDashboardDisplay
+          boards={this.allBoards()}
+          onNewBoardClick={this.handleNewBoardClick}
+        />
+        <Popover {...this.state.popover} coverTarget={true}>
+          <NewBoardFormContainer onCloseClick={this.handleClosePopoverClick}/>
+        </Popover>
+      </div>
     )
   }
 }

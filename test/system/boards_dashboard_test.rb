@@ -32,17 +32,15 @@ class BoardsDashboardTest < ApplicationSystemTestCase
     test "it can be toggled" do
       visit "/"
 
-      refute_selector ".board-tile .new-board-form"
+      refute_selector ".popover.new-board"
 
       find(".board-tile .new-board").click
 
-      assert_selector ".board-tile .new-board-form"
-      refute_selector ".board-tile .new-board"
+      assert_selector ".popover.new-board"
 
-      find(".new-board-form .icon-close").click
+      find(".popover.new-board .icon-close").click
 
-      refute_selector ".board-tile .new-board-form"
-      assert_selector ".board-tile .new-board"
+      refute_selector ".popover.new-board"
     end
   end
 end
