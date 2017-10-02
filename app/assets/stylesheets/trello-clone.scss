@@ -312,7 +312,6 @@ nav > ul > li + li {
 }
 .dropdown {
   position: absolute;
-  right: 5px;
   width: 302px;
   padding: 0 0 10px 0;
   background-color: #fff;
@@ -2099,6 +2098,7 @@ span.bg-random-grey {
   float: right;
   padding-right: 10px;
   vertical-align: middle;
+  line-height: 30px;
 }
 .label-list li .check-icon:before {
   color: #fff;
@@ -2484,12 +2484,6 @@ span.bg-random-grey {
 }
 #copy-list .button {
   padding: 11px 30px;
-}
-#add-options-members-dropdown,
-#add-options-labels-dropdown,
-#add-options-position-dropdown {
-  top: 444px;
-  left: 242px;
 }
 #add-options-members-dropdown > div,
 #add-options-labels-dropdown > div,
