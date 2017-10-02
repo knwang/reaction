@@ -118,29 +118,30 @@ const Card = (props) => {
               <ul className="modal-outer-list">
                 <li className="details-section">
                   <ul className="modal-details-list">
-                    <li className="labels-section">
-                      <h3>Labels</h3>
-                      <div className="member-container">
-                        <div className="green label colorblindable"></div>
-                      </div>
-                      <div className="member-container">
-                        <div className="yellow label colorblindable"></div>
-                      </div>
-                      <div className="member-container">
-                        <div className="orange label colorblindable"></div>
-                      </div>
-                      <div className="member-container">
-                        <div className="blue label colorblindable"></div>
-                      </div>
-                      <div className="member-container">
-                        <div className="purple label colorblindable"></div>
-                      </div>
-                      <div className="member-container">
-                        <div className="red label colorblindable"></div>
-                      </div>
-                      <div className="member-container"><i className="plus-icon sm-icon"></i>
-                      </div>
-                    </li>
+                    {
+                      props.card.labels.length > 0 ? (
+                        <li className="labels-section">
+                          <h3>Labels</h3>
+                          {
+                            props.card.labels.map((label) => (
+                              <div
+                                className="member-container"
+                                key={label}
+                                onClick={(e) => props.showPopover(e, 'labels')}
+                              >
+                                <div className={`${label} label colorblindable`}></div>
+                              </div>
+                            ))
+                          }
+                          <div
+                            className="member-container"
+                            onClick={(e) => props.showPopover(e, 'labels')}
+                          >
+                            <i className="plus-icon sm-icon"></i>
+                          </div>
+                        </li>
+                      ) : null
+                    }
                     {
                       props.card.due_date ? (
                         <li className="due-date-section">
@@ -183,7 +184,10 @@ const Card = (props) => {
               <h2>Add</h2>
               <ul>
                 <li className="member-button"><i className="person-icon sm-icon"></i>Members</li>
-                <li className="label-button"><i className="label-icon sm-icon"></i>Labels</li>
+                <li
+                  className="label-button"
+                  onClick={(e) => props.showPopover(e, 'labels')}
+                ><i className="label-icon sm-icon"></i>Labels</li>
                 <li className="checklist-button"><i className="checklist-icon sm-icon"></i>Checklist</li>
                 <li 
                   className="date-button"

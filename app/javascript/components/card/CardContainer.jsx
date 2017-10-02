@@ -12,6 +12,7 @@ import * as actions from '../../actions/CardActions';
 import Card from './Card';
 import Popover from '../shared/Popover';
 import DueDateForm from './DueDateForm';
+import LabelsForm from './LabelsForm';
 
 class CardContainer extends React.Component {
   static contextTypes = {
@@ -160,6 +161,20 @@ class CardContainer extends React.Component {
     }));
   }
 
+  handleToggleLabel = (e, label) => {
+    const store = this.context.store;
+    const currentLabels = this.state.card.labels;
+    let labels;
+
+    if (currentLabels.indexOf(label) === -1) {
+      labels = currentLabels.concat(label);
+    } else {
+      labels = _.without(currentLabels, label);
+    }
+
+    store.dispatch(actions.updateCard(this.state.card.id, { labels }));
+  }
+
   closePopover = () => {
     this.setState({
       popover: {
@@ -180,6 +195,14 @@ class CardContainer extends React.Component {
               onClose={this.handleClosePopover}
               onSubmit={this.handleDueDateSubmit}
               onRemove={this.handleDueDateRemove}
+            />
+          );
+        case 'labels':
+          return (
+            <LabelsForm
+              selectedLabels={this.state.card.labels}
+              onClose={this.handleClosePopover}
+              onClickLabel={this.handleToggleLabel}
             />
           );
       }

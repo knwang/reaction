@@ -50823,6 +50823,10 @@ var _DueDateForm = __webpack_require__(253);
 
 var _DueDateForm2 = _interopRequireDefault(_DueDateForm);
 
+var _LabelsForm = __webpack_require__(480);
+
+var _LabelsForm2 = _interopRequireDefault(_LabelsForm);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -51000,6 +51004,22 @@ var CardContainer = function (_React$Component) {
           completed: !_this.state.card.completed
         }));
       }
+    }), Object.defineProperty(_this, 'handleToggleLabel', {
+      enumerable: true,
+      writable: true,
+      value: function value(e, label) {
+        var store = _this.context.store;
+        var currentLabels = _this.state.card.labels;
+        var labels = void 0;
+
+        if (currentLabels.indexOf(label) === -1) {
+          labels = currentLabels.concat(label);
+        } else {
+          labels = _.without(currentLabels, label);
+        }
+
+        store.dispatch(actions.updateCard(_this.state.card.id, { labels: labels }));
+      }
     }), Object.defineProperty(_this, 'closePopover', {
       enumerable: true,
       writable: true,
@@ -51043,6 +51063,12 @@ var CardContainer = function (_React$Component) {
               onClose: this.handleClosePopover,
               onSubmit: this.handleDueDateSubmit,
               onRemove: this.handleDueDateRemove
+            });
+          case 'labels':
+            return _react2.default.createElement(_LabelsForm2.default, {
+              selectedLabels: this.state.card.labels,
+              onClose: this.handleClosePopover,
+              onClickLabel: this.handleToggleLabel
             });
         }
       }
@@ -68682,7 +68708,7 @@ var Card = function Card(props) {
                 _react2.default.createElement(
                   'ul',
                   { className: 'modal-details-list' },
-                  _react2.default.createElement(
+                  props.card.labels.length > 0 ? _react2.default.createElement(
                     'li',
                     { className: 'labels-section' },
                     _react2.default.createElement(
@@ -68690,42 +68716,30 @@ var Card = function Card(props) {
                       null,
                       'Labels'
                     ),
+                    props.card.labels.map(function (label) {
+                      return _react2.default.createElement(
+                        'div',
+                        {
+                          className: 'member-container',
+                          key: label,
+                          onClick: function onClick(e) {
+                            return props.showPopover(e, 'labels');
+                          }
+                        },
+                        _react2.default.createElement('div', { className: label + ' label colorblindable' })
+                      );
+                    }),
                     _react2.default.createElement(
                       'div',
-                      { className: 'member-container' },
-                      _react2.default.createElement('div', { className: 'green label colorblindable' })
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'member-container' },
-                      _react2.default.createElement('div', { className: 'yellow label colorblindable' })
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'member-container' },
-                      _react2.default.createElement('div', { className: 'orange label colorblindable' })
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'member-container' },
-                      _react2.default.createElement('div', { className: 'blue label colorblindable' })
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'member-container' },
-                      _react2.default.createElement('div', { className: 'purple label colorblindable' })
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'member-container' },
-                      _react2.default.createElement('div', { className: 'red label colorblindable' })
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'member-container' },
+                      {
+                        className: 'member-container',
+                        onClick: function onClick(e) {
+                          return props.showPopover(e, 'labels');
+                        }
+                      },
                       _react2.default.createElement('i', { className: 'plus-icon sm-icon' })
                     )
-                  ),
+                  ) : null,
                   props.card.due_date ? _react2.default.createElement(
                     'li',
                     { className: 'due-date-section' },
@@ -68806,7 +68820,12 @@ var Card = function Card(props) {
               ),
               _react2.default.createElement(
                 'li',
-                { className: 'label-button' },
+                {
+                  className: 'label-button',
+                  onClick: function onClick(e) {
+                    return props.showPopover(e, 'labels');
+                  }
+                },
                 _react2.default.createElement('i', { className: 'label-icon sm-icon' }),
                 'Labels'
               ),
@@ -73811,6 +73830,8 @@ var Popover = function (_React$Component) {
       } else if (!prevProps.visible && this.props.visible) {
         this.setLocation();
         this.addSizeBindings();
+      } else if (this.props.visible && prevProps.attachedTo !== this.props.attachedTo) {
+        this.setLocation();
       }
     }
   }, {
@@ -84163,6 +84184,97 @@ module.exports = function debounce(func, wait, immediate){
   return debounced;
 };
 
+
+/***/ }),
+/* 480 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var allLabels = ["green", "yellow", "orange", "red", "purple", "blue"];
+
+var LabelsForm = function LabelsForm(props) {
+  var labelLis = allLabels.map(function (label) {
+    return _react2.default.createElement(
+      "li",
+      {
+        key: label,
+        onClick: function onClick(e) {
+          return props.onClickLabel(e, label);
+        }
+      },
+      _react2.default.createElement(
+        "div",
+        { className: label + " colorblindable", "data-id": "1" },
+        props.selectedLabels.indexOf(label) !== -1 ? _react2.default.createElement("i", { className: "check-icon sm-icon" }) : null
+      ),
+      _react2.default.createElement("div", { className: "label-background " + label }),
+      _react2.default.createElement("div", { className: "label-background-overlay" }),
+      _react2.default.createElement("i", { className: "edit-icon icon not-implemented" })
+    );
+  });
+
+  return _react2.default.createElement(
+    "div",
+    { id: "add-options-labels-dropdown" },
+    _react2.default.createElement(
+      "header",
+      null,
+      _react2.default.createElement(
+        "span",
+        null,
+        "Change due date"
+      ),
+      _react2.default.createElement("a", {
+        href: "#",
+        className: "icon-sm icon-close",
+        onClick: props.onClose
+      })
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "content" },
+      _react2.default.createElement("input", { className: "dropdown-input", placeholder: "Search labels...", type: "text" }),
+      _react2.default.createElement(
+        "div",
+        { className: "labels-search-results" },
+        _react2.default.createElement(
+          "ul",
+          { className: "label-list" },
+          labelLis
+        ),
+        _react2.default.createElement(
+          "ul",
+          { className: "light-list" },
+          _react2.default.createElement(
+            "li",
+            { className: "not-implemented" },
+            "Create a new label"
+          ),
+          _react2.default.createElement("hr", null),
+          _react2.default.createElement(
+            "li",
+            { className: "toggleColorblind" },
+            "Enable color blind friendly mode."
+          )
+        )
+      )
+    )
+  );
+};
+
+exports.default = LabelsForm;
 
 /***/ })
 /******/ ]);

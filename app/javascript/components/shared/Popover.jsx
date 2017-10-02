@@ -18,11 +18,13 @@ class Popover extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.visible && ! this.props.visible) {
+    if (prevProps.visible && !this.props.visible) {
       this.removeSizeBindings();
     } else if (!prevProps.visible && this.props.visible) {
       this.setLocation();
       this.addSizeBindings();
+    } else if (this.props.visible && prevProps.attachedTo !== this.props.attachedTo) {
+      this.setLocation();
     }
   }
 

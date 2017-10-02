@@ -246,7 +246,6 @@ class CardsTest < ApplicationSystemTestCase
 
   test "user closes the due date popover" do
     card = create(:card, list: @list, due_date: 1.month.from_now)
-
     visit "/cards/#{card.id}"
 
     find("#dueDateDisplay").click
@@ -254,5 +253,22 @@ class CardsTest < ApplicationSystemTestCase
     find(".icon-close").click
 
     refute_selector "#popover.due-date"
+  end
+
+  test "user adds a label using the Labels button" do
+    card = create(:card)
+    visit "/cards/#{card.id}"
+
+    refute_selector ".labels-section"
+
+    find(".label-button").click
+    find(".popover .green.colorblindable").click
+
+    assert_selector ".labels-section .green.label.colorblindable", count: 1
+
+    find(".labels-section .green.label.colorblindable").click
+    find(".popover .green.colorblindable").click
+
+    assert_selector ".labels-section .green.label.colorblindable", count: 0
   end
 end
