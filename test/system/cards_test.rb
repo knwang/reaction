@@ -165,4 +165,94 @@ class CardsTest < ApplicationSystemTestCase
 
     refute card.archived
   end
+
+  test "user adds a comment" do
+    card = create(:card, list: @list)
+
+    visit "/cards/#{card.id}"
+
+    input = find(".comment textarea")
+    input.set("This is my comment")
+
+    submit = find(".comment [type='submit']")
+    submit.click
+
+    assert_selector ".comment.static-comment", text: "This is my comment"
+
+    card.reload
+
+    assert_equal 1, card.comments.count
+  end
+
+  test "user adds a due date" do
+    card = create(:card, list: @list)
+
+    visit "/cards/#{card.id}"
+
+    find('li', text: "Due Date").click
+
+    click_button "13"
+    find(".datepicker-select-time input").set("1:17 AM")
+
+    click_on "Save"
+
+    assert_selector "#dueDateDisplay", text: Date.today.strftime("%b 13 at 1:17 AM")
+  end
+
+  test "user changes a due date by clicking on the date" do
+    card = create(:card, list: @list, due_date: 2.months.from_now)
+
+    visit "/cards/#{card.id}"
+
+    find("#dueDateDisplay").click
+
+    click_on "13"
+    find(".datepicker-select-time input").set("1:17 AM")
+
+    click_on "Save"
+
+    assert_selector "#dueDateDisplay", text: 2.months.from_now.strftime("%b 13 at 1:17 AM")
+
+    refute_equal card.due_date, card.reload.due_date
+  end
+
+  test "user completes a card" do
+    card = create(:card, list: @list, due_date: 1.month.from_now)
+
+    visit "/cards/#{card.id}"
+
+    refute_selector("#dueDateCheckbox.completed")
+
+    find("#dueDateCheckbox").click
+
+    assert_selector("#dueDateDisplay.completed")
+
+    assert card.reload.completed
+  end
+
+  test "user removes a due date" do
+    card = create(:card, list: @list, due_date: 1.month.from_now)
+
+    visit "/cards/#{card.id}"
+
+    find("#dueDateDisplay").click
+
+    click_on "Remove"
+
+    refute_selector "#dueDateDisplay"
+
+    assert_nil card.reload.due_date
+  end
+
+  test "user closes the due date popover" do
+    card = create(:card, list: @list, due_date: 1.month.from_now)
+
+    visit "/cards/#{card.id}"
+
+    find("#dueDateDisplay").click
+
+    find(".icon-close").click
+
+    refute_selector "#popover.due-date"
+  end
 end
