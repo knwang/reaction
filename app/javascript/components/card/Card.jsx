@@ -108,7 +108,11 @@ const Card = (props) => {
                 onBlur={props.onTitleBlur}
                 onKeyPress={props.onTitleKeyPress}
               ></textarea>
-              <p>in list <a className="link">Stuff to try (this is a list)</a><i className="sub-icon sm-icon"></i>
+              <p>{"in list "}
+              <a
+                className="link"
+                onClick={(e) => props.showPopover(e, 'move-card')}
+              >{props.listTitle}</a><i className="sub-icon sm-icon"></i>
               </p>
             </header>
             <section className="modal-main">
@@ -194,7 +198,10 @@ const Card = (props) => {
               </ul>
               <h2>Actions</h2>
               <ul>
-                <li className="move-button"><i className="forward-icon sm-icon"></i>Move</li>
+                <li
+                  className="move-button"
+                  onClick={(e) => props.showPopover(e, 'move-card')}
+                ><i className="forward-icon sm-icon"></i>Move</li>
                 <li className="copy-button"><i className="card-icon sm-icon"></i>Copy</li>
                 <li className="subscribe-button"><i className="sub-icon sm-icon"></i>Subscribe<i className="check-icon sm-icon"></i>
                 </li>

@@ -13,6 +13,7 @@ import Card from './Card';
 import Popover from '../shared/Popover';
 import DueDateForm from './DueDateForm';
 import LabelsForm from './LabelsForm';
+import MoveCardFormContainer from './MoveCardFormContainer';
 
 class CardContainer extends React.Component {
   static contextTypes = {
@@ -205,8 +206,27 @@ class CardContainer extends React.Component {
               onClickLabel={this.handleToggleLabel}
             />
           );
+        case 'move-card':
+          return (
+            <MoveCardFormContainer
+              onClose={this.handleClosePopover}
+            />
+          )
       }
     }
+  }
+
+  list = () => {
+    const store = this.context.store;
+    const state = store.getState();
+
+    return state.lists.find(list => list.id === this.state.card.list_id);
+  };
+
+  listTitle = () => {
+    const list = this.list();
+
+    return list && list.title || '';
   }
 
   render() {
@@ -216,6 +236,7 @@ class CardContainer extends React.Component {
           <Card 
             card={this.state.card}
             title={this.state.title}
+            listTitle={this.listTitle()}
             onTitleChange={this.handleTitleChange}
             onTitleBlur={this.handleTitleBlur}
             onTitleKeyPress={this.handleTitleKeyPress}

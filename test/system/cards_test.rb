@@ -271,4 +271,11 @@ class CardsTest < ApplicationSystemTestCase
 
     assert_selector ".labels-section .green.label.colorblindable", count: 0
   end
+
+  test "shows the correct list link" do
+    card = create(:card)
+    visit "/cards/#{card.id}"
+
+    assert_selector(".link", text: card.list.title)
+  end
 end

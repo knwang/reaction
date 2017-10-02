@@ -19,5 +19,7 @@ Rails.application.routes.draw do
   get '/ui/card_archived', to: 'ui#card_archived'
   get '/ui/due_date_popover', to: 'ui#due_date_popover'
   get '/ui/labels_popover', to: 'ui#labels_popover'
+  get '/ui/move_card_popover', to: 'ui#move_card_popover'
+  get '/ui/copy_card_popover', to: 'ui#copy_card_popover'
   get '/ui', to: 'ui#index'
 end

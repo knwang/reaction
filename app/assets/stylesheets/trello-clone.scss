@@ -4217,3 +4217,95 @@ input[type=text], input[type=password], input[type=email] {
 .popover.due-date #calendar-widget {
   clear: both;
 }
+
+.button-link {
+  background: #E2E4E6;
+  box-shadow: 0 1px 0 0 #C4C9CC;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  height: 2pc;
+  margin-top: 8px;
+  max-width: 300px;
+  padding: 7px 7px 7px 11px;
+  position: relative;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.button-link, .button-link .on {
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.button-link.setting {
+  height: 52px;
+  float: left;
+  position: relative;
+  margin-top: 0;
+}
+
+.button-link.setting .label {
+  color: #838c91;
+  display: block;
+  font-size: 9pt;
+  line-height: 14px;
+  margin-bottom: 0;
+}
+
+.button-link.setting .value {
+  display: block;
+  font-size: 18px;
+  line-height: 24px;
+  color: #333333;
+}
+
+.button-link, .button-link.setting .value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button-link.setting label {
+  display: none;
+}
+
+.button-link.setting select {
+  border: none;
+  cursor: pointer;
+  height: 50px;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+}
+
+.popover select {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.button-link.setting.board {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.button-link.setting.list {
+  width: calc(75% - 8px);
+  margin-right: 8px;
+}
+
+.button-link.setting.position {
+  width: 25%;
+}
+
+.button-link.setting.list,
+.button-link.setting.position {
+  display: inline-block;
+  margin-bottom: 8px;
+}
