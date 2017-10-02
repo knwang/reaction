@@ -85,23 +85,26 @@ class MoveCardFormContainer extends React.Component {
         if (newLists.length) {
           this.selectList(newLists[0].id);
         } else {
-          this.setState({
-            positions: [],
-            selectedList: undefined,
-            selectedPosition: undefined
-          });
+          this.selectList();
         }
       });
     }));
   }
 
   selectList = (id) => {
+    let list;
+    const positions = [];
+
     if (id) {
+      list = this.state.lists.find(list => list.id === id);
+    } else {
+      list = this.state.lists[0];
+    }
+
+    if (list) {
       const store = this.context.store;
       const state = store.getState();
-      const list = this.state.lists.find(list => list.id === id);
       const cards = cardSelectors.listCards(state, list.id);
-      const positions = [];
       let currentPosition = cards.findIndex(card => card.id === this.props.card.id);
       if (currentPosition === -1) currentPosition = undefined;
 
@@ -124,18 +127,14 @@ class MoveCardFormContainer extends React.Component {
 
         positions.push(position);
       }
+    }    
 
-      this.setState({
-        selectedList: list,
-        positions
-      }, () => {
-        this.selectPosition();
-      });
-    } else {
-      this.setState({
-        selectedList: this.state.lists[0]
-      });
-    }
+    this.setState({
+      selectedList: list,
+      positions
+    }, () => {
+      this.selectPosition();
+    });
   }
 
   selectPosition = (position) => {
