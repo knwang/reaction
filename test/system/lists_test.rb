@@ -75,4 +75,47 @@ class ListsTest < ApplicationSystemTestCase
     assert_selector "p.list-title", text: "Updated title"
     assert_equal "Updated title", @board.lists.first.title
   end
+
+  test "shows the correct card icons" do
+    list = create(:list, board: @board)
+    create(:card, list: list, due_date: nil, description: "")
+
+    visit "/boards/#{@board.id}"
+
+    refute_selector ".card .clock-icon"
+    refute_selector ".card .description-icon"
+    refute_selector ".card .comment-icon"
+
+    find(".card").click
+    find("li", text: "Due Date").click
+    within ".popover" do
+      click_on "Save"
+    end
+    find(".close-modal").click
+
+    assert_selector ".card .clock-icon"
+    refute_selector ".card .description-icon"
+    refute_selector ".card .comment-icon"
+
+    find(".card").click
+    find("#description-edit").click
+    find(".textarea-toggle").set("My description")
+    find(".description .button", text: "Save").click
+    find(".close-modal").click
+
+    assert_selector ".card .clock-icon"
+    assert_selector ".card .description-icon"
+    refute_selector ".card .comment-icon"
+
+    find(".card").click
+    find(".comment textarea").set("My comment")
+    within ".comment-section" do
+      click_on "Save"
+    end
+    find(".close-modal").click
+
+    assert_selector ".card .clock-icon"
+    assert_selector ".card .description-icon"
+    assert_selector ".card .comment-icon"
+  end
 end

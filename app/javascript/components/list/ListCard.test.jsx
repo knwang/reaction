@@ -1,11 +1,20 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from '../../lib/Store';
 
 import ListCard from './ListCard';
 
 describe("ListCard", () => {
   let wrapper;
+  let store = createStore({
+    cards: [{
+      id: 1,
+      title: "My card",
+      description: "My description"
+    }]
+  });
   const card = {
     id: 1,
     title: "My card",
@@ -13,7 +22,13 @@ describe("ListCard", () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Router><ListCard card={card} /></Router>);
+    wrapper = mount(
+      <Provider store={store}>
+        <Router>
+          <ListCard card={card} />
+        </Router>
+      </Provider>
+    );
   });
 
   it("displays the card title", () => {

@@ -7,6 +7,21 @@ export default function commentsReducer(state = [], action) {
     );
 
     return filteredState.concat(action.card.comments);
+  } else if (action.type === 'FETCH_BOARD_SUCCESS') {
+    let newComments = [];
+    let filteredState = state;
+
+    action.board.lists.forEach((list) => {
+      list.cards.forEach((card) => {
+        filteredState = filteredState.filter(
+          (comment) => comment.card_id !== card.id
+        )
+
+        newComments = newComments.concat(card.comments);
+      });
+    });
+
+    return filteredState.concat(newComments);
   } else {
     return state;
   }

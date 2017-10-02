@@ -24,7 +24,7 @@ class Api::BoardsController < ApplicationController
 
     board.lists.each do |list|
       list_json = list.as_json
-      list_json["cards"] = list.cards.where(archived: false).as_json
+      list_json["cards"] = list.cards.where(archived: false).as_json(include: :comments)
       board_json["lists"] << list_json
     end
 

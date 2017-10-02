@@ -57,7 +57,10 @@ class BoardsAPITest < ActionDispatch::IntegrationTest
 
         expected = JSON.parse(@board.to_json)
 
-        expected = @board.as_json(include: { lists: { include: :cards } })
+        expected = @board.as_json(include: {
+          lists: { include: { cards: { include: :comments } } }
+        })
+
         assert_equal expected.to_json, response.body
       end
 

@@ -54,4 +54,53 @@ describe("CommentsReducer", () => {
       ).toEqual(['other stuff', newComment]);
     });
   });
+
+  describe("FETCH_BOARD_SUCCESS", () => {
+    const comments = [
+      { id: 1, text: "First comment", card_id: 1 },
+      { id: 2, text: "Second comment", card_id: 1 },
+      { id: 3, text: "Third comment", card_id: 3 }
+    ];
+    const updatedComment = { id: 1, text: "Updated comment", card_id: 1 };
+
+    it("replaces card comments for all lists in this board", () => {
+      expect(
+        reducer([comments[0], comments[1]], {
+          type: types.FETCH_BOARD_SUCCESS,
+          board: {
+            id: 1,
+            lists: [{
+              id: 1,
+              board_id: 1,
+              cards: [{
+                id: 1,
+                list_id: 1,
+                comments: [updatedComment]
+              }]
+            }]
+          }
+        })
+      ).toEqual([updatedComment]);
+    });
+
+    it("doesn't replace other card comments", () => {
+      expect(
+        reducer([comments[2]], {
+          type: types.FETCH_BOARD_SUCCESS,
+          board: {
+            id: 1,
+            lists: [{
+              id: 1,
+              board_id: 1,
+              cards: [{
+                id: 1,
+                list_id: 1,
+                comments: [updatedComment]
+              }]
+            }]
+          }
+        })
+      ).toEqual([comments[2], updatedComment]);
+    });
+  });
 });

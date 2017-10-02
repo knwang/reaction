@@ -102,7 +102,7 @@ class CardContainer extends React.Component {
   gatherComments = (e) => {
     const store = this.context.store;
 
-    return commentSelectors.cardComments(store.getState(), this.state.card.id, (a, b) => (
+    return commentSelectors.cardCommentsAndActions(store.getState(), this.state.card.id, (a, b) => (
       new Date(b.created_at) - new Date(a.created_at)
     ));
   }
