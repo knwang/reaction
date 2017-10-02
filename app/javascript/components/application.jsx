@@ -13,6 +13,11 @@ class Application extends React.Component {
   static contextTypes = {
     store: PropTypes.object
   }
+
+  componentDidMount() {
+    this.context.store.dispatch(fetchBoards());
+  }
+
   render() {
     return (
       <div>

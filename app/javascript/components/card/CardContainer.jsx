@@ -210,6 +210,7 @@ class CardContainer extends React.Component {
           return (
             <MoveCardFormContainer
               onClose={this.handleClosePopover}
+              card={this.state.card}
             />
           )
       }
