@@ -14,15 +14,7 @@ class DueDateForm extends React.Component {
     if (this.props.dueDate) {
       return moment(this.props.dueDate);
     } else {
-      const time = moment();
-
-      time.set({
-        hour: 12,
-        minute: 0,
-        second: 0
-      });
-
-      return time.add(1, 'day');
+      return time = moment("12:00 PM").add(1, 'day');
     }
   }
 
