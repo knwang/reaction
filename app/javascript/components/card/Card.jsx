@@ -5,8 +5,52 @@ import moment from 'moment';
 
 import EditableCardDescription from './EditableCardDescription';
 import NewCommentFormContainer from './NewCommentFormContainer';
+import DueDateForm from './DueDateForm';
 
 import * as boardSelectors from '../../selectors/BoardSelectors';
+
+const formattedDueDate = (date) => {
+  const momentDate = moment(date);
+  let formatString;
+
+  if (momentDate.toDate().getFullYear() === (new Date()).getFullYear()) {
+    formatString = 'MMM D [at] h:mm A';
+  } else {
+    formatString = 'MMM D, YYYY [at] h:mm A';
+  }
+
+  let formatted = momentDate.format(formatString);
+
+  return `${formatted}${dueStatus(date)}`;
+}
+
+const dueClass = (card) => {
+  var diff = (moment(card.due_date).toDate() - new Date()) / (1000 * 60 * 60 * 24);
+
+  if (diff < -1) {
+    return "overdue";
+  } else if (diff < 0) {
+    return "overdue-recent";
+  } else if (diff < 1) {
+    return "due-soon";
+  } else {
+    return "due-later";
+  }
+};
+
+const dueStatus = (date) => {
+  var diff = (moment(date).toDate() - new Date()) / (1000 * 60 * 60 * 24);
+
+  if (diff < -1) {
+    return " (past due)";
+  } else if (diff < 0) {
+    return " (recently past due!)";
+  } else if (diff < 1) {
+    return " (due soon)";
+  } else {
+    return "";
+  }
+};
 
 const Card = (props) => {
   if (props.card) {
@@ -95,8 +139,11 @@ const Card = (props) => {
                     </li>
                     <li className="due-date-section">
                       <h3>Due Date</h3>
-                      <div id="dueDateDisplay" className="overdue completed">
-                        <input id="dueDateCheckbox" type="checkbox" className="checkbox" checked="" />Aug 4 at 10:42 AM <span>(past due)</span>
+                      <div id="dueDateDisplay"
+                        className={dueClass(props.card)}
+                        onClick={(e) => props.showPopover(e, 'due-date')}
+                      >
+                        <input id="dueDateCheckbox" type="checkbox" className="checkbox" checked={props.card.completed} />{formattedDueDate(props.card.due_date)}
                       </div>
                     </li>
                   </ul>
@@ -125,7 +172,10 @@ const Card = (props) => {
                 <li className="member-button"><i className="person-icon sm-icon"></i>Members</li>
                 <li className="label-button"><i className="label-icon sm-icon"></i>Labels</li>
                 <li className="checklist-button"><i className="checklist-icon sm-icon"></i>Checklist</li>
-                <li className="date-button not-implemented"><i className="clock-icon sm-icon"></i>Due Date</li>
+                <li 
+                  className="date-button"
+                  onClick={(e) => props.showPopover(e, 'due-date')}
+                ><i className="clock-icon sm-icon"></i>Due Date</li>
                 <li className="attachment-button not-implemented"><i className="attachment-icon sm-icon"></i>Attachment</li>
               </ul>
               <h2>Actions</h2>

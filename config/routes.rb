@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   get '/ui/card', to: 'ui#card'
   get '/ui/card_editing_description', to: 'ui#card_editing_description'
   get '/ui/card_archived', to: 'ui#card_archived'
+  get '/ui/due_date_popover', to: 'ui#due_date_popover'
   get '/ui', to: 'ui#index'
 end

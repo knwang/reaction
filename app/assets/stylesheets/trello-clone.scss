@@ -4165,3 +4165,131 @@ main.dashboard .board-group {
   cursor: default;
   font-weight: 700;
 }
+
+.popover {
+  background: white;
+  border: 1px solid #D6DADC;
+  border-radius: 3px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.15);
+  font-size: 0.875rem;
+  left: 0;
+  padding: 5px 10px 10px 10px;
+  position: absolute;
+  top: 0;
+  width: 300px;
+  z-index: 100;
+}
+
+.popover header {
+  border-bottom: 1px solid #D6DADC;
+  color: #8c8c8c;
+  margin-bottom: 10px;
+  padding: 7px 0px 10px 10px;
+  text-align: center;
+}
+
+.popover header a,
+.popover header a:link,
+.popover header a:visited,
+.popover header a:hover,
+.popover header a:active {
+  background: #fff;
+  float: right;
+  height: auto;
+  padding: 0;
+}
+
+.popover .button {
+  background-image: linear-gradient(rgb(97, 189, 79) 0px, rgb(90, 172, 68) 100%);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 #3F6F21;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.6; 
+  padding: 5px 30px;
+
+  &:hover {
+    background-image: linear-gradient(to bottom,#5AAC44 0,#519839 100%);
+  }
+}
+
+.popover button:hover, .popover .button:hover {
+  cursor: pointer;
+}
+
+.popover.due-date {
+  width: 300px;
+}
+ 
+.popover.due-date .content {
+  max-height: 625px;
+}
+
+.popover.due-date input[type=text], .popover.due-date input[type=password], .popover.due-date input[type=email] {
+  margin: 4px 0 9pt;
+  width: 100%;
+}
+
+.popover.due-date button[type="submit"] {
+  float: left;
+}
+
+.popover.due-date button[type="reset"] {
+  float: right;
+}
+
+input[type=text], input[type=password], input[type=email] {
+  -webkit-transition: background 85ms ease-in,border-color 85ms ease-in;
+  transition: background 85ms ease-in,border-color 85ms ease-in;
+  width: 250px;
+}
+
+.popover button, .popover input:not([type=file]):not([type=checkbox]), .popover textarea {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  background-color: #E2E4E6;
+  border: 1px solid #CDD2D4;
+  border-radius: 3px;
+  display: block;
+  margin-bottom: 9pt;
+  padding: 7px;
+
+  &:active, &:focus {
+    background-color: white;
+  }
+}
+
+.popover .button, .popover button, .popover input[type=button], .popover input[type=submit] {
+  border: none;
+  box-shadow: 0 1px 0 #959DA1;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 700;
+  line-height: 22px;
+  margin: 8px 4px 0 0;
+  margin-top: 8px;
+  margin-right: 4px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding: 5px 1pc;
+  text-align: center;
+}
+
+.popover.due-date .datepicker-select-date,
+.popover.due-date .datepicker-select-time {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  width: 50%;
+}
+
+.popover.due-date .datepicker-select-date {
+  padding-right: 9pt;
+}
+
+.popover.due-date #calendar-widget {
+  clear: both;
+}

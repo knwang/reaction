@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
+import moment from 'moment';
 
 import * as cardSelectors from '../../selectors/CardSelectors';
 import * as boardSelectors from '../../selectors/BoardSelectors';
@@ -9,6 +10,8 @@ import * as commentSelectors from '../../selectors/CommentSelectors';
 import * as actions from '../../actions/CardActions';
 
 import Card from './Card';
+import Popover from '../shared/Popover';
+import DueDateForm from './DueDateForm';
 
 class CardContainer extends React.Component {
   static contextTypes = {
@@ -17,7 +20,12 @@ class CardContainer extends React.Component {
 
   state = {
     title: '',
-    card: undefined
+    card: undefined,
+    popover: {
+      visible: false,
+      attachedTo: null,
+      type: null
+    }
   };
 
   componentDidMount() {
@@ -91,8 +99,6 @@ class CardContainer extends React.Component {
   };
 
   gatherComments = (e) => {
-    if (!this.state.card) { return []; }
-
     const store = this.context.store;
 
     return commentSelectors.cardComments(store.getState(), this.state.card.id, (a, b) => (
@@ -100,19 +106,100 @@ class CardContainer extends React.Component {
     ));
   }
 
+  handleShowPopover = (e, type) => {
+    this.setState({
+      popover: {
+        type,
+        attachedTo: e.target,
+        visible: true
+      }
+    });
+  };
+
+  handleClosePopover = (e) => {
+    e.preventDefault();
+    this.closePopover();
+  }
+
+  handleDueDateSubmit = (e) => {
+    e.preventDefault();
+
+    const date = e.target.querySelector('.datepicker-select-date input').value;
+    const time = e.target.querySelector('.datepicker-select-time input').value;
+    const dateTime = `${date} ${time}`;
+
+    const store = this.context.store;
+
+    store.dispatch(actions.updateCard(this.state.card.id, {
+      due_date: moment(dateTime, 'M/D/YYYY h:mm A').toISOString()
+    }, () => {
+      this.closePopover();
+    }));
+  }
+
+  handleDueDateRemove = (e) => {
+    e.preventDefault();
+
+    const store = this.context.store;
+
+    store.dispatch(actions.updateCard(this.state.card.id, {
+      due_date: null
+    }, () => {
+      this.closePopover();
+    }));
+  };
+
+  closePopover = () => {
+    this.setState({
+      popover: {
+        type: null,
+        attachedTo: null,
+        visible: false
+      }
+    });
+  }
+
+  popoverChildren() {
+    if (this.state.popover.visible && this.state.popover.type) {
+      switch(this.state.popover.type) {
+        case 'due-date':
+          return (
+            <DueDateForm
+              dueDate={this.state.card.due_date}
+              onClose={this.handleClosePopover}
+              onSubmit={this.handleDueDateSubmit}
+              onRemove={this.handleDueDateRemove}
+            />
+          );
+      }
+    }
+  }
+
+
+
   render() {
-    return (
-      <Card 
-        card={this.state.card}
-        title={this.state.title}
-        onTitleChange={this.handleTitleChange}
-        onTitleBlur={this.handleTitleBlur}
-        onTitleKeyPress={this.handleTitleKeyPress}
-        onArchiveClick={this.handleArchiveClick}
-        onUnarchiveClick={this.handleUnarchiveClick}
-        comments={this.gatherComments()}
-      />
-    );
+    if (this.state.card) {
+      return (
+        <div>
+          <Card 
+            card={this.state.card}
+            title={this.state.title}
+            onTitleChange={this.handleTitleChange}
+            onTitleBlur={this.handleTitleBlur}
+            onTitleKeyPress={this.handleTitleKeyPress}
+            onArchiveClick={this.handleArchiveClick}
+            onUnarchiveClick={this.handleUnarchiveClick}
+            showPopover={this.handleShowPopover}
+            comments={this.gatherComments()}
+          />
+          <Popover {...this.state.popover}>
+            {this.popoverChildren()}
+          </Popover>
+        </div>
+      );
+    } else {
+      return null;
+    }
   };
 }
 
