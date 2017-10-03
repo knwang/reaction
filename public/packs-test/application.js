@@ -18417,8 +18417,10 @@ var Popover = function (_React$Component) {
       enumerable: true,
       writable: true,
       value: {
-        top: 0,
-        left: 0
+        position: {
+          top: 0,
+          left: 0
+        }
       }
     }), Object.defineProperty(_this, 'setLocation', {
       enumerable: true,
@@ -18428,19 +18430,47 @@ var Popover = function (_React$Component) {
         var targetLocation = $attachedTo.offset();
         var attachedHeight = $attachedTo.outerHeight();
         var elWidth = (0, _jquery2.default)(_this.refs.popover).outerWidth(true);
+        var elHeight = (0, _jquery2.default)(_this.refs.popover).outerHeight(true);
+        var $header = (0, _jquery2.default)(_this.refs.popover).find('header').eq(0);
+        var $content = (0, _jquery2.default)(_this.refs.popover).find('.content').eq(0);
+        var contentVerticalMargin = $content.outerHeight(true) - $content.outerHeight();
+        var headerHeight = $header.outerHeight(true);
         var windowWidth = (0, _jquery2.default)(window).width();
-        var overBounds = elWidth + targetLocation.left - windowWidth;
-
-        if (overBounds > 0) {
-          targetLocation.left -= overBounds;
-          targetLocation.left -= 20;
-        }
+        var windowHeight = (0, _jquery2.default)(window).height();
+        var overRightBounds = elWidth + targetLocation.left - windowWidth;
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
         if (!_this.props.coverTarget) {
           targetLocation.top += attachedHeight + 3;
         }
 
-        _this.setState(targetLocation);
+        var overBottomBounds = targetLocation.top + elHeight - (windowHeight + scrollTop);
+
+        if (overRightBounds > 0) {
+          targetLocation.left -= overRightBounds;
+          targetLocation.left -= 20;
+        }
+
+        if (targetLocation.left < 0) {
+          targetLocation.left = 20;
+        };
+
+        if (overBottomBounds > 0) {
+          targetLocation.top -= overBottomBounds;
+          targetLocation.top -= 20;
+        }
+
+        if (targetLocation.top < 0) {
+          targetLocation.top = 20;
+        };
+
+        $content.css({
+          maxHeight: Math.max(windowHeight - 40 - headerHeight - contentVerticalMargin, 50)
+        });
+
+        _this.setState({
+          position: targetLocation
+        });
       }
     }), Object.defineProperty(_this, 'addSizeBindings', {
       enumerable: true,
@@ -18494,7 +18524,10 @@ var Popover = function (_React$Component) {
           {
             ref: 'popover',
             className: 'popover ' + this.props.type,
-            style: { top: this.state.top, left: this.state.left }
+            style: {
+              top: this.state.position.top,
+              left: this.state.position.left
+            }
           },
           this.props.children
         );
@@ -84493,23 +84526,9 @@ var _MoveCardForm = __webpack_require__(482);
 
 var _MoveCardForm2 = _interopRequireDefault(_MoveCardForm);
 
-var _ListSelectors = __webpack_require__(38);
-
-var listSelectors = _interopRequireWildcard(_ListSelectors);
-
-var _CardSelectors = __webpack_require__(23);
-
-var cardSelectors = _interopRequireWildcard(_CardSelectors);
-
-var _PositionCalculator = __webpack_require__(50);
-
-var _PositionCalculator2 = _interopRequireDefault(_PositionCalculator);
-
 var _CardActions = __webpack_require__(49);
 
 var actions = _interopRequireWildcard(_CardActions);
-
-var _BoardActions = __webpack_require__(36);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -84548,6 +84567,226 @@ var MoveCardFormContainer = function (_React$Component) {
       enumerable: true,
       writable: true,
       value: {
+        location: {
+          boardId: undefined,
+          listId: undefined,
+          position: undefined
+        }
+      }
+    }), Object.defineProperty(_this, 'handleLocationChange', {
+      enumerable: true,
+      writable: true,
+      value: function value(location) {
+        _this.setState({ location: location });
+      }
+    }), Object.defineProperty(_this, 'handleSubmit', {
+      enumerable: true,
+      writable: true,
+      value: function value(e) {
+        if (_this.isSubmitDisabled()) {
+          return;
+        }
+
+        e.preventDefault;
+
+        var store = _this.context.store;
+        var _this$state$location = _this.state.location,
+            boardId = _this$state$location.boardId,
+            listId = _this$state$location.listId,
+            position = _this$state$location.position;
+
+        var sourceBoardId = _this.props.card.board_id;
+        var changingBoard = boardId !== sourceBoardId;
+
+        store.dispatch(actions.updateCard(_this.props.card.id, {
+          list_id: listId,
+          position: position
+        }, function () {
+          if (changingBoard) {
+            _this.props.history.push('/boards/' + sourceBoardId);
+          } else {
+            _this.props.onClose(new Event("click"));
+          }
+        }));
+      }
+    }), Object.defineProperty(_this, 'isSubmitDisabled', {
+      enumerable: true,
+      writable: true,
+      value: function value() {
+        var _this$state$location2 = _this.state.location,
+            boardId = _this$state$location2.boardId,
+            listId = _this$state$location2.listId,
+            position = _this$state$location2.position;
+
+
+        return boardId == null || listId == null || position == null;
+      }
+    }), _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(MoveCardFormContainer, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_MoveCardForm2.default, {
+        card: this.props.card,
+        onCloseClick: this.props.onClose,
+        onLocationChange: this.handleLocationChange,
+        onSubmit: this.handleSubmit,
+        isSubmitDisabled: this.isSubmitDisabled()
+      });
+    }
+  }]);
+
+  return MoveCardFormContainer;
+}(_react2.default.Component);
+
+Object.defineProperty(MoveCardFormContainer, 'contextTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    store: _propTypes2.default.object
+  }
+});
+exports.default = (0, _reactRouterDom.withRouter)(MoveCardFormContainer);
+
+/***/ }),
+/* 482 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _CardLocationFormContainer = __webpack_require__(483);
+
+var _CardLocationFormContainer2 = _interopRequireDefault(_CardLocationFormContainer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MoveCardForm = function MoveCardForm(props) {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'header',
+      null,
+      _react2.default.createElement(
+        'span',
+        null,
+        'Move Card'
+      ),
+      _react2.default.createElement('a', {
+        href: '#',
+        className: 'icon-sm icon-close',
+        onClick: props.onCloseClick
+      })
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'content' },
+      _react2.default.createElement(_CardLocationFormContainer2.default, {
+        card: props.card,
+        onLocationChange: props.onLocationChange
+      }),
+      _react2.default.createElement(
+        'button',
+        {
+          className: 'button',
+          type: 'submit',
+          onClick: props.onSubmit,
+          disabled: props.isSubmitDisabled
+        },
+        'Move'
+      )
+    )
+  );
+};
+
+exports.default = MoveCardForm;
+
+/***/ }),
+/* 483 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _CardLocationForm = __webpack_require__(484);
+
+var _CardLocationForm2 = _interopRequireDefault(_CardLocationForm);
+
+var _ListSelectors = __webpack_require__(38);
+
+var listSelectors = _interopRequireWildcard(_ListSelectors);
+
+var _CardSelectors = __webpack_require__(23);
+
+var cardSelectors = _interopRequireWildcard(_CardSelectors);
+
+var _PositionCalculator = __webpack_require__(50);
+
+var _PositionCalculator2 = _interopRequireDefault(_PositionCalculator);
+
+var _BoardActions = __webpack_require__(36);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var sortByTitle = function sortByTitle(a, b) {
+  var aTitle = a.title.toLowerCase();
+  var bTitle = b.title.toLowerCase();
+
+  if (aTitle < bTitle) return -1;
+  if (aTitle > bTitle) return 1;
+  return 0;
+};
+
+var CardLocationFormContainer = function (_React$Component) {
+  _inherits(CardLocationFormContainer, _React$Component);
+
+  function CardLocationFormContainer() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, CardLocationFormContainer);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CardLocationFormContainer.__proto__ || Object.getPrototypeOf(CardLocationFormContainer)).call.apply(_ref, [this].concat(args))), _this), Object.defineProperty(_this, 'state', {
+      enumerable: true,
+      writable: true,
+      value: {
         selectedBoard: undefined,
         selectedList: undefined,
         selectedPosition: undefined,
@@ -84578,31 +84817,6 @@ var MoveCardFormContainer = function (_React$Component) {
         var selectedValue = Number(e.target.value);
 
         _this.selectPosition(selectedValue);
-      }
-    }), Object.defineProperty(_this, 'handleMove', {
-      enumerable: true,
-      writable: true,
-      value: function value(e) {
-        if (_this.isSubmitDisabled()) {
-          return;
-        }
-
-        e.preventDefault;
-
-        var store = _this.context.store;
-        var sourceBoardId = _this.props.card.board_id;
-        var changingBoard = _this.state.selectedBoard.id !== sourceBoardId;
-
-        store.dispatch(actions.updateCard(_this.props.card.id, {
-          list_id: _this.state.selectedList.id,
-          position: _this.state.selectedPosition
-        }, function () {
-          if (changingBoard) {
-            _this.props.history.push('/boards/' + sourceBoardId);
-          } else {
-            _this.props.onClose(new Event("click"));
-          }
-        }));
       }
     }), Object.defineProperty(_this, 'selectBoard', {
       enumerable: true,
@@ -84691,10 +84905,22 @@ var MoveCardFormContainer = function (_React$Component) {
         if (position != null) {
           _this.setState({
             selectedPosition: position
+          }, function () {
+            _this.props.onLocationChange({
+              boardId: _this.state.selectedBoard && _this.state.selectedBoard.id,
+              listId: _this.state.selectedList && _this.state.selectedList.id,
+              position: _this.state.selectedPosition
+            });
           });
         } else {
           _this.setState({
             selectedPosition: _this.state.positions[0]
+          }, function () {
+            _this.props.onLocationChange({
+              boardId: _this.state.selectedBoard && _this.state.selectedBoard.id,
+              listId: _this.state.selectedList && _this.state.selectedList.id,
+              position: _this.state.selectedPosition
+            });
           });
         }
       }
@@ -84761,7 +84987,7 @@ var MoveCardFormContainer = function (_React$Component) {
     }), _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  _createClass(MoveCardFormContainer, [{
+  _createClass(CardLocationFormContainer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       var _this2 = this;
@@ -84786,9 +85012,7 @@ var MoveCardFormContainer = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_MoveCardForm2.default, {
-        onCloseClick: this.props.onClose,
-        onMove: this.handleMove,
+      return _react2.default.createElement(_CardLocationForm2.default, {
         boards: this.state.boards,
         lists: this.state.lists,
         positions: this.state.positions,
@@ -84809,20 +85033,20 @@ var MoveCardFormContainer = function (_React$Component) {
     }
   }]);
 
-  return MoveCardFormContainer;
+  return CardLocationFormContainer;
 }(_react2.default.Component);
 
-Object.defineProperty(MoveCardFormContainer, 'contextTypes', {
+Object.defineProperty(CardLocationFormContainer, 'contextTypes', {
   enumerable: true,
   writable: true,
   value: {
     store: _propTypes2.default.object
   }
 });
-exports.default = (0, _reactRouterDom.withRouter)(MoveCardFormContainer);
+exports.default = CardLocationFormContainer;
 
 /***/ }),
-/* 482 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84843,50 +85067,69 @@ var MoveCardForm = function MoveCardForm(props) {
     "div",
     null,
     _react2.default.createElement(
-      "header",
-      null,
+      "div",
+      { className: "button-link setting board" },
       _react2.default.createElement(
         "span",
-        null,
-        "Move Card"
+        { className: "label" },
+        "Board"
       ),
-      _react2.default.createElement("a", {
-        href: "#",
-        className: "icon-sm icon-close",
-        onClick: props.onCloseClick
-      })
+      _react2.default.createElement(
+        "span",
+        { className: "value js-board-value" },
+        props.selectedBoardTitle
+      ),
+      _react2.default.createElement(
+        "label",
+        null,
+        "Board"
+      ),
+      _react2.default.createElement(
+        "select",
+        { onChange: props.onBoardChange, value: props.selectedBoardId },
+        props.boards.map(function (board) {
+          var selected = board.id === props.currentBoardId;
+
+          return _react2.default.createElement(
+            "option",
+            { value: board.id, key: board.id },
+            board.title,
+            selected ? ' (current)' : ''
+          );
+        })
+      )
     ),
     _react2.default.createElement(
       "div",
-      { className: "content" },
+      null,
       _react2.default.createElement(
         "div",
-        { className: "button-link setting board" },
+        { className: "button-link setting list" },
         _react2.default.createElement(
           "span",
           { className: "label" },
-          "Board"
+          "List"
         ),
         _react2.default.createElement(
           "span",
-          { className: "value js-board-value" },
-          props.selectedBoardTitle
+          { className: "value js-list-value" },
+          props.selectedListTitle
         ),
         _react2.default.createElement(
           "label",
           null,
-          "Board"
+          "List"
         ),
         _react2.default.createElement(
           "select",
-          { onChange: props.onBoardChange, value: props.selectedBoardId },
-          props.boards.map(function (board) {
-            var selected = board.id === props.currentBoardId;
+          { onChange: props.onListChange, value: props.selectedListId },
+          props.lists.map(function (list) {
+            var selected = list.id === props.currentListId;
 
             return _react2.default.createElement(
               "option",
-              { value: board.id, key: board.id },
-              board.title,
+              { value: list.id, key: list.id },
+              list.title,
               selected ? ' (current)' : ''
             );
           })
@@ -84894,83 +85137,36 @@ var MoveCardForm = function MoveCardForm(props) {
       ),
       _react2.default.createElement(
         "div",
-        null,
+        { className: "button-link setting position" },
         _react2.default.createElement(
-          "div",
-          { className: "button-link setting list" },
-          _react2.default.createElement(
-            "span",
-            { className: "label" },
-            "List"
-          ),
-          _react2.default.createElement(
-            "span",
-            { className: "value js-list-value" },
-            props.selectedListTitle
-          ),
-          _react2.default.createElement(
-            "label",
-            null,
-            "List"
-          ),
-          _react2.default.createElement(
-            "select",
-            { onChange: props.onListChange, value: props.selectedListId },
-            props.lists.map(function (list) {
-              var selected = list.id === props.currentListId;
-
-              return _react2.default.createElement(
-                "option",
-                { value: list.id, key: list.id },
-                list.title,
-                selected ? ' (current)' : ''
-              );
-            })
-          )
+          "span",
+          { className: "label" },
+          "Position"
         ),
         _react2.default.createElement(
-          "div",
-          { className: "button-link setting position" },
-          _react2.default.createElement(
-            "span",
-            { className: "label" },
-            "Position"
-          ),
-          _react2.default.createElement(
-            "span",
-            { className: "value" },
-            props.selectedPositionHumanIndex
-          ),
-          _react2.default.createElement(
-            "label",
-            null,
-            "Position"
-          ),
-          _react2.default.createElement(
-            "select",
-            { onChange: props.onPositionChange, value: props.selectedPosition },
-            props.positions.map(function (position, index) {
-              var selected = props.selectedListId === props.currentListId && props.currentPosition === position;
+          "span",
+          { className: "value" },
+          props.selectedPositionHumanIndex
+        ),
+        _react2.default.createElement(
+          "label",
+          null,
+          "Position"
+        ),
+        _react2.default.createElement(
+          "select",
+          { onChange: props.onPositionChange, value: props.selectedPosition },
+          props.positions.map(function (position, index) {
+            var selected = props.selectedListId === props.currentListId && props.currentPosition === position;
 
-              return _react2.default.createElement(
-                "option",
-                { value: position, key: position },
-                index + 1,
-                selected ? ' (current)' : ''
-              );
-            })
-          )
+            return _react2.default.createElement(
+              "option",
+              { value: position, key: position },
+              index + 1,
+              selected ? ' (current)' : ''
+            );
+          })
         )
-      ),
-      _react2.default.createElement(
-        "button",
-        {
-          className: "button",
-          type: "submit",
-          onClick: props.onMove,
-          disabled: props.isSubmitDisabled
-        },
-        "Move"
       )
     )
   );
