@@ -129,18 +129,22 @@ class ExistingLists extends React.Component {
     if (e.key === 'Enter') {
       e.preventDefault();
 
-      store.dispatch(cardActions.createCard(this.state.addCardActiveListId, {
-        title: this.state.newCardFormText
-      }, this.setState({ newCardFormText: '' })));
+      this.handleNewCardFormSubmit(new Event("submit"));
     }
   };
 
   handleNewCardFormSubmit = (e) => {
     const store = this.context.store;
+    const currentCards = cardSelectors.listCards(
+      store.getState(),
+      this.state.addCardActiveListId
+    );
+    const position = calculatePosition(currentCards, currentCards.length);
 
     e.preventDefault();
     store.dispatch(cardActions.createCard(this.state.addCardActiveListId, {
-      title: this.state.newCardFormText
+      title: this.state.newCardFormText,
+      position
     }, this.handleNewCardFormClose));
   };
 
