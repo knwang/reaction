@@ -72,7 +72,11 @@ const MoveCardForm = (props) => (
         </div>
       </div>
 
-      <button className="button" type="submit">Move</button>
+      <button
+        className="button"
+        type="submit"
+        disabled={props.isSubmitDisabled}
+      >Move</button>
     </div>
   </div>
 );

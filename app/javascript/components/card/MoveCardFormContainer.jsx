@@ -189,6 +189,14 @@ class MoveCardFormContainer extends React.Component {
     return pos === 0 ? "N/A" : pos;
   }
 
+  isSubmitDisabled = () => {
+    return (
+      this.state.selectedBoard == null ||
+      this.state.selectedList == null ||
+      this.state.selectedPosition == null 
+    );
+  }
+
   render() {
     return (
       <MoveCardForm
@@ -208,6 +216,7 @@ class MoveCardFormContainer extends React.Component {
         onBoardChange={this.handleBoardChange}
         onListChange={this.handleListChange}
         onPositionChange={this.handlePositionChange}
+        isSubmitDisabled={this.isSubmitDisabled()}
       />
     );
   }
