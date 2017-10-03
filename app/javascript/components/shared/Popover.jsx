@@ -4,8 +4,10 @@ import debounce from 'debounce';
 
 class Popover extends React.Component {
   state = {
-    top: 0,
-    left: 0
+    position: {
+      top: 0,
+      left: 0
+    }
   };
 
   componentDidMount() {
@@ -37,19 +39,44 @@ class Popover extends React.Component {
     const targetLocation = $attachedTo.offset();
     const attachedHeight = $attachedTo.outerHeight();
     const elWidth = $(this.refs.popover).outerWidth(true);
+    const elHeight = $(this.refs.popover).outerHeight(true);
+    const $header = $(this.refs.popover).find('header').eq(0);
+    const $content = $(this.refs.popover).find('.content').eq(0);
+    const contentVerticalMargin = $content.outerHeight(true) - $content.outerHeight();
+    const headerHeight = $header.outerHeight(true);
     const windowWidth = $(window).width();
-    const overBounds = (elWidth + targetLocation.left) - windowWidth;
+    const windowHeight = $(window).height();
+    const overRightBounds = (elWidth + targetLocation.left) - windowWidth;
+    const scrollTop = window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
 
-    if (overBounds > 0) {
-      targetLocation.left -= overBounds;
+    if (!this.props.coverTarget) { targetLocation.top += attachedHeight + 3; }
+
+    const overBottomBounds = (targetLocation.top + elHeight) - (windowHeight + scrollTop);
+
+    if (overRightBounds > 0) {
+      targetLocation.left -= overRightBounds;
       targetLocation.left -= 20;
     }
 
-    if (!this.props.coverTarget) {
-      targetLocation.top += attachedHeight + 3;
+    if (targetLocation.left < 0 ) { targetLocation.left = 20 };
+
+    if (overBottomBounds > 0) {
+      targetLocation.top -= overBottomBounds;
+      targetLocation.top -= 20;
     }
 
-    this.setState(targetLocation);
+    if (targetLocation.top < 0 ) { targetLocation.top = 20 };
+
+    $content.css({
+      maxHeight: Math.max(windowHeight - 40 - headerHeight - contentVerticalMargin, 50)
+    });
+
+    this.setState({
+      position: targetLocation
+    });
   }
 
   addSizeBindings = () => {
@@ -67,7 +94,10 @@ class Popover extends React.Component {
         <div 
           ref="popover"
           className={`popover ${this.props.type}`}
-          style={{top: this.state.top, left: this.state.left}}
+          style={{
+            top: this.state.position.top,
+            left: this.state.position.left
+          }}
         >
           {this.props.children}
         </div>

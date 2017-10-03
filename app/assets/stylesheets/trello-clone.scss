@@ -4101,19 +4101,26 @@ main.dashboard .board-group {
   box-shadow: 0 1px 6px rgba(0,0,0,.15);
   font-size: 0.875rem;
   left: 0;
-  padding: 5px 10px 10px 10px;
   position: absolute;
   top: 0;
   width: 300px;
   z-index: 100;
+  overflow: hidden;
 }
 
 .popover header {
   border-bottom: 1px solid #D6DADC;
   color: #8c8c8c;
   margin-bottom: 10px;
-  padding: 7px 0px 10px 10px;
+  padding: 12px 10px 10px 20px;
   text-align: center;
+}
+
+.popover .content {
+  padding: 0px 10px 10px 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .popover header a,
