@@ -133,11 +133,22 @@ class MoveCardFormContainer extends React.Component {
       selectedList: list,
       positions
     }, () => {
-      this.selectPosition();
+      if (
+        this.state.selectedBoard.id === this.props.card.board_id &&
+        this.state.selectedBoard.id === this.props.card.board_id
+      ) {
+        this.selectPosition(this.props.card.position);
+      } else {
+        this.selectPosition("bottom");
+      }
     });
   }
 
   selectPosition = (position) => {
+    if (position === "bottom") {
+      position = this.state.positions[this.state.positions.length - 1];
+    }
+
     if (position) {
       this.setState({
         selectedPosition: position
@@ -157,7 +168,6 @@ class MoveCardFormContainer extends React.Component {
     }
   }
 
-
   selectedBoardId = () => {
     if (this.state.selectedBoard) {
       return this.state.selectedBoard.id;
@@ -173,7 +183,6 @@ class MoveCardFormContainer extends React.Component {
       return "No Lists";
     }
   }
-
 
   selectedListId = () => {
     if (this.state.selectedList) {
