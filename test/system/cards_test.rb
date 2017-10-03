@@ -23,6 +23,8 @@ class CardsTest < ApplicationSystemTestCase
     create(:list, board: @board)
     visit "/boards/#{@board.id}"
 
+    assert_selector ".add-card-toggle"
+
     toggles = all(".add-card-toggle")
     toggles.first.click
 
@@ -46,6 +48,8 @@ class CardsTest < ApplicationSystemTestCase
   test "new card form retains value when moving between lists" do
     create(:list, board: @board)
     visit "/boards/#{@board.id}"
+
+    assert_selector ".add-card-toggle"
 
     toggles = all(".add-card-toggle")
     toggles.first.click
