@@ -61,7 +61,7 @@ const MoveCardForm = (props) => (
                   props.currentPosition === position;
 
                 return (
-                  <option value={position} key={index}>
+                  <option value={position} key={position}>
                     {index + 1}
                     {selected ? ' (current)' : ''}
                   </option>
