@@ -75,6 +75,7 @@ const MoveCardForm = (props) => (
       <button
         className="button"
         type="submit"
+        onClick={props.onMove}
         disabled={props.isSubmitDisabled}
       >Move</button>
     </div>

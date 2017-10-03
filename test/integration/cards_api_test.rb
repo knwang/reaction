@@ -138,6 +138,21 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           assert_equal 1, card.reload.actions.count
         end
 
+        test "creates an action if the card is moved to another list" do
+          list = create(:list)
+          other_list = create(:list)
+          card = create(:card, list: list)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { list_id: other_list.id } }
+
+          assert_equal 1, card.reload.actions.count
+          assert_equal(
+            "moved this card from #{list.title} to #{other_list.title}",
+            card.actions.first.description
+          )
+        end
+
         test "creates more than one action" do
           card = create(:card, completed: false)
 

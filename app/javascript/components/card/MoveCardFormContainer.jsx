@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom'
 
 import MoveCardForm from './MoveCardForm';
 
 import * as listSelectors from '../../selectors/ListSelectors';
 import * as cardSelectors from '../../selectors/CardSelectors';
 import calculatePosition from '../../lib/PositionCalculator';
+import * as actions from '../../actions/CardActions';
 
 import { fetchBoard } from '../../actions/BoardActions';
 
@@ -69,6 +71,31 @@ class MoveCardFormContainer extends React.Component {
     this.selectPosition(selectedValue)
   };
 
+  handleMove = (e) => {
+    if (this.isSubmitDisabled()) { return; }
+
+    e.preventDefault;
+
+    const store = this.context.store;
+    const sourceBoardId = this.props.card.board_id;
+    const changingBoard = this.state.selectedBoard.id !== sourceBoardId;
+
+    store.dispatch(
+      actions.updateCard(
+        this.props.card.id, {
+          list_id: this.state.selectedList.id,
+          position: this.state.selectedPosition
+        }, () => {
+          if (changingBoard) {
+            this.props.history.push(`/boards/${sourceBoardId}`);
+          } else {
+            this.props.onClose(new Event("click"));
+          }
+        }
+      )
+    )
+  }
+
   selectBoard = (id) => {
     const store = this.context.store;
 
@@ -82,7 +109,9 @@ class MoveCardFormContainer extends React.Component {
         selectedBoard: board,
         lists: newLists
       }, () => {
-        if (newLists.length) {
+        if (this.state.selectedBoard.id === this.props.card.board_id) {
+          this.selectList(this.props.card.list_id);
+        } else if (newLists.length) {
           this.selectList(newLists[0].id);
         } else {
           this.selectList();
@@ -104,7 +133,9 @@ class MoveCardFormContainer extends React.Component {
     if (list) {
       const store = this.context.store;
       const state = store.getState();
-      const cards = cardSelectors.listCards(state, list.id);
+      const cards = cardSelectors
+        .listCards(state, list.id)
+        .sort((a, b) => a.position - b.position);
       let currentPosition = cards.findIndex(card => card.id === this.props.card.id);
       if (currentPosition === -1) currentPosition = undefined;
 
@@ -118,7 +149,7 @@ class MoveCardFormContainer extends React.Component {
           cards[i] &&
           this.selectedBoardId() === this.props.card.board_id &&
           id === this.props.card.list_id &&
-          cards[i].id === this.props.card.id
+          i === currentPosition
         ) {
           position = this.props.card.position;
         } else {
@@ -135,7 +166,7 @@ class MoveCardFormContainer extends React.Component {
     }, () => {
       if (
         this.state.selectedBoard.id === this.props.card.board_id &&
-        this.state.selectedBoard.id === this.props.card.board_id
+        this.state.selectedList.id === this.props.card.list_id
       ) {
         this.selectPosition(this.props.card.position);
       } else {
@@ -149,7 +180,7 @@ class MoveCardFormContainer extends React.Component {
       position = this.state.positions[this.state.positions.length - 1];
     }
 
-    if (position) {
+    if (position != null) {
       this.setState({
         selectedPosition: position
       });
@@ -193,9 +224,15 @@ class MoveCardFormContainer extends React.Component {
   }
 
   selectedPositionHumanIndex = () => {
-    const pos = this.state.positions.findIndex(pos => pos === this.state.selectedPosition) + 1;
+    const pos = this.state.positions.findIndex(
+      pos => pos === this.state.selectedPosition
+    )
     
-    return pos === 0 ? "N/A" : pos;
+    if (pos === -1) {
+      return "N/A"
+     } else {
+      return pos + 1;
+     }
   }
 
   isSubmitDisabled = () => {
@@ -210,6 +247,7 @@ class MoveCardFormContainer extends React.Component {
     return (
       <MoveCardForm
         onCloseClick={this.props.onClose}
+        onMove={this.handleMove}
         boards={this.state.boards}
         lists={this.state.lists}
         positions={this.state.positions}
@@ -231,4 +269,4 @@ class MoveCardFormContainer extends React.Component {
   }
 }
 
-export default MoveCardFormContainer;
+export default withRouter(MoveCardFormContainer);

@@ -59,5 +59,19 @@ class Api::CardsController < ApplicationController
       completion = card.completed ? "complete" : "incomplete"
       card.actions.create!(description: " marked the due date #{completion}")
     end
+
+    if card.list_id_changed?
+      old_list = List.find(card.list_id_was)
+
+      if old_list.board == card.list.board
+        card.actions.create!(
+          description: "moved this card from #{old_list.title} to #{card.list.title}"
+        )
+      else
+        card.actions.create!(
+          description: "transferred this card from #{old_list.board.title}"
+        )
+      end
+    end
   end
 end

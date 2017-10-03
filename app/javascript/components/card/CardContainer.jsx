@@ -47,6 +47,10 @@ class CardContainer extends React.Component {
     const store = this.context.store;
     const card = cardSelectors.getCardById(store.getState(), this.getCardId());
 
+    if (card && this.cardOriginallyRenderedFromBoardId == null) {
+      this.cardOriginallyRenderedFromBoardId = card.board_id;
+    }
+
     if (!_.isEqual(card, this.state.card)) {
       this.setState({
         card: card,
@@ -246,6 +250,7 @@ class CardContainer extends React.Component {
             onToggleCompleted={this.handleToggleCompleted}
             showPopover={this.handleShowPopover}
             comments={this.gatherComments()}
+            currentBoardId={this.cardOriginallyRenderedFromBoardId}
           />
           <Popover {...this.state.popover}>
             {this.popoverChildren()}

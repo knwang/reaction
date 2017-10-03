@@ -87,7 +87,7 @@ const Card = (props) => {
         <div id="modal-container">
           <div className="screen"></div>
           <div id="modal">
-            <Link to={`/boards/${props.card.board_id}`}>
+            <Link to={`/boards/${props.currentBoardId}`}>
               <i className="x-icon icon close-modal"></i>
             </Link>
             {

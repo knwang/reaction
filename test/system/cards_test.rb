@@ -278,4 +278,115 @@ class CardsTest < ApplicationSystemTestCase
 
     assert_selector(".link", text: card.list.title)
   end
+
+  test "moving a card within the same list" do
+    board = create(:board)
+    list = create(:list, board: board)
+    card = create(:card, position: 1, list: list)
+    create(:card, position: 2, list: list)
+    create(:card, position: 3, list: list)
+    visit "/cards/#{card.id}"
+
+    find("li", text: "Move").click
+
+    assert_selector ".button-link.setting.position option", text: "1 (current)"
+
+    within ".button-link.setting.position" do
+      select "2"
+    end
+
+    within ".popover" do
+      click_on "Move"
+    end
+
+    refute_selector ".popover"
+
+    find("li", text: "Move").click
+    assert_selector ".button-link.setting.position option", text: "2 (current)"
+
+    card.reload
+
+    assert_equal board.id, card.board_id
+    assert_equal list, card.list
+    assert_equal 2.5, card.position
+
+    # a move action should only be generated when list is changed
+    refute has_content? "moved this card"
+  end
+
+  test "moving a card to another list within the same board" do
+    board = create(:board)
+    list = create(:list, board: board, position: 1)
+    list2 = create(:list, board: board, position: 2)
+    create(:list, board: board)
+    card = create(:card, position: 1, list: list)
+    card2 = create(:card, position: 2, list: list2)
+    visit "/cards/#{card.id}"
+
+    find("li", text: "Move").click
+
+    assert_selector ".button-link.setting.list option", text: "#{list.title} (current)"
+
+    within ".button-link.setting.list" do
+      select list2.title
+    end
+
+    within ".popover" do
+      click_on "Move"
+    end
+
+    refute_selector ".popover"
+
+    find("li", text: "Move").click
+    assert_selector ".button-link.setting.list option", text: "#{list2.title} (current)"
+
+    card.reload
+
+    assert_equal board.id, card.board_id
+    assert_equal list2, card.list
+    assert card.position > card2.position
+
+    assert has_content? "moved this card from #{list.title} to #{list2.title}"
+  end
+
+  test "moving a card to a list on another board" do
+    board = create(:board)
+    board2 = create(:board)
+    list = create(:list, board: board)
+    list2 = create(:list, board: board2)
+    card = create(:card, position: 1, list: list)
+    visit "/cards/#{card.id}"
+
+    find("li", text: "Move").click
+
+    assert_selector ".button-link.setting.board option", text: "#{board.title} (current)"
+    refute_selector ".button-link.setting.board option", text: "#{board2.title} (current)"
+
+    within ".button-link.setting.board" do
+      select board2.title
+    end
+
+    within ".popover" do
+      click_on "Move"
+    end
+
+    refute_selector ".popover"
+    refute_selector "#modal"
+    assert "/boards/#{board.id}", current_path
+
+    visit "/cards/#{card.id}"
+
+    find("li", text: "Move").click
+    refute_selector ".button-link.setting.board option", text: "#{board.title} (current)"
+    assert_selector ".button-link.setting.board option", text: "#{board2.title} (current)"
+    assert_selector ".button-link.setting.list option", text: "#{list2.title} (current)"
+    assert_selector ".button-link.setting.position option", text: "1 (current)"
+
+    card.reload
+
+    assert_equal board2.id, card.board_id
+    assert_equal list2, card.list
+
+    assert has_content? "transferred this card from #{board.title}"
+  end
 end
