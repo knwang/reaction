@@ -3,7 +3,7 @@ class Card < ApplicationRecord
 
   belongs_to :list
   has_many :comments, dependent: :destroy
-  has_many :actions, as: :actionable
+  has_many :actions, as: :actionable, dependent: :destroy
 
   validates_presence_of :title, :list_id
 
