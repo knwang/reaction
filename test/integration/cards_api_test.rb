@@ -30,6 +30,20 @@ class CardsAPITest < ActionDispatch::IntegrationTest
 
           assert_equal @list.reload.cards.last.to_json, response.body
         end
+
+        test "creates an action" do
+          post "/api/cards",
+              params: { list_id: @list.id, card: { title: "My new card" } }
+
+          card = Card.first
+
+          assert_equal 1, card.actions.count
+
+          assert_equal(
+            " added this card to #{@list.title}",
+            card.actions.first.description
+          )
+        end
       end
 
       class InvalidDataTest < ActionDispatch::IntegrationTest

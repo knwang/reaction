@@ -3,11 +3,14 @@ class Api::CardsController < ApplicationController
     list = List.find(params[:list_id])
     card = list.cards.new(card_params)
 
-    if card.save
-      render json: card.to_json, status: :created
-    else
-      render json: { error: card.errors.full_messages.join(', ') },
-            status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      if card.save
+        create_actions(card, new: true)
+        render json: card.to_json, status: :created
+      else
+        render json: { error: card.errors.full_messages.join(', ') },
+              status: :unprocessable_entity
+      end
     end
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Invalid list id provided" },
@@ -50,7 +53,12 @@ class Api::CardsController < ApplicationController
     )
   end
 
-  def create_actions(card)
+  def create_actions(card, options = {})
+    if options[:new]
+      card.actions.create!(description: " added this card to #{card.list.title}")
+      return
+    end
+
     if card.due_date_changed?
       card.actions.create!(description: " changed the due date of this card")
     end
