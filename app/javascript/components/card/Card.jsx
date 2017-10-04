@@ -85,8 +85,13 @@ const Card = (props) => {
     return (
       <div>
         <div id="modal-container">
-          <div className="screen"></div>
-          <div id="modal">
+          <div className="screen"
+            onClick={props.onOverlayClick}
+          ></div>
+          <div
+            id="modal"
+            onClick={props.onCardClick}
+          >
             <Link to={`/boards/${props.currentBoardId}`}>
               <i className="x-icon icon close-modal"></i>
             </Link>

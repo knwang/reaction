@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import moment from 'moment';
@@ -71,6 +72,25 @@ class CardContainer extends React.Component {
     this.setState({
       title: e.target.value
     });
+  };
+
+  handleOverlayClick = (e) => {
+    if (e.target.classList.contains('screen')) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (this.state.popover.visible) {
+        this.closePopover();
+      } else if (this.state.card) {
+        this.props.history.push(`/boards/${this.state.card.board_id}`);
+      }
+    }
+  };
+
+  handleCardClick = (e) => {
+    if (this.state.popover.visible) {
+      this.closePopover();
+    }
   };
 
   handleTitleBlur = (e) => {
@@ -256,6 +276,8 @@ class CardContainer extends React.Component {
             onArchiveClick={this.handleArchiveClick}
             onUnarchiveClick={this.handleUnarchiveClick}
             onToggleCompleted={this.handleToggleCompleted}
+            onOverlayClick={this.handleOverlayClick}
+            onCardClick={this.handleCardClick}
             showPopover={this.handleShowPopover}
             comments={this.gatherComments()}
             currentBoardId={this.cardOriginallyRenderedFromBoardId}
@@ -271,4 +293,4 @@ class CardContainer extends React.Component {
   };
 }
 
-export default CardContainer;
+export default withRouter(CardContainer);
