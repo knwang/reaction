@@ -30263,9 +30263,9 @@ var _reactRedux = __webpack_require__(49);
 
 var _Store = __webpack_require__(404);
 
-var _application = __webpack_require__(413);
+var _Application = __webpack_require__(413);
 
-var _application2 = _interopRequireDefault(_application);
+var _Application2 = _interopRequireDefault(_Application);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -30281,7 +30281,7 @@ function _interopRequireDefault(obj) {
 // layout file, like app/views/layouts/application.html.erb
 
 document.addEventListener('DOMContentLoaded', function () {
-  _reactDom2.default.render(_react2.default.createElement(_reactRedux.Provider, { store: (0, _Store.createStore)() }, _react2.default.createElement(_reactRouterDom.BrowserRouter, null, _react2.default.createElement(_application2.default, null))), document.body.appendChild(document.createElement('div')));
+  _reactDom2.default.render(_react2.default.createElement(_reactRedux.Provider, { store: (0, _Store.createStore)() }, _react2.default.createElement(_reactRouterDom.BrowserRouter, null, _react2.default.createElement(_Application2.default, null))), document.body.appendChild(document.createElement('div')));
 });
 
 /***/ }),

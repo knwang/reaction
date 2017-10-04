@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 
 import { createStore } from '../lib/Store.js';
 
-import Application from '../components/application';
+import Application from '../components/Application';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
