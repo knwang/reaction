@@ -60,5 +60,16 @@ describe("CardSelectors", () => {
         ).toEqual([]);
       });
     });
+
+    it("sorts the cards if a sort function is provided", () => {
+      const state = { cards: [
+        { id: 1, title: "A", list_id: 1 },
+        { id: 3, title: "B", list_id: 1 },
+        { id: 2, title: "C", list_id: 1 }
+      ], actions: []};
+
+      expect(selectors.listCards(state, 1, (a, b) => a.id - b.id))
+       .toEqual([state.cards[0], state.cards[2], state.cards[1]]);
+    });
   });
 });

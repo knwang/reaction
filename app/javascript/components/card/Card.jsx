@@ -202,7 +202,10 @@ const Card = (props) => {
                   className="move-button"
                   onClick={(e) => props.showPopover(e, 'move-card')}
                 ><i className="forward-icon sm-icon"></i>Move</li>
-                <li className="copy-button"><i className="card-icon sm-icon"></i>Copy</li>
+                <li
+                  className="copy-button"
+                  onClick={(e) => props.showPopover(e, 'copy-card')}
+                ><i className="card-icon sm-icon"></i>Copy</li>
                 <li className="subscribe-button"><i className="sub-icon sm-icon"></i>Subscribe<i className="check-icon sm-icon"></i>
                 </li>
                 <hr />

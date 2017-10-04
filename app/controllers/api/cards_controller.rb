@@ -1,11 +1,22 @@
 class Api::CardsController < ApplicationController
   def create
     list = List.find(params[:list_id])
-    card = list.cards.new(card_params)
+    copy_from = params[:card][:copy_from]
+    copy_from_card = Card.find(copy_from) if copy_from
+
+    if copy_from
+      card = copy_from_card.dup
+      card.assign_attributes(card_params)
+      card.list = List.find(params[:list_id])
+    else
+      card = list.cards.new(card_params)
+    end
 
     ActiveRecord::Base.transaction do
       if card.save
         create_actions(card, new: true)
+        clone_comments(copy_from_card, card) if clone_comments?
+
         render json: card.to_json, status: :created
       else
         render json: { error: card.errors.full_messages.join(', ') },
@@ -55,7 +66,13 @@ class Api::CardsController < ApplicationController
 
   def create_actions(card, options = {})
     if options[:new]
-      card.actions.create!(description: " added this card to #{card.list.title}")
+      if card_id = params[:card][:copy_from]
+        original_card = Card.find(card_id)
+        card.actions.create!(description: " copied this card from #{original_card.title} in list #{original_card.list.title}")
+      else
+        card.actions.create!(description: " added this card to #{card.list.title}")
+      end
+
       return
     end
 
@@ -80,6 +97,18 @@ class Api::CardsController < ApplicationController
           description: "transferred this card from #{old_list.board.title}"
         )
       end
+    end
+  end
+
+  def clone_comments?
+    params.dig(:card, :keep, :comments) == "true"
+  end
+
+  def clone_comments(from, to)
+    from.comments.find_each do |comment|
+      new_comment = comment.dup()
+      new_comment.card = to
+      new_comment.save!
     end
   end
 end

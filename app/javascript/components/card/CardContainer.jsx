@@ -14,6 +14,7 @@ import Popover from '../shared/Popover';
 import DueDateForm from './DueDateForm';
 import LabelsForm from './LabelsForm';
 import MoveCardFormContainer from './MoveCardFormContainer';
+import CopyCardFormContainer from './CopyCardFormContainer';
 
 class CardContainer extends React.Component {
   static contextTypes = {
@@ -213,6 +214,13 @@ class CardContainer extends React.Component {
         case 'move-card':
           return (
             <MoveCardFormContainer
+              onClose={this.handleClosePopover}
+              card={this.state.card}
+            />
+          )
+        case 'copy-card':
+          return (
+            <CopyCardFormContainer
               onClose={this.handleClosePopover}
               card={this.state.card}
             />

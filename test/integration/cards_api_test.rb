@@ -44,6 +44,59 @@ class CardsAPITest < ActionDispatch::IntegrationTest
             card.actions.first.description
           )
         end
+
+        test "copies a card" do
+          list2 = create(:list)
+          original_card = create(:card, list: @list, due_date: 1.day.from_now)
+          original_action = original_card.actions.create!(description: "blah")
+          original_comment = original_card.comments.create!(text: "blah")
+
+          post "/api/cards",
+              params: { list_id: list2.id,
+                        card: { title: "copied card",
+                                copy_from: original_card.id,
+                                position: 100,
+                                keep: {
+                                  comments: false
+                                } } }
+
+          card = Card.last
+
+          assert_equal 1, card.actions.count
+
+          assert_equal(
+            " copied this card from #{original_card.title} in list #{@list.title}",
+            card.actions.first.description
+          )
+
+          assert_equal 0, card.comments.count
+
+          assert_equal original_card.description, card.description
+          assert_equal "copied card", card.title
+
+          assert_equal list2, card.list
+        end
+
+        test "copies comments" do
+          original_card = create(:card, list: @list, due_date: 1.day.from_now)
+          original_action = original_card.actions.create!(description: "blah")
+          original_comment = original_card.comments.create!(text: "blah")
+
+          post "/api/cards",
+            params: { list_id: @list.id,
+                      card: { title: "copied card",
+                              copy_from: original_card.id,
+                              position: 100,
+                              keep: {
+                                comments: true
+                              } } }
+
+          card = Card.last
+
+          assert_equal 1, card.comments.count
+          refute_equal original_comment.id, card.comments.first.id
+          assert_equal "blah", card.comments.first.text
+        end
       end
 
       class InvalidDataTest < ActionDispatch::IntegrationTest
@@ -131,12 +184,12 @@ class CardsAPITest < ActionDispatch::IntegrationTest
         end
 
         test "creates an action if due date is changed" do
-          card = create(:card, due_date: Date.yesterday)
+          card = create(:card, due_date: Time.now)
 
           assert_equal 0, card.reload.actions.count
 
           put "/api/cards/#{card.id}",
-              params: { card: { due_date: Date.today.iso8601 } }
+              params: { card: { due_date: Time.now + 1.day } }
 
           assert_equal 1, card.reload.actions.count
         end

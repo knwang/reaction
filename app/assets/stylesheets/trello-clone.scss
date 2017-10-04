@@ -4349,3 +4349,27 @@ input[type=text], input[type=password], input[type=email] {
   display: table;
   clear: both;
 }
+
+.check-div, .radio-div {
+  display: block;
+  margin: 0 0 4px 20px;
+  min-height: 20px;
+  position: relative;
+}
+
+.check-div label, .radio-div label {
+  font-weight: 400;
+}
+
+.check-div input, .radio-div input {
+  left: -18px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 2px;
+}
+
+.quiet, .quiet a {
+  color: #838c91;
+}

@@ -393,4 +393,110 @@ class CardsTest < ApplicationSystemTestCase
 
     assert has_content? "transferred this card from #{board.title}"
   end
+
+  test "copying a card to the same list" do
+    board = create(:board)
+    list = create(:list, board: board)
+    card = create(:card, position: 1, list: list)
+    visit "/cards/#{card.id}"
+
+    assert_equal 1, Card.count
+
+    find("li", text: "Copy").click
+
+    assert_selector ".button-link.setting.position option", text: "1 (current)"
+
+    within ".button-link.setting.position" do
+      select "2"
+    end
+
+    within ".popover" do
+      click_on "Create Card"
+    end
+
+    refute_selector ".popover"
+
+    assert_equal "/cards/#{card.id}", current_path
+
+    assert_equal 2, Card.count
+
+    new_card = Card.last
+
+    assert_equal card.list, new_card.list
+    assert new_card.position > card.position
+
+    # a move action should only be generated when list is changed
+    refute has_content? "moved this card"
+  end
+
+  test "copying a card to another list within the same board" do
+    board = create(:board)
+    list = create(:list, board: board)
+    list2 = create(:list, board: board)
+    card = create(:card, position: 1, list: list)
+    visit "/cards/#{card.id}"
+
+    assert_equal 1, Card.count
+
+    find("li", text: "Copy").click
+
+    assert_selector ".button-link.setting.position option", text: "1 (current)"
+
+    within ".button-link.setting.list" do
+      select list2.title
+    end
+
+    within ".popover" do
+      click_on "Create Card"
+    end
+
+    refute_selector ".popover"
+
+    assert_equal "/cards/#{card.id}", current_path
+
+    assert_equal 2, Card.count
+
+    new_card = Card.last
+
+    assert_equal list2, new_card.list
+
+    # a move action should only be generated when list is changed
+    refute has_content? "moved this card"
+  end
+
+  test "copying a card to another board" do
+    board = create(:board)
+    board2 = create(:board)
+    list = create(:list, board: board)
+    list2 = create(:list, board: board2)
+    card = create(:card, position: 1, list: list)
+    visit "/cards/#{card.id}"
+
+    assert_equal 1, Card.count
+
+    find("li", text: "Copy").click
+
+    assert_selector ".button-link.setting.position option", text: "1 (current)"
+
+    within ".button-link.setting.board" do
+      select board2.title
+    end
+
+    within ".popover" do
+      click_on "Create Card"
+    end
+
+    refute_selector ".popover"
+
+    assert_equal "/cards/#{card.id}", current_path
+
+    assert_equal 2, Card.count
+
+    new_card = Card.last
+
+    assert_equal list2, new_card.list
+
+    # a move action should only be generated when list is changed
+    refute has_content? "moved this card"
+  end
 end

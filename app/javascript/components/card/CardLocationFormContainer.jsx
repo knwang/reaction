@@ -42,7 +42,7 @@ class CardLocationFormContainer extends React.Component {
 
     this.setState({
       selectedBoard: boards.find(board => board.id === card.board_id),
-      selectedPosition: card.position,
+      selectedPosition: this.currentCardPositionIndex(),
       boards,
       lists
     }, () => {
@@ -66,6 +66,19 @@ class CardLocationFormContainer extends React.Component {
     const selectedValue = Number(e.target.value);
 
     this.selectPosition(selectedValue)
+  };
+
+  currentCardPositionIndex = () => {
+    const store = this.context.store;
+    const state = store.getState();
+    const card = this.props.card;
+    const cards = cardSelectors
+      .listCards(state, this.props.card.list_id)
+      .sort((a, b) => a.position - b.position);
+    let currentPosition = cards.findIndex(card => card.id === this.props.card.id);
+    if (currentPosition === -1) currentPosition = undefined;
+
+    return currentPosition;
   };
 
   selectBoard = (id) => {
@@ -111,24 +124,14 @@ class CardLocationFormContainer extends React.Component {
       let currentPosition = cards.findIndex(card => card.id === this.props.card.id);
       if (currentPosition === -1) currentPosition = undefined;
 
-      const potentialPositionsLength =
-        currentPosition == undefined ? cards.length + 1 : cards.length;
+      if (currentPosition == undefined || this.props.mode === 'copy') {
+        var potentialPositionsLength = cards.length + 1;
+      } else {
+        var potentialPositionsLength = cards.length;
+      }
 
-      for (let i = 0; i < potentialPositionsLength; i++) {
-        let position;
-
-        if (
-          cards[i] &&
-          this.selectedBoardId() === this.props.card.board_id &&
-          id === this.props.card.list_id &&
-          i === currentPosition
-        ) {
-          position = this.props.card.position;
-        } else {
-          position = calculatePosition(cards, i, currentPosition);
-        }
-
-        positions.push(position);
+      for (let i = 0; i < potentialPositionsLength; i ++) {
+        positions.push(i);
       }
     }    
 
@@ -138,9 +141,10 @@ class CardLocationFormContainer extends React.Component {
     }, () => {
       if (
         this.state.selectedBoard.id === this.props.card.board_id &&
-        this.state.selectedList.id === this.props.card.list_id
+        this.state.selectedList.id === this.props.card.list_id &&
+        this.props.mode !== 'copy'
       ) {
-        this.selectPosition(this.props.card.position);
+        this.selectPosition(this.currentCardPositionIndex());
       } else {
         this.selectPosition("bottom");
       }
@@ -208,14 +212,10 @@ class CardLocationFormContainer extends React.Component {
   }
 
   selectedPositionHumanIndex = () => {
-    const pos = this.state.positions.findIndex(
-      pos => pos === this.state.selectedPosition
-    )
-    
-    if (pos === -1) {
+    if (this.state.selectedPosition == null) {
       return "N/A"
      } else {
-      return pos + 1;
+      return this.state.selectedPosition + 1;
      }
   }
 
@@ -240,7 +240,7 @@ class CardLocationFormContainer extends React.Component {
         selectedPosition={this.state.selectedPosition}
         currentBoardId={this.props.card.board_id}
         currentListId={this.props.card.list_id}
-        currentPosition={this.props.card.position}
+        currentPosition={this.currentCardPositionIndex()}
         selectedPositionHumanIndex={this.selectedPositionHumanIndex()}
         onBoardChange={this.handleBoardChange}
         onListChange={this.handleListChange}
