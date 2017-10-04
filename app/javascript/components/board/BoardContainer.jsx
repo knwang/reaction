@@ -46,13 +46,16 @@ class BoardContainer extends React.Component {
   }
 
   boardId = () => {
-    if (this.props.match.params.boardId) {
-      return Number(this.props.match.params.boardId);
+    const { id } = this.props.match.params;
+    const { url } = this.props.match;
+
+    if (url.match(new RegExp("^/boards/"))) {
+      return Number(id);
     } else {
       const store = this.context.store;
       const card = cardSelectors.getCardById(
         store.getState(),
-        Number(this.props.match.params.cardId)
+        Number(id)
       );
 
       if (card) {
