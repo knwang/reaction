@@ -6,7 +6,7 @@ import CardLocationForm from './CardLocationForm';
 import * as listSelectors from '../../selectors/ListSelectors';
 import * as cardSelectors from '../../selectors/CardSelectors';
 import calculatePosition from '../../lib/PositionCalculator';
-import { fetchBoard } from '../../actions/BoardActions';
+import { fetchBoards, fetchBoard } from '../../actions/BoardActions';
 
 const sortByTitle = (a, b) => {
   const aTitle = a.title.toLowerCase();
@@ -48,7 +48,17 @@ class CardLocationFormContainer extends React.Component {
     }, () => {
       this.selectList(this.props.card.list_id);
     });
+
+    this.unsubscribe = store.subscribe(() => {
+      this.setState({ boards: store.getState().boards.slice().sort(sortByTitle) });
+    });
+
+    store.dispatch(fetchBoards());
   };
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   handleBoardChange = (e) => {
     const selectedValue = Number(e.target.value);

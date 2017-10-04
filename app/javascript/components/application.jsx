@@ -17,7 +17,6 @@ class Application extends React.Component {
   componentDidMount() {
     const store = this.context.store;
     this.unsubscribe = store.subscribe(() => this.forceUpdate());
-    this.context.store.dispatch(fetchBoards());
   }
 
   componentWillUnmount() {

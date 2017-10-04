@@ -30194,6 +30194,17 @@ var CardLocationFormContainer = function (_React$Component) {
       }, function () {
         _this2.selectList(_this2.props.card.list_id);
       });
+
+      this.unsubscribe = store.subscribe(function () {
+        _this2.setState({ boards: store.getState().boards.slice().sort(sortByTitle) });
+      });
+
+      store.dispatch((0, _BoardActions.fetchBoards)());
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.unsubscribe();
     }
   }, {
     key: 'render',
@@ -46897,7 +46908,6 @@ var Application = function (_React$Component) {
       this.unsubscribe = store.subscribe(function () {
         return _this2.forceUpdate();
       });
-      this.context.store.dispatch((0, _BoardActions.fetchBoards)());
     }
   }, {
     key: 'componentWillUnmount',
