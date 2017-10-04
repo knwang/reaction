@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MoveCardForm = (props) => (
+const CardLocationForm = (props) => (
   <div>
     <div className="button-link setting board">
       <span className="label">Board</span>
@@ -65,4 +65,4 @@ const MoveCardForm = (props) => (
   </div>
 );
 
-export default MoveCardForm;
+export default CardLocationForm;
