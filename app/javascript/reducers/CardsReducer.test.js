@@ -10,8 +10,8 @@ describe("CardsReducer", () => {
   });
 
   describe("FETCH_BOARD_SUCCESS", () => {
-    const existingCard = { id: 1, board_id: 1, title: "old card" };
-    const replacementCard = { id: 1, board_id: 1, title: "replacement card" };
+    const existingCard = { id: 1, board_id: 1, list_id: 1, title: "old card" };
+    const replacementCard = { id: 1, board_id: 1, list_id: 1, title: "replacement card" };
     const newCard1 = { id: 2, board_id: 1, list_id: 1, title: "new card" };
     const newCard2 = { id: 3, board_id: 1, list_id: 2, title: "new card" };
     const otherCard = { id: 4, board_id: 2, title: "other card" };
@@ -24,7 +24,7 @@ describe("CardsReducer", () => {
             id: 1,
             lists: [{
               id: 1,
-              cards: [newCard1]
+              cards: [existingCard, newCard1]
             }, {
               id: 2,
               cards: [newCard2]
@@ -34,7 +34,7 @@ describe("CardsReducer", () => {
       ).toEqual([existingCard, newCard1, newCard2])
     });
 
-    it("replaces existing cards from the board", () => {
+    it("updates existing cards from the board", () => {
       expect(
         reducer([existingCard], {
           type: types.FETCH_BOARD_SUCCESS,
@@ -42,11 +42,26 @@ describe("CardsReducer", () => {
             id: 1,
             lists: [{
               id: 1,
-              cards: [replacementCard]
+              cards: [{ id: 1, list_id: 27, board_id: 1 }]
             }]
           }
         })
-      ).toEqual([replacementCard]);
+      ).toEqual([{ ...existingCard, list_id: 27 }]);
+    });
+
+    it("removes cards that no longer exist in the board", () => {
+      expect(
+        reducer([existingCard], {
+          type: types.FETCH_BOARD_SUCCESS,
+          board: {
+            id: 1,
+            lists: [{
+              id: 1,
+              cards: []
+            }]
+          }
+        })
+      ).toEqual([]);
     });
 
     it("doesn't change other board cards", () => {

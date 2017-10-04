@@ -11,9 +11,7 @@ class ListCard extends React.Component {
   }
 
   hasComments = () => {
-    const store = this.context.store;
-
-    return selectors.cardComments(store.getState(), this.props.card.id).length;
+    return this.props.card.comments_count;
   }
 
   hasDueDate = () => {

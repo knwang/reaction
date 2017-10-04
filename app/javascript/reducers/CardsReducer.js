@@ -1,13 +1,25 @@
 export default function cardsReducer(state = [], action) {
   if (action.type === 'FETCH_BOARD_SUCCESS') {
+    const stateCopy = state.slice();
     const lists = action.board.lists;
+    const boardId = action.board.id;
     let cards = [];
+
     lists.forEach(list => cards = cards.concat(list.cards));
 
-    const newCardIds = cards.map(card => card.id);
-    const otherCards = state.filter(card => newCardIds.indexOf(card.id) === -1);
+    const filteredState = state.filter(card => card.board_id !== boardId);
 
-    return otherCards.concat(cards);
+    cards = cards.map((card) => {
+      const existingVersion = state.find(stateCard => card.id === stateCard.id);
+
+      if (existingVersion) {
+        return { ...existingVersion, ...card };
+      } else {
+        return card;
+      }
+    });
+
+    return filteredState.concat(cards);
   } else if (action.type === 'CREATE_CARD_SUCCESS') {
     return state.concat(action.card);
   } else if (action.type === 'FETCH_CARD_SUCCESS') {
