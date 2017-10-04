@@ -89,9 +89,6 @@ class ExistingLists extends React.Component {
         },
         accepts: function (el, target, source, sibling) {
           return !el.closest("#cards-container");
-        },
-        invalid: function(el, handle) {
-          return el.classList.contains(".cards-container");
         }
       };
 
