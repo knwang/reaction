@@ -11,21 +11,26 @@ class CommentsAPITest < ActionDispatch::IntegrationTest
             assert_equal 0, @card.comments.count
 
             post "/api/comments",
-                 params: { card_id: @card.id, comment: { text: "A new comment" }}
+              params: { card_id: @card.id, comment: { text: "A new comment" }},
+              headers: { 'Accept' => 'application/json' }
 
             assert_equal 1, @card.comments.count
           end
 
           test "returns a 201" do
             post "/api/comments",
-                params: { card_id: @card.id, comment: { text: "A new comment" }}
+              params: { card_id: @card.id, comment: { text: "A new comment" }},
+              headers: { 'Accept' => 'application/json' }
+
 
             assert_response 201
           end
 
           test "returns the new comment" do
             post "/api/comments",
-                 params: { card_id: @card.id, comment: { text: "A new comment" }}
+              params: { card_id: @card.id, comment: { text: "A new comment" }},
+              headers: { 'Accept' => 'application/json' }
+
 
             assert_equal @card.reload.comments.last.to_json, response.body
           end
@@ -37,7 +42,9 @@ class CommentsAPITest < ActionDispatch::IntegrationTest
           card = create(:card)
 
           post "/api/comments",
-               params: { card_id: card.id, comment: { text: "" }}
+            params: { card_id: card.id, comment: { text: "" }},
+            headers: { 'Accept' => 'application/json' }
+
         end
 
         test "returns a 422" do
@@ -53,7 +60,8 @@ class CommentsAPITest < ActionDispatch::IntegrationTest
     class InvalidCardIdTest < ActionDispatch::IntegrationTest
       def setup
         post "/api/comments",
-             params: { card_id: "abc", comment: { text: "" }}
+          params: { card_id: "abc", comment: { text: "" }},
+          headers: { 'Accept' => 'application/json' }
       end
 
       test "returns a 404" do

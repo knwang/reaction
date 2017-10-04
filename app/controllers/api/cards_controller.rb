@@ -5,54 +5,54 @@ class Api::CardsController < ApplicationController
     copy_from_card = Card.find(copy_from) if copy_from
 
     if copy_from
-      card = copy_from_card.dup
-      card.assign_attributes(card_params)
-      card.list = List.find(params[:list_id])
+      @card = copy_from_card.dup
+      @card.assign_attributes(card_params)
+      @card.list = List.find(params[:list_id])
     else
-      card = list.cards.new(card_params)
+      @card = list.cards.new(card_params)
     end
 
     ActiveRecord::Base.transaction do
-      if card.save
-        create_actions(card, new: true)
-        clone_comments(copy_from_card, card) if clone_comments?
+      if @card.save
+        create_actions(@card, new: true)
+        clone_comments(copy_from_card, @card) if clone_comments?
 
-        render json: card.to_json, status: :created
+        render :create, status: :created
       else
-        render json: { error: card.errors.full_messages.join(', ') },
-              status: :unprocessable_entity
+        @error = @card.errors.full_messages.join(', ')
+        render 'api/shared/error', status: :unprocessable_entity
       end
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Invalid list id provided" },
-           status: :not_found
+    @error = "Invalid list id provided"
+    render 'api/shared/error', status: :not_found
   end
 
   def show
-    card = Card.find(params[:id])
-    render json: card.as_json(include: [:comments, :actions])
+    @card = Card.find(params[:id])
+    render :show
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Invalid card id provided" },
-           status: :not_found
+    @error = "Invalid card id provided"
+    render 'api/shared/error', status: :not_found
   end
 
   def update
-    card = Card.find(params[:id])
-    card.assign_attributes(card_params)
+    @card = Card.find(params[:id])
+    @card.assign_attributes(card_params)
 
     ActiveRecord::Base.transaction do
-      create_actions(card) if card.valid?
+      create_actions(@card) if @card.valid?
 
-      if card.save
-        render json: card.as_json(include: :actions)
+      if @card.save
+        render :update
       else
-        render json: { error: card.errors.full_messages.join(', ') },
-              status: :unprocessable_entity
+        @error = @card.errors.full_messages.join(', ')
+        render 'api/shared/error', status: :unprocessable_entity
       end
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Invalid card id provided" },
-           status: :not_found
+    @error = "Invalid card id provided"
+    render 'api/shared/error', status: :not_found
   end
 
   private

@@ -1,31 +1,31 @@
 class Api::ListsController < ApplicationController
   def create
     board = Board.find(params[:board_id])
-    list = List.new(list_params.merge(board: board))
+    @list = List.new(list_params.merge(board: board))
 
-    if list.save
-      render json: list, status: :created
+    if @list.save
+      render :create, status: :created
     else
-      render json: { error: list.errors.full_messages.join(', ') },
-             status: :unprocessable_entity
+      @error = @list.errors.full_messages.join(', ')
+      render 'api/shared/error', status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Invalid board id provided" },
-           status: :not_found
+    @error = "Invalid board id provided"
+    render 'api/shared/error', status: :not_found
   end
 
   def update
-    list = List.find(params[:id])
+    @list = List.find(params[:id])
 
-    if list.update(list_params)
-      render json: list.to_json
+    if @list.update(list_params)
+      render :update
     else
-      render json: { error: list.errors.full_messages.join(', ') },
-             status: :unprocessable_entity
+      @error = @list.errors.full_messages.join(', ')
+      render 'api/shared/error', status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Invalid list id provided" },
-           status: :not_found
+    @error = "Invalid list id provided"
+    render 'api/shared/error', status: :not_found
   end
 
   private

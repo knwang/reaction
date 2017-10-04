@@ -134,6 +134,8 @@ class CardContainer extends React.Component {
   }
 
   handleShowPopover = (e, type) => {
+    e.stopPropagation();
+
     this.setState({
       popover: {
         type,

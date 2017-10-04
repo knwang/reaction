@@ -6276,6 +6276,65 @@ module.exports = ReactUpdates;
 
 /***/ }),
 /* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__ = __webpack_require__(356);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(358);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return __WEBPACK_IMPORTED_MODULE_1__HashRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(117);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(360);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NavLink__ = __webpack_require__(363);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "NavLink", function() { return __WEBPACK_IMPORTED_MODULE_4__NavLink__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Prompt__ = __webpack_require__(366);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_5__Prompt__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(368);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(118);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(70);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(374);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_9__StaticRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Switch__ = __webpack_require__(376);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_10__Switch__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__matchPath__ = __webpack_require__(378);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_11__matchPath__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__withRouter__ = __webpack_require__(379);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_12__withRouter__["a"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6544,65 +6603,6 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
      true ? warning(warningCondition, "This synthetic event is reused for performance reasons. If you're seeing this, " + "you're %s `%s` on a released/nullified synthetic event. %s. " + 'If you must keep the original synthetic event around, use event.persist(). ' + 'See https://fb.me/react-event-pooling for more information.', action, propName, result) : void 0;
   }
 }
-
-/***/ }),
-/* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__ = __webpack_require__(356);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(358);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return __WEBPACK_IMPORTED_MODULE_1__HashRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(117);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(360);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NavLink__ = __webpack_require__(363);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "NavLink", function() { return __WEBPACK_IMPORTED_MODULE_4__NavLink__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Prompt__ = __webpack_require__(366);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_5__Prompt__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(368);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(118);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(70);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(374);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_9__StaticRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Switch__ = __webpack_require__(376);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_10__Switch__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__matchPath__ = __webpack_require__(378);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_11__matchPath__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__withRouter__ = __webpack_require__(379);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_12__withRouter__["a"]; });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /***/ }),
 /* 19 */
@@ -8479,7 +8479,7 @@ module.exports = EventPluginHub;
 
 
 
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 
 var getEventTarget = __webpack_require__(54);
 
@@ -10313,33 +10313,40 @@ function unwrapData(response) {
   return response.data;
 }
 
+var client = _axios2.default.create({
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Accept': 'application/json'
+  }
+});
+
 var apiClient = {
   getBoards: function getBoards(callback) {
-    return _axios2.default.get(routes.BOARDS_INDEX_URL).then(unwrapData).then(callback).catch(logError);
+    return client.get(routes.BOARDS_INDEX_URL).then(unwrapData).then(callback).catch(logError);
   },
   getBoard: function getBoard(boardId, callback) {
-    return _axios2.default.get(routes.boardUrl(boardId)).then(unwrapData).then(callback).catch(logError);
+    return client.get(routes.boardUrl(boardId)).then(unwrapData).then(callback).catch(logError);
   },
   createBoard: function createBoard(board, callback) {
-    return _axios2.default.post(routes.CREATE_BOARD_URL, { board: board }).then(unwrapData).then(callback).catch(logError);
+    return client.post(routes.CREATE_BOARD_URL, { board: board }).then(unwrapData).then(callback).catch(logError);
   },
   createList: function createList(boardId, list, callback) {
-    return _axios2.default.post(routes.CREATE_LIST_URL, { board_id: boardId, list: list }).then(unwrapData).then(callback).catch(logError);
+    return client.post(routes.CREATE_LIST_URL, { board_id: boardId, list: list }).then(unwrapData).then(callback).catch(logError);
   },
   updateList: function updateList(listId, updatedList, callback) {
-    return _axios2.default.put(routes.updateListUrl(listId), { list: updatedList }).then(unwrapData).then(callback).catch(logError);
+    return client.put(routes.updateListUrl(listId), { list: updatedList }).then(unwrapData).then(callback).catch(logError);
   },
   createCard: function createCard(listId, card, callback) {
-    return _axios2.default.post(routes.CREATE_CARD_URL, { list_id: listId, card: card }).then(unwrapData).then(callback).catch(logError);
+    return client.post(routes.CREATE_CARD_URL, { list_id: listId, card: card }).then(unwrapData).then(callback).catch(logError);
   },
   getCard: function getCard(cardId, callback) {
-    return _axios2.default.get(routes.cardUrl(cardId)).then(unwrapData).then(callback).catch(logError);
+    return client.get(routes.cardUrl(cardId)).then(unwrapData).then(callback).catch(logError);
   },
   updateCard: function updateCard(cardId, attrs, callback) {
-    return _axios2.default.put(routes.updateCardUrl(cardId), { card: attrs }).then(unwrapData).then(callback).catch(logError);
+    return client.put(routes.updateCardUrl(cardId), { card: attrs }).then(unwrapData).then(callback).catch(logError);
   },
   createComment: function createComment(cardId, attrs, callback) {
-    return _axios2.default.post(routes.CREATE_COMMENT_URL, { card_id: cardId, comment: attrs }).then(unwrapData).then(callback).catch(logError);
+    return client.post(routes.CREATE_COMMENT_URL, { card_id: cardId, comment: attrs }).then(unwrapData).then(callback).catch(logError);
   }
 };
 
@@ -30241,7 +30248,7 @@ var _reactDom = __webpack_require__(270);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 var _reactRedux = __webpack_require__(49);
 
@@ -33008,7 +33015,7 @@ module.exports = FallbackCompositionState;
 
 
 
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 
 /**
  * @interface Event
@@ -33049,7 +33056,7 @@ module.exports = SyntheticCompositionEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 
 /**
  * @interface Event
@@ -33096,7 +33103,7 @@ var EventPropagators = __webpack_require__(30);
 var ExecutionEnvironment = __webpack_require__(8);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactUpdates = __webpack_require__(16);
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 
 var inputValueTracking = __webpack_require__(95);
 var getEventTarget = __webpack_require__(54);
@@ -40877,7 +40884,7 @@ var EventPropagators = __webpack_require__(30);
 var ExecutionEnvironment = __webpack_require__(8);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactInputSelection = __webpack_require__(110);
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 
 var getActiveElement = __webpack_require__(111);
 var isTextInputElement = __webpack_require__(96);
@@ -41074,7 +41081,7 @@ var EventPropagators = __webpack_require__(30);
 var ReactDOMComponentTree = __webpack_require__(7);
 var SyntheticAnimationEvent = __webpack_require__(337);
 var SyntheticClipboardEvent = __webpack_require__(338);
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 var SyntheticFocusEvent = __webpack_require__(339);
 var SyntheticKeyboardEvent = __webpack_require__(340);
 var SyntheticMouseEvent = __webpack_require__(44);
@@ -41297,7 +41304,7 @@ module.exports = SimpleEventPlugin;
 
 
 
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 
 /**
  * @interface Event
@@ -41341,7 +41348,7 @@ module.exports = SyntheticAnimationEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 
 /**
  * @interface Event
@@ -41722,7 +41729,7 @@ module.exports = SyntheticTouchEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(17);
+var SyntheticEvent = __webpack_require__(18);
 
 /**
  * @interface Event
@@ -46802,7 +46809,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 var _propTypes = __webpack_require__(4);
 
@@ -47202,7 +47209,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48360,7 +48367,7 @@ var BOARDS_INDEX_URL = exports.BOARDS_INDEX_URL = '/api/boards';
 var CREATE_BOARD_URL = exports.CREATE_BOARD_URL = '/api/boards';
 
 var boardUrl = exports.boardUrl = function boardUrl(boardId) {
-  return BOARDS_INDEX_URL + '/' + boardId;
+  return '/api/boards/' + boardId;
 };
 
 var CREATE_LIST_URL = exports.CREATE_LIST_URL = '/api/lists';
@@ -58723,7 +58730,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 var _BoardActions = __webpack_require__(36);
 
@@ -61238,7 +61245,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 var _propTypes = __webpack_require__(4);
 
@@ -61734,7 +61741,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 var _propTypes = __webpack_require__(4);
 
@@ -62079,6 +62086,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(49);
 
+var _reactRouterDom = __webpack_require__(17);
+
 var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -62202,6 +62211,29 @@ var CardContainer = function (_React$Component) {
           title: e.target.value
         });
       }
+    }), Object.defineProperty(_this, 'handleOverlayClick', {
+      enumerable: true,
+      writable: true,
+      value: function value(e) {
+        if (e.target.classList.contains('screen')) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (_this.state.popover.visible) {
+            _this.closePopover();
+          } else if (_this.state.card) {
+            _this.props.history.push('/boards/' + _this.state.card.board_id);
+          }
+        }
+      }
+    }), Object.defineProperty(_this, 'handleCardClick', {
+      enumerable: true,
+      writable: true,
+      value: function value(e) {
+        if (_this.state.popover.visible) {
+          _this.closePopover();
+        }
+      }
     }), Object.defineProperty(_this, 'handleTitleBlur', {
       enumerable: true,
       writable: true,
@@ -62252,6 +62284,8 @@ var CardContainer = function (_React$Component) {
       enumerable: true,
       writable: true,
       value: function value(e, type) {
+        e.stopPropagation();
+
         _this.setState({
           popover: {
             type: type,
@@ -62427,6 +62461,8 @@ var CardContainer = function (_React$Component) {
             onArchiveClick: this.handleArchiveClick,
             onUnarchiveClick: this.handleUnarchiveClick,
             onToggleCompleted: this.handleToggleCompleted,
+            onOverlayClick: this.handleOverlayClick,
+            onCardClick: this.handleCardClick,
             showPopover: this.handleShowPopover,
             comments: this.gatherComments(),
             currentBoardId: this.cardOriginallyRenderedFromBoardId
@@ -62453,7 +62489,7 @@ Object.defineProperty(CardContainer, 'contextTypes', {
     store: _propTypes2.default.object.isRequired
   }
 });
-exports.default = CardContainer;
+exports.default = (0, _reactRouterDom.withRouter)(CardContainer);
 
 /***/ }),
 /* 472 */
@@ -79566,7 +79602,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 var _moment = __webpack_require__(0);
 
@@ -79723,10 +79759,15 @@ var Card = function Card(props) {
       _react2.default.createElement(
         'div',
         { id: 'modal-container' },
-        _react2.default.createElement('div', { className: 'screen' }),
+        _react2.default.createElement('div', { className: 'screen',
+          onClick: props.onOverlayClick
+        }),
         _react2.default.createElement(
           'div',
-          { id: 'modal' },
+          {
+            id: 'modal',
+            onClick: props.onCardClick
+          },
           _react2.default.createElement(
             _reactRouterDom.Link,
             { to: '/boards/' + props.currentBoardId },
@@ -84915,7 +84956,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 var _MoveCardForm = __webpack_require__(483);
 
@@ -85262,7 +85303,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(18);
+var _reactRouterDom = __webpack_require__(17);
 
 var _CopyCardForm = __webpack_require__(486);
 

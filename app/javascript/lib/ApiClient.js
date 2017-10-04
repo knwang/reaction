@@ -15,33 +15,40 @@ function unwrapData(response) {
   return response.data;
 }
 
+const client = axios.create({
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Accept': 'application/json'
+  }
+});
+
 const apiClient = {
   getBoards: function(callback) {
-    return axios.get(routes.BOARDS_INDEX_URL)
+    return client.get(routes.BOARDS_INDEX_URL)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   getBoard: function(boardId, callback) {
-    return axios.get(routes.boardUrl(boardId))
+    return client.get(routes.boardUrl(boardId))
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   createBoard: function(board, callback) {
-    return axios.post(routes.CREATE_BOARD_URL, { board })
+    return client.post(routes.CREATE_BOARD_URL, { board })
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   createList: function(boardId, list, callback) {
-    return axios.post(routes.CREATE_LIST_URL, { board_id: boardId, list })
+    return client.post(routes.CREATE_LIST_URL, { board_id: boardId, list })
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   updateList: function(listId, updatedList, callback) {
-    return axios.put(
+    return client.put(
       routes.updateListUrl(listId), { list: updatedList }
     )
       .then(unwrapData)
@@ -49,7 +56,7 @@ const apiClient = {
       .catch(logError);
   },
   createCard: function(listId, card, callback) {
-    return axios.post(
+    return client.post(
       routes.CREATE_CARD_URL, { list_id: listId, card }
     )
       .then(unwrapData)
@@ -57,19 +64,19 @@ const apiClient = {
       .catch(logError);
   },
   getCard: function(cardId, callback) {
-    return axios.get(routes.cardUrl(cardId))
+    return client.get(routes.cardUrl(cardId))
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   updateCard: function(cardId, attrs, callback) {
-    return axios.put(routes.updateCardUrl(cardId), { card: attrs })
+    return client.put(routes.updateCardUrl(cardId), { card: attrs })
       .then(unwrapData)
       .then(callback)
       .catch(logError)
   },
   createComment: function(cardId, attrs, callback) {
-    return axios.post(routes.CREATE_COMMENT_URL, { card_id: cardId, comment: attrs })
+    return client.post(routes.CREATE_COMMENT_URL, { card_id: cardId, comment: attrs })
       .then(unwrapData)
       .then(callback)
       .catch(logError)

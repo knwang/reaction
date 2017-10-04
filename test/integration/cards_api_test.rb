@@ -12,28 +12,32 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           assert_equal 0, @list.cards.count
 
           post "/api/cards",
-              params: { list_id: @list.id, card: { title: "My new card" } }
+            params: { list_id: @list.id, card: { title: "My new card" } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, @list.cards.count
         end
 
         test "returns a 201" do
           post "/api/cards",
-              params: { list_id: @list.id, card: { title: "My new card" } }
+            params: { list_id: @list.id, card: { title: "My new card" } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_response 201
         end
 
         test "returns the new list" do
           post "/api/cards",
-              params: { list_id: @list.id, card: { title: "My new card" } }
+            params: { list_id: @list.id, card: { title: "My new card" } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal @list.reload.cards.last.to_json, response.body
         end
 
         test "creates an action" do
           post "/api/cards",
-              params: { list_id: @list.id, card: { title: "My new card" } }
+            params: { list_id: @list.id, card: { title: "My new card" } },
+            headers: { 'Accept' => 'application/json' }
 
           card = Card.first
 
@@ -52,13 +56,14 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           original_comment = original_card.comments.create!(text: "blah")
 
           post "/api/cards",
-              params: { list_id: list2.id,
-                        card: { title: "copied card",
-                                copy_from: original_card.id,
-                                position: 100,
-                                keep: {
-                                  comments: false
-                                } } }
+            params: { list_id: list2.id,
+                      card: { title: "copied card",
+                              copy_from: original_card.id,
+                              position: 100,
+                              keep: {
+                                comments: false
+                              } } },
+            headers: { 'Accept' => 'application/json' }
 
           card = Card.last
 
@@ -89,7 +94,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
                               position: 100,
                               keep: {
                                 comments: true
-                              } } }
+                              } } },
+            headers: { 'Accept' => 'application/json' }
 
           card = Card.last
 
@@ -104,7 +110,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           list = create(:list)
 
           post "/api/cards",
-              params: { list_id: list.id, card: { title: '' } }
+            params: { list_id: list.id, card: { title: '' } },
+            headers: { 'Accept' => 'application/json' }
         end
 
         test "returns a 422" do
@@ -120,7 +127,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
     class InvalidListIdTest < ActionDispatch::IntegrationTest
       def setup
         post "/api/cards",
-            params: { list_id: 'abc', card: { title: 'My new card' } }
+          params: { list_id: 'abc', card: { title: 'My new card' } },
+          headers: { 'Accept' => 'application/json' }
       end
 
       test "returns a 404" do
@@ -140,7 +148,7 @@ class CardsAPITest < ActionDispatch::IntegrationTest
         create(:comment, card: card)
         create(:action, actionable: card)
 
-        get "/api/cards/#{card.id}"
+        get "/api/cards/#{card.id}", headers: { 'Accept' => 'application/json' }
         expected = JSON.parse(card.as_json(include: [:comments, :actions]).to_json)
         assert_equal expected, JSON.parse(response.body)
       end
@@ -148,14 +156,14 @@ class CardsAPITest < ActionDispatch::IntegrationTest
       test "returns a 200" do
         card = create(:card)
 
-        get "/api/cards/#{card.id}"
+        get "/api/cards/#{card.id}", headers: { 'Accept' => 'application/json' }
         assert_response 200
       end
     end
 
     class InvalidCardIdTest < ActionDispatch::IntegrationTest
       test "returns a 404" do
-        get "/api/cards/abc"
+        get "/api/cards/abc", headers: { 'Accept' => 'application/json' }
         assert_response 404
       end
     end
@@ -168,7 +176,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card)
 
           put "/api/cards/#{card.id}",
-              params: { card: { title: "New card title" } }
+            params: { card: { title: "New card title" } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_response 200
         end
@@ -177,7 +186,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card)
 
           put "/api/cards/#{card.id}",
-              params: { card: { title: "New card title" } }
+            params: { card: { title: "New card title" } },
+            headers: { 'Accept' => 'application/json' }
 
           expected = JSON.parse(card.reload.as_json(include: :actions).to_json)
           assert_equal expected, JSON.parse(response.body)
@@ -189,7 +199,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           assert_equal 0, card.reload.actions.count
 
           put "/api/cards/#{card.id}",
-              params: { card: { due_date: Time.now + 1.day } }
+            params: { card: { due_date: Time.now + 1.day } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
         end
@@ -200,7 +211,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           assert_equal 0, card.reload.actions.count
 
           put "/api/cards/#{card.id}",
-              params: { card: { completed: true } }
+            params: { card: { completed: true } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
         end
@@ -211,7 +223,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card, list: list)
 
           put "/api/cards/#{card.id}",
-              params: { card: { list_id: other_list.id } }
+            params: { card: { list_id: other_list.id } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
           assert_equal(
@@ -226,7 +239,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card, list: list)
 
           put "/api/cards/#{card.id}",
-              params: { card: { list_id: other_list.id } }
+            params: { card: { list_id: other_list.id } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
           assert_equal(
@@ -239,7 +253,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card, archived: false)
 
           put "/api/cards/#{card.id}",
-              params: { card: { archived: true } }
+            params: { card: { archived: true } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
           assert_equal(
@@ -252,7 +267,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card, archived: true)
 
           put "/api/cards/#{card.id}",
-              params: { card: { archived: false } }
+            params: { card: { archived: false } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
           assert_equal(
@@ -265,7 +281,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card, due_date: nil)
 
           put "/api/cards/#{card.id}",
-              params: { card: { due_date: Date.tomorrow } }
+            params: { card: { due_date: Date.tomorrow } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
           assert_equal(
@@ -278,7 +295,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card, due_date: Date.yesterday)
 
           put "/api/cards/#{card.id}",
-              params: { card: { due_date: Date.tomorrow } }
+            params: { card: { due_date: Date.tomorrow } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
           assert_equal(
@@ -291,7 +309,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card, due_date: Date.yesterday)
 
           put "/api/cards/#{card.id}",
-              params: { card: { due_date: nil } }
+            params: { card: { due_date: nil } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
           assert_equal(
@@ -304,7 +323,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           card = create(:card, due_date: nil)
 
           put "/api/cards/#{card.id}",
-              params: { card: { due_date: Date.today + 2.years } }
+            params: { card: { due_date: Date.today + 2.years } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, card.reload.actions.count
           assert card.actions.first.description.ends_with?(
@@ -321,7 +341,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
               params: { card: {
                 due_date: Date.today.iso8601,
                 completed: true
-              } }
+              } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 2, card.reload.actions.count
         end
@@ -332,7 +353,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           @card = create(:card, completed: false)
 
           put "/api/cards/#{@card.id}",
-              params: { card: { title: "", completed: true } }
+            params: { card: { title: "", completed: true } },
+            headers: { 'Accept' => 'application/json' }
         end
 
         test "returns a 422" do
@@ -352,7 +374,8 @@ class CardsAPITest < ActionDispatch::IntegrationTest
     class InvalidCardIdTest < ActionDispatch::IntegrationTest
       def setup
         put "/api/cards/abc",
-            params: { card: { title: "New title" } }
+          params: { card: { title: "New title" } },
+          headers: { 'Accept' => 'application/json' }
       end
 
       test "returns a 404" do

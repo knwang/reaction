@@ -12,21 +12,24 @@ class ListsAPITest < ActionDispatch::IntegrationTest
           assert_equal 0, @board.lists.count
 
           post "/api/lists",
-              params: { board_id: @board.id, list: { title: "My new list" } }
+            params: { board_id: @board.id, list: { title: "My new list" } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal 1, @board.lists.count
         end
 
         test "returns a 201" do
           post "/api/lists",
-              params: { board_id: @board.id, list: { title: "My new list" } }
+            params: { board_id: @board.id, list: { title: "My new list" } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_response 201
         end
 
         test "returns the new list" do
           post "/api/lists",
-              params: { board_id: @board.id, list: { title: "My new list" } }
+            params: { board_id: @board.id, list: { title: "My new list" } },
+            headers: { 'Accept' => 'application/json' }
 
           assert_equal @board.reload.lists.last.to_json, response.body
         end
@@ -37,7 +40,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
           board = create(:board)
 
           post "/api/lists",
-              params: { board_id: board.id, list: { title: '' } }
+            params: { board_id: board.id, list: { title: '' } },
+            headers: { 'Accept' => 'application/json' }
         end
 
         test "returns a 422" do
@@ -53,7 +57,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
     class InvalidBoardIdTest < ActionDispatch::IntegrationTest
       def setup
         post "/api/lists",
-            params: { board_id: 'abc', list: { title: 'My new board' } }
+          params: { board_id: 'abc', list: { title: 'My new board' } },
+          headers: { 'Accept' => 'application/json' }
       end
 
       test "returns a 404" do
@@ -75,7 +80,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
           put "/api/lists/#{@list.id}",
               params: {
                 list: { title: "New title", position: 10.123 }
-              }
+              },
+            headers: { 'Accept' => 'application/json' }
         end
 
         test "updates the list title" do
@@ -100,7 +106,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
           @list = create(:list, position: 1.0)
 
           put "/api/lists/#{@list.id}",
-              params: { list: { title: "" } }
+            params: { list: { title: "" } },
+            headers: { 'Accept' => 'application/json' }
         end
 
         test "returns a 422" do
@@ -118,7 +125,8 @@ class ListsAPITest < ActionDispatch::IntegrationTest
         @list = create(:list, position: 1.0)
 
         put "/api/lists/abc",
-            params: { list: { title: "My list" } }
+          params: { list: { title: "My list" } },
+          headers: { 'Accept' => 'application/json' }
       end
 
       test "returns a 404" do
