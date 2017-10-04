@@ -40,7 +40,10 @@ const LabelsForm = (props) => {
           <ul className="light-list">
             <li className="not-implemented">Create a new label</li>
             <hr />
-            <li className="toggleColorblind">Enable color blind friendly mode.</li>
+            <li
+              className="toggleColorblind"
+              onClick={props.onToggleColorblind}
+            >Enable color blind friendly mode.</li>
           </ul>
         </div>
       </div>

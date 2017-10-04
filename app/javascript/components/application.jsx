@@ -15,12 +15,20 @@ class Application extends React.Component {
   }
 
   componentDidMount() {
+    const store = this.context.store;
+    this.unsubscribe = store.subscribe(() => this.forceUpdate());
     this.context.store.dispatch(fetchBoards());
   }
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   render() {
+    const state = this.context.store.getState();
+
     return (
-      <div>
+      <div className={state.colors.colorblind ? 'colorblind' : ''}>
         <TopNav />
 
         <Route path='/(boards|cards)/:id' exact component={BoardContainer} />

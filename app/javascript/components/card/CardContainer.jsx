@@ -8,7 +8,8 @@ import moment from 'moment';
 import * as cardSelectors from '../../selectors/CardSelectors';
 import * as boardSelectors from '../../selectors/BoardSelectors';
 import * as commentSelectors from '../../selectors/CommentSelectors';
-import * as actions from '../../actions/CardActions';
+import * as cardActions from '../../actions/CardActions';
+import * as colorActions from '../../actions/ColorActions';
 
 import Card from './Card';
 import Popover from '../shared/Popover';
@@ -38,7 +39,7 @@ class CardContainer extends React.Component {
       this.updateCardInState();
       this.forceUpdate();
     });
-    store.dispatch(actions.fetchCard(this.getCardId()));
+    store.dispatch(cardActions.fetchCard(this.getCardId()));
   };
 
   componentWillUnmount() {
@@ -96,7 +97,7 @@ class CardContainer extends React.Component {
   handleTitleBlur = (e) => {
     const store = this.context.store;
 
-    store.dispatch(actions.updateCard(
+    store.dispatch(cardActions.updateCard(
       this.state.card.id,
       { title: this.state.title }
     ));
@@ -111,7 +112,7 @@ class CardContainer extends React.Component {
   toggleArchive = (archived) => {
     const store = this.context.store;
 
-    store.dispatch(actions.updateCard(
+    store.dispatch(cardActions.updateCard(
       this.state.card.id,
       { archived }
     ));
@@ -159,7 +160,7 @@ class CardContainer extends React.Component {
 
     const store = this.context.store;
 
-    store.dispatch(actions.updateCard(this.state.card.id, {
+    store.dispatch(cardActions.updateCard(this.state.card.id, {
       due_date: moment(dateTime, 'M/D/YYYY h:mm A').toISOString()
     }, () => {
       this.closePopover();
@@ -171,7 +172,7 @@ class CardContainer extends React.Component {
 
     const store = this.context.store;
 
-    store.dispatch(actions.updateCard(this.state.card.id, {
+    store.dispatch(cardActions.updateCard(this.state.card.id, {
       due_date: null,
       completed: false
     }, () => {
@@ -184,7 +185,7 @@ class CardContainer extends React.Component {
 
     const store = this.context.store;
 
-    store.dispatch(actions.updateCard(this.state.card.id, {
+    store.dispatch(cardActions.updateCard(this.state.card.id, {
       completed: !this.state.card.completed
     }));
   }
@@ -200,7 +201,12 @@ class CardContainer extends React.Component {
       labels = _.without(currentLabels, label);
     }
 
-    store.dispatch(actions.updateCard(this.state.card.id, { labels }));
+    store.dispatch(cardActions.updateCard(this.state.card.id, { labels }));
+  }
+
+  handleToggleColorblind = (e) => {
+    const store = this.context.store;
+    store.dispatch(colorActions.toggleColorblind());
   }
 
   closePopover = () => {
@@ -231,6 +237,7 @@ class CardContainer extends React.Component {
               selectedLabels={this.state.card.labels}
               onClose={this.handleClosePopover}
               onClickLabel={this.handleToggleLabel}
+              onToggleColorblind={this.handleToggleColorblind}
             />
           );
         case 'move-card':

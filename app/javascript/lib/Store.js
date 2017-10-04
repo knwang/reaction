@@ -7,6 +7,7 @@ import statusReducer from '../reducers/StatusReducer';
 import cardsReducer from '../reducers/CardsReducer';
 import commentsReducer from '../reducers/CommentsReducer';
 import actionsReducer from '../reducers/ActionsReducer';
+import colorsReducer from '../reducers/ColorsReducer';
 
 function reducer(state = {}, action) {
   return {
@@ -16,6 +17,7 @@ function reducer(state = {}, action) {
     cards: cardsReducer(state.cards, action),
     comments: commentsReducer(state.comments, action),
     actions: actionsReducer(state.actions, action),
+    colors: colorsReducer(state.colors, action)
   };
 }
 
