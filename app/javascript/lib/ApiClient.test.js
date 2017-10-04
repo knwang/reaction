@@ -440,7 +440,7 @@ describe("ApiClient", () => {
 
         await flushPromises();
 
-        expect(cb).toHaveBeenCalledWith({ ... newComment, id: 1 });
+        expect(cb).toHaveBeenCalledWith({ ...newComment, id: 1 });
       });
     });
 
