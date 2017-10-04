@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom'
 
 import CopyCardForm from './CopyCardForm';
 
@@ -99,4 +98,4 @@ class CopyCardFormContainer extends React.Component {
   }
 }
 
-export default withRouter(CopyCardFormContainer);
+export default CopyCardFormContainer;
