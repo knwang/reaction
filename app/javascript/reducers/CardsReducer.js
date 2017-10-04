@@ -30,6 +30,14 @@ export default function cardsReducer(state = [], action) {
       if (card.id === action.card.id) return action.card;
       else return card;
     });
+  } else if (action.type === 'CREATE_COMMENT_SUCCESS') {
+    return state.map(card => {
+      if (card.id === action.comment.card_id) {
+        return { ...card, comments_count: card.comments_count + 1 };
+      } else {
+        return card;
+      }
+    });
   } else {
     return state;
   }

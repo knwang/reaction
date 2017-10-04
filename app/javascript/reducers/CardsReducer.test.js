@@ -145,4 +145,15 @@ describe("CardsReducer", () => {
       });
     });
   });
+
+  describe("CREATE_COMMENT_SUCCESS", () => {
+    it("adds one to the card comments_count", () => {
+      expect(
+        reducer([{ id: 1, comments_count: 1 }], {
+          type: types.CREATE_COMMENT_SUCCESS,
+          comment: { card_id: 1 }
+        })
+      ).toEqual([{ id: 1, comments_count: 2 }]);
+    });
+  });
 });

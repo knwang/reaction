@@ -105,6 +105,8 @@ class CardsTest < ApplicationSystemTestCase
     visit "/boards/#{@board.id}"
     find("#cards-container .card").click
 
+    assert_selector "#modal"
+
     assert_equal "/cards/#{card.id}", current_path
   end
 
@@ -150,6 +152,7 @@ class CardsTest < ApplicationSystemTestCase
 
     find(".archive-button").click
 
+    assert_selector ".archived-banner"
     assert has_content?("This card is archived.")
     refute_selector ".archive-button"
     assert_selector ".unarchive-button"
@@ -161,6 +164,7 @@ class CardsTest < ApplicationSystemTestCase
 
     find(".unarchive-button").click
 
+    refute_selector ".archived-banner"
     refute has_content?("This card is archived.")
     assert_selector ".archive-button"
     refute_selector ".unarchive-button"

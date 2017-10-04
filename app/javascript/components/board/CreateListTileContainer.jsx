@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import * as formActions from '../../actions/FormActions';
@@ -16,8 +16,7 @@ class CreateListTileContainer extends React.Component {
   };
 
   static contextTypes = {
-    store: PropTypes.object,
-    currentBoardId: PropTypes.number
+    store: PropTypes.object
   };
 
   handleTileClick = (e) => {
@@ -45,15 +44,17 @@ class CreateListTileContainer extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault;
 
+    const boardId = this.props.match.params.id;
+
     const currentState = this.context.store.getState();
     const lists = listSelectors.boardListsSelector(
-      currentState, this.context.currentBoardId
+      currentState, boardId 
     );
     const position = positionCalculator(lists, lists.length + 1);
 
     this.context.store.dispatch(
       listActions.createList(
-        this.context.currentBoardId, {
+        boardId, {
           title: this.state.title,
           position
         }, () => {
@@ -80,4 +81,4 @@ class CreateListTileContainer extends React.Component {
   };
 }
 
-export default CreateListTileContainer;
+export default withRouter(CreateListTileContainer);

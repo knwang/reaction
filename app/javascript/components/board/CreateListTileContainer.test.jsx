@@ -1,5 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Provider } from 'react-redux';
 import { createStore } from '../../lib/Store';
 
 import configureStore from 'redux-mock-store'
@@ -25,8 +27,11 @@ describe("CreateListTileContainer", () => {
     store.dispatch = jest.fn();
 
     wrapper = mount(
-      <CreateListTileContainer />, 
-      { context: { store }}
+      <Provider store={store}>
+        <Router>
+          <CreateListTileContainer />
+        </Router>
+      </Provider>
     );
   });
 
