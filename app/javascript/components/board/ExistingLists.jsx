@@ -129,11 +129,11 @@ class ExistingLists extends React.Component {
     if (e.key === 'Enter') {
       e.preventDefault();
 
-      this.handleNewCardFormSubmit(new Event("submit"));
+      this.handleNewCardFormSubmit(new Event("submit"), true);
     }
   };
 
-  handleNewCardFormSubmit = (e) => {
+  handleNewCardFormSubmit = (e, keepOpen) => {
     const store = this.context.store;
     const currentCards = cardSelectors.listCards(
       store.getState(),
@@ -142,10 +142,19 @@ class ExistingLists extends React.Component {
     const position = calculatePosition(currentCards, currentCards.length);
 
     e.preventDefault();
+
+    let callback;
+
+    if (keepOpen) { 
+      callback = () => this.setState({ newCardFormText: '' });
+    } else {
+      callback = this.handleNewCardFormClose;
+    }
+
     store.dispatch(cardActions.createCard(this.state.addCardActiveListId, {
       title: this.state.newCardFormText,
       position
-    }, this.handleNewCardFormClose));
+    }, callback));
   };
 
   handleNewCardFormClose = () => {

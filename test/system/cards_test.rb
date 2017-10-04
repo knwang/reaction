@@ -79,6 +79,7 @@ class CardsTest < ApplicationSystemTestCase
 
     assert_selector ".card-info p", text: "My card"
     refute_selector "textarea[name='add-card']", text: "My card"
+    assert_selector "textarea[name='add-card']", text: ""
   end
 
   test "displaying no lists" do

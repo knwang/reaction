@@ -59399,22 +59399,33 @@ var ExistingLists = function (_React$Component) {
         if (e.key === 'Enter') {
           e.preventDefault();
 
-          _this.handleNewCardFormSubmit(new Event("submit"));
+          _this.handleNewCardFormSubmit(new Event("submit"), true);
         }
       }
     }), Object.defineProperty(_this, 'handleNewCardFormSubmit', {
       enumerable: true,
       writable: true,
-      value: function value(e) {
+      value: function value(e, keepOpen) {
         var store = _this.context.store;
         var currentCards = cardSelectors.listCards(store.getState(), _this.state.addCardActiveListId);
         var position = (0, _PositionCalculator2.default)(currentCards, currentCards.length);
 
         e.preventDefault();
+
+        var callback = void 0;
+
+        if (keepOpen) {
+          callback = function callback() {
+            return _this.setState({ newCardFormText: '' });
+          };
+        } else {
+          callback = _this.handleNewCardFormClose;
+        }
+
         store.dispatch(cardActions.createCard(_this.state.addCardActiveListId, {
           title: _this.state.newCardFormText,
           position: position
-        }, _this.handleNewCardFormClose));
+        }, callback));
       }
     }), Object.defineProperty(_this, 'handleNewCardFormClose', {
       enumerable: true,
