@@ -36,13 +36,13 @@ class ExistingLists extends React.Component {
     this.unsubscribe = store.subscribe(() => this.updateLists());
     this.updateLists();
 
-    const cardDrake = dragula({
+    this.cardDrake = dragula({
       isContainer: function (el) {
         return el.id === 'cards-container';
       }
     });
 
-    cardDrake.on('drop', (el) => {
+    this.cardDrake.on('drop', (el) => {
       const store = this.context.store;
       const state = store.getState();
       const droppedEl = el;
@@ -62,7 +62,7 @@ class ExistingLists extends React.Component {
 
       el.setAttribute("style", `${el.style.cssText};display: none;`);
 
-      cardDrake.cancel(true)
+      this.cardDrake.cancel(true)
 
       store.dispatch(
         cardActions.updateCard(cardId, { 
@@ -77,6 +77,7 @@ class ExistingLists extends React.Component {
 
   componentWillUnmount() {
     this.unsubscribe();
+    this.cardDrake.destroy();
   }
 
   dragulaDecorator = (componentBackingInstance) => {
