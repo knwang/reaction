@@ -46812,9 +46812,9 @@ var _TopNav = __webpack_require__(413);
 
 var _TopNav2 = _interopRequireDefault(_TopNav);
 
-var _BoardsDashboard = __webpack_require__(414);
+var _BoardsDashboardContainer = __webpack_require__(414);
 
-var _BoardsDashboard2 = _interopRequireDefault(_BoardsDashboard);
+var _BoardsDashboardContainer2 = _interopRequireDefault(_BoardsDashboardContainer);
 
 var _BoardContainer = __webpack_require__(442);
 
@@ -46857,7 +46857,7 @@ var Application = function (_React$Component) {
         _react2.default.createElement(_TopNav2.default, null),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/(boards|cards)/:id', exact: true, component: _BoardContainer2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/cards/:cardId', exact: true, component: _CardContainer2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, component: _BoardsDashboard2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, component: _BoardsDashboardContainer2.default })
       );
     }
   }]);
@@ -46976,9 +46976,9 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _BoardsDashboardDisplay = __webpack_require__(415);
+var _BoardsDashboard = __webpack_require__(415);
 
-var _BoardsDashboardDisplay2 = _interopRequireDefault(_BoardsDashboardDisplay);
+var _BoardsDashboard2 = _interopRequireDefault(_BoardsDashboard);
 
 var _NewBoardFormContainer = __webpack_require__(418);
 
@@ -47002,21 +47002,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BoardsDashboard = function (_React$Component) {
-  _inherits(BoardsDashboard, _React$Component);
+var BoardsDashboardContainer = function (_React$Component) {
+  _inherits(BoardsDashboardContainer, _React$Component);
 
-  function BoardsDashboard() {
+  function BoardsDashboardContainer() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    _classCallCheck(this, BoardsDashboard);
+    _classCallCheck(this, BoardsDashboardContainer);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BoardsDashboard.__proto__ || Object.getPrototypeOf(BoardsDashboard)).call.apply(_ref, [this].concat(args))), _this), Object.defineProperty(_this, 'state', {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BoardsDashboardContainer.__proto__ || Object.getPrototypeOf(BoardsDashboardContainer)).call.apply(_ref, [this].concat(args))), _this), Object.defineProperty(_this, 'state', {
       enumerable: true,
       writable: true,
       value: {
@@ -47062,7 +47062,7 @@ var BoardsDashboard = function (_React$Component) {
     }), _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  _createClass(BoardsDashboard, [{
+  _createClass(BoardsDashboardContainer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       var _this2 = this;
@@ -47084,7 +47084,7 @@ var BoardsDashboard = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_BoardsDashboardDisplay2.default, {
+        _react2.default.createElement(_BoardsDashboard2.default, {
           boards: this.allBoards(),
           onNewBoardClick: this.handleNewBoardClick
         }),
@@ -47097,17 +47097,17 @@ var BoardsDashboard = function (_React$Component) {
     }
   }]);
 
-  return BoardsDashboard;
+  return BoardsDashboardContainer;
 }(_react2.default.Component);
 
-Object.defineProperty(BoardsDashboard, 'contextTypes', {
+Object.defineProperty(BoardsDashboardContainer, 'contextTypes', {
   enumerable: true,
   writable: true,
   value: {
     store: _propTypes2.default.object.isRequired
   }
 });
-exports.default = BoardsDashboard;
+exports.default = BoardsDashboardContainer;
 
 /***/ }),
 /* 415 */
@@ -59470,13 +59470,13 @@ var ExistingLists = function (_React$Component) {
       });
       this.updateLists();
 
-      var cardDrake = (0, _reactDragula2.default)({
+      this.cardDrake = (0, _reactDragula2.default)({
         isContainer: function isContainer(el) {
           return el.id === 'cards-container';
         }
       });
 
-      cardDrake.on('drop', function (el) {
+      this.cardDrake.on('drop', function (el) {
         var store = _this2.context.store;
         var state = store.getState();
         var droppedEl = el;
@@ -59498,7 +59498,7 @@ var ExistingLists = function (_React$Component) {
 
         el.setAttribute("style", el.style.cssText + ';display: none;');
 
-        cardDrake.cancel(true);
+        _this2.cardDrake.cancel(true);
 
         store.dispatch(cardActions.updateCard(cardId, {
           position: newPosition,
@@ -59512,6 +59512,7 @@ var ExistingLists = function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.unsubscribe();
+      this.cardDrake.destroy();
     }
   }, {
     key: 'render',
@@ -61824,10 +61825,12 @@ var CreateListTileContainer = function (_React$Component) {
       value: function value(e) {
         e.preventDefault;
 
-        var boardId = _this.props.match.params.id;
+        var boardId = Number(_this.props.match.params.id);
 
         var currentState = _this.context.store.getState();
-        var lists = listSelectors.boardListsSelector(currentState, boardId);
+        var lists = listSelectors.boardListsSelector(currentState, boardId).sort(function (a, b) {
+          return a.position - b.position;
+        });
         var position = (0, _PositionCalculator2.default)(lists, lists.length + 1);
 
         _this.context.store.dispatch(listActions.createList(boardId, {

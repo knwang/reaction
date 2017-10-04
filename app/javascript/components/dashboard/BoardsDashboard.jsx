@@ -1,76 +1,39 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import BoardsDashboardDisplay from './BoardsDashboardDisplay';
-import NewBoardFormContainer from './NewBoardFormContainer';
-import Popover from '../shared/Popover';
+import BoardTile from './BoardTile';
+import CreateBoardTile from './CreateBoardTile';
 
-import * as actions from '../../actions/BoardActions';
+const BoardsDashboard = props => {
+  let boards = props.boards.map((board) => (
+    <BoardTile 
+      title={board.title}
+      id={board.id}
+      key={board.id}
+    />
+  ));
 
-class BoardsDashboard extends React.Component {
-  state = {
-    popover: {
-      visible: false,
-      attachedTo: null,
-      type: null
-    }
-  };
+  return (
+    <main className="dashboard">
+      <section className="board-group">
+        <header>
+          <div className="board-section-logo">
+          <span className="person-logo"></span>
+          </div>
+          <h2>Personal Boards</h2>
+        </header>
 
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  };
-
-  componentDidMount() {
-    const store = this.context.store;
-    this.unsubscribe = store.subscribe(() => this.forceUpdate());
-    store.dispatch(actions.fetchBoards());
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  allBoards = () => {
-    const store = this.context.store;
-    return store.getState().boards;
-  }
-
-  handleNewBoardClick = (e) => {
-    this.setState({
-      popover: {
-        visible: true,
-        attachedTo: e.currentTarget,
-        type: 'new-board'
-      }
-    });
-  };
-
-  handleClosePopoverClick = (e) => {
-    e.preventDefault();
-
-    this.setState({
-      popover: {
-        visible: false,
-        attachedTo: null,
-        type: null
-      }
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <BoardsDashboardDisplay
-          boards={this.allBoards()}
-          onNewBoardClick={this.handleNewBoardClick}
-        />
-        <Popover {...this.state.popover} coverTarget={true}>
-          <NewBoardFormContainer onCloseClick={this.handleClosePopoverClick}/>
-        </Popover>
-      </div>
-    )
-  }
+        <ul className="dashboard-board-tiles">
+          {boards}
+          <CreateBoardTile onClick={props.onNewBoardClick} />
+        </ul>
+      </section>
+    </main>
+  );
 }
+
+BoardsDashboard.contextTypes = {
+  store: PropTypes.object
+};
 
 export default BoardsDashboard;
