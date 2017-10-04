@@ -235,6 +235,83 @@ class CardsAPITest < ActionDispatch::IntegrationTest
           )
         end
 
+        test "creates an action if the card is archived" do
+          card = create(:card, archived: false)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { archived: true } }
+
+          assert_equal 1, card.reload.actions.count
+          assert_equal(
+            " archived this card",
+            card.actions.first.description
+          )
+        end
+
+        test "creates an action if the card is unarchived" do
+          card = create(:card, archived: true)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { archived: false } }
+
+          assert_equal 1, card.reload.actions.count
+          assert_equal(
+            " sent this card to the board",
+            card.actions.first.description
+          )
+        end
+
+        test "creates an action if a due date is added" do
+          card = create(:card, due_date: nil)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { due_date: Date.tomorrow } }
+
+          assert_equal 1, card.reload.actions.count
+          assert_equal(
+            " set the due date of this card to #{card.due_date.strftime("%b %e at %l:%M %p")}",
+            card.actions.first.description
+          )
+        end
+
+        test "creates an action if the due date is changed" do
+          card = create(:card, due_date: Date.yesterday)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { due_date: Date.tomorrow } }
+
+          assert_equal 1, card.reload.actions.count
+          assert_equal(
+            " changed the due date of this card to #{card.due_date.strftime("%b %e at %l:%M %p")}",
+            card.actions.first.description
+          )
+        end
+
+        test "creates an action if the due date is removed" do
+          card = create(:card, due_date: Date.yesterday)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { due_date: nil } }
+
+          assert_equal 1, card.reload.actions.count
+          assert_equal(
+            " removed the due date from this card",
+            card.actions.first.description
+          )
+        end
+
+        test "due date action includes year if it is not this year" do
+          card = create(:card, due_date: nil)
+
+          put "/api/cards/#{card.id}",
+              params: { card: { due_date: Date.today + 2.years } }
+
+          assert_equal 1, card.reload.actions.count
+          assert card.actions.first.description.ends_with?(
+            card.due_date.strftime("%b %e, %Y at %l:%M %p")
+          )
+        end
+
         test "creates more than one action" do
           card = create(:card, completed: false)
 

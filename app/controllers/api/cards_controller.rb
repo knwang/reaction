@@ -77,7 +77,21 @@ class Api::CardsController < ApplicationController
     end
 
     if card.due_date_changed?
-      card.actions.create!(description: " changed the due date of this card")
+      if card.due_date
+        if card.due_date.year == Date.today.year
+          due_date = card.due_date.strftime("%b %e at %l:%M %p")
+        else
+          due_date = card.due_date.strftime("%b %e, %Y at %l:%M %p")
+        end
+
+        if card.due_date_was
+          card.actions.create!(description: " changed the due date of this card to #{due_date}")
+        else
+          card.actions.create!(description: " set the due date of this card to #{due_date}")
+        end
+      else
+        card.actions.create!(description: " removed the due date from this card")
+      end
     end
 
     if card.completed_changed?
@@ -96,6 +110,14 @@ class Api::CardsController < ApplicationController
         card.actions.create!(
           description: "transferred this card from #{old_list.board.title}"
         )
+      end
+    end
+
+    if card.archived_changed?
+      if card.archived?
+        card.actions.create!(description: " archived this card")
+      else
+        card.actions.create!(description: " sent this card to the board")
       end
     end
   end
