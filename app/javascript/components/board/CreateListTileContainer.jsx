@@ -44,12 +44,12 @@ class CreateListTileContainer extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault;
 
-    const boardId = this.props.match.params.id;
+    const boardId = Number(this.props.match.params.id);
 
     const currentState = this.context.store.getState();
     const lists = listSelectors.boardListsSelector(
       currentState, boardId 
-    );
+    ).sort((a, b) => a.position - b.position);
     const position = positionCalculator(lists, lists.length + 1);
 
     this.context.store.dispatch(
