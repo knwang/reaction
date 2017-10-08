@@ -1,111 +1,29 @@
 <!-- TOC -->
 
-- [1. Capstone: Trello Clone](#1-capstone-trello-clone)
-    - [1.1. UI](#11-ui)
-        - [1.1.1. Special Elements](#111-special-elements)
-            - [1.1.1.1. Create a board tile](#1111-create-a-board-tile)
-            - [1.1.1.2. List titles](#1112-list-titles)
-            - [1.1.1.3. Create a list form](#1113-create-a-list-form)
-            - [1.1.1.4. New Card Form](#1114-new-card-form)
-            - [1.1.1.5. Colorblind labels](#1115-colorblind-labels)
-    - [1.2. Pitfalls](#12-pitfalls)
-        - [1.2.1. URL params](#121-url-params)
-        - [1.2.2. Clean up after yourself!](#122-clean-up-after-yourself)
-        - [1.2.3. Dev Console](#123-dev-console)
-    - [1.3. Tradeoffs](#13-tradeoffs)
-        - [1.3.1. Redux data structure](#131-redux-data-structure)
-        - [1.3.2. New Board and List Forms](#132-new-board-and-list-forms)
-        - [1.3.3. How to access board id in new list form](#133-how-to-access-board-id-in-new-list-form)
-        - [1.3.4. How to order items](#134-how-to-order-items)
-        - [1.3.5. React-DnD vs Dragula](#135-react-dnd-vs-dragula)
-        - [1.3.6. Card creation local state](#136-card-creation-local-state)
-        - [1.3.7. How to connect dragula to cards and lists simultaneously](#137-how-to-connect-dragula-to-cards-and-lists-simultaneously)
-            - [1.3.7.1. UPDATE](#1371-update)
-        - [1.3.8. /cards/:cardId](#138-cardscardid)
-            - [1.3.8.1. Thoughts](#1381-thoughts)
-- [2. introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.](#2-introduces-some-logic-requirements-making-sure-the-card-component-has-a-board-or-can-retrieve-it-from-the-api-so-that-it-can-be-rendered)
-- [3. introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.](#3-introduces-similar-requirements-but-inverted-the-board-component-has-to-know-how-to-retrieve-the-card-so-it-can-be-displayed)
-- [4. introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.](#4-introduces-a-unique-requirement-that-it-has-to-be-able-to-figure-out-what-board-to-display-based-only-on-having-the-data-for-a-single-card)
-            - [4.0.8.2. Decisions](#4082-decisions)
-- [5. and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another card. This is a potential maintenance nightmare and not good pattern in general.](#5-and-2-are-asking-for-trouble-since-in-order-to-render-the-component-we-want-it-has-to-be-rendered-through-another-card-this-is-a-potential-maintenance-nightmare-and-not-good-pattern-in-general)
-            - [5.0.8.3. UPDATE](#5083-update)
-            - [5.0.8.4. UPDATE 2](#5084-update-2)
-        - [5.0.9. Textarea onBlur](#509-textarea-onblur)
-        - [5.0.10. Archiving Cards](#5010-archiving-cards)
-        - [5.0.11. Duplicated UI and logic for board/list/position selects on move/copy popovers](#5011-duplicated-ui-and-logic-for-boardlistposition-selects-on-movecopy-popovers)
-        - [5.0.12. How to load boards and lists on move/copy card popovers](#5012-how-to-load-boards-and-lists-on-movecopy-card-popovers)
+- [1. Build Notes](#1-build-notes)
+    - [1.1. Redux data structure](#11-redux-data-structure)
+    - [1.2. New Board and List Forms](#12-new-board-and-list-forms)
+    - [1.3. How to access board id in new list form](#13-how-to-access-board-id-in-new-list-form)
+    - [1.4. How to order items](#14-how-to-order-items)
+    - [1.5. React-DnD vs Dragula](#15-react-dnd-vs-dragula)
+    - [1.6. Card creation local state](#16-card-creation-local-state)
+    - [1.7. How to connect dragula to cards and lists simultaneously](#17-how-to-connect-dragula-to-cards-and-lists-simultaneously)
+        - [1.7.1. UPDATE](#171-update)
+    - [1.8. /cards/:cardId](#18-cardscardid)
+        - [1.8.1. Thoughts](#181-thoughts)
+        - [1.8.2. Decisions](#182-decisions)
+        - [1.8.3. UPDATE](#183-update)
+        - [1.8.4. UPDATE 2](#184-update-2)
+    - [1.9. Textarea onBlur](#19-textarea-onblur)
+    - [1.10. Archiving Cards](#110-archiving-cards)
+    - [1.11. Duplicated UI and logic for board/list/position selects on move/copy popovers](#111-duplicated-ui-and-logic-for-boardlistposition-selects-on-movecopy-popovers)
+    - [1.12. How to load boards and lists on move/copy card popovers](#112-how-to-load-boards-and-lists-on-movecopy-card-popovers)
 
 <!-- /TOC -->
 
-# 1. Capstone: Trello Clone
+# 1. Build Notes
 
-## 1.1. UI
-
-### 1.1.1. Special Elements
-
-
-#### 1.1.1.1. Create a board tile
-The create a board button tile should be replaced with the new board form when it is clicked on.
-
-
-#### 1.1.1.2. List titles
-The React component should swap the list title `<p>` tag for a `<input>` tag when it is clicked on. Pressing enter during editing the title or blurring the input should submit the change and swap the `<p>` back in.
-
-NOTE: It is important to have the `<p>` and `<input>` wrapped in a `<div>` so that the styles will work properly.
-
-
-#### 1.1.1.3. Create a list form
-The create a list button tile should add the `selected` class when it is clicked on. This will display the form. When either the “Save” of “X” buttons are clicked, the `selected` class should be removed.
-
-
-#### 1.1.1.4. New Card Form
-The new card form is active when the parent `.list-wrapper` has the `add-dropdown-active` class and the `.add-dropdown.add-bottom` element has the `active-card` class.
-
-Since only one list should have the form active at a time, only one list should  have the `add-dropdown-active` class at a time.
-
-#### 1.1.1.5. Colorblind labels
-
-Colorblind labels are toggled by adding the `colorblind` class to a parent element. The easiest way to do this is to apply it to the top-most `<div>` rendered in our application, because that is a parent to both the lists UI and the card UI.
-
-It could also be added in multiple places, to parents of each of those elements.
-
-## 1.2. Pitfalls
-
-### 1.2.1. URL params
-
-URL matches are *strings*. I ran into trouble a few times where I couldn’t figure out why my board or card wasn’t being rendered and the problem ended up being that I was searching for the item using `match === id`.
-
-If coercion is used via the `==` operator, this won’t be a problem. Otherwise it is imperative to remember to call `Number` with the match to turn it into a number. There shouldn’t be any problems using coercion because even if the match was `undefined`, that will be coerced to `0`, and no cards or boards will have that id, so it will function as it should.
-
-### 1.2.2. Clean up after yourself!
-
-If you create any sort of event listener when the component mounts, it must be cleaned up when the component is unmounted. If this isn’t done, the console will contain mysterious errors because the component is gone but events are trying to access it.
-
-The two most common places I needed this were:
-
-- Clean up dragula events
-- Clean up redux store subscriptions.
-
-To clean up a redux store subscription, the code looks like this:
-
-```javascript
-componentDidMount() {
-. const store = this.context.store;
-. this.unsubscribe = store.subscribe(() => this.forceUpdate());
-}
-
-componentWillUnmount() {
-. this.unsubscribe();
-}
-```
-### 1.2.3. Dev Console
-
-Keep dev tools open! Even if you are on a tab other than console, you will see the error icon in the upper right of dev tools if a JS error occurs. It is very easy to go down the wrong troubleshooting road if you don’t realize there is an error to read and a stacktrace to visit.
-
-
-## 1.3. Tradeoffs
-
-### 1.3.1. Redux data structure
+## 1.1. Redux data structure
 
 My first thought was to store the data in a nested structure mirroring its relationships.:
 
@@ -142,9 +60,9 @@ I ended up going with a flat data structure, but didn’t include the child ids 
 ```
 
 
-I also didn’t end up cleaning up the nested data, but I don’t use it. There is a library called [normalizr](https://github.com/paularmstrong/normalizr) which normalizes json data and would make cleaning up the nested data easy, and I would probably use it in a production project.
+I also didn’t always end up cleaning up the nested data, but I don’t use it. There is a library called [normalizr](https://github.com/paularmstrong/normalizr) which normalizes json data and would make cleaning up the nested data easy, and I would probably use it in a production project.
 
-### 1.3.2. New Board and List Forms
+## 1.2. New Board and List Forms
 
 The new board and list forms require some state:
 
@@ -230,7 +148,7 @@ After this, I was able to remove the reducer and all state related to the form f
 
 I made this same change for new lists, and the entire app now uses this pattern.
 
-### 1.3.3. How to access board id in new list form
+## 1.3. How to access board id in new list form
 
 In order to create a new list, the `CreateListTileContainer` component has to know the board we are currently viewing. It seems that this would be easy because it is in the URL, but it was a little tricky.
 
@@ -250,7 +168,7 @@ This code is executed if a card is moved to a different board.
 
 I realized that this was exactly what I needed for `CreateListTileContainer`. By using `withRouter` in that component, I was able to grab the current board id using `this.props.match.params.id`. I no longer needed to use the context to solve the problem.
 
-### 1.3.4. How to order items
+## 1.4. How to order items
 
 In order to maintain order, lists and cards need some implementation of a position. There is one obvious way to do this: normalized positions such as 1, 2, 3, 4.
 
@@ -276,11 +194,11 @@ I quickly realized that this was a really good solution. Reordering only require
 
 I mimicked these rules in my own implementation.
 
-### 1.3.5. React-DnD vs Dragula
+## 1.5. React-DnD vs Dragula
 
 When implement dragging lists I found React-DnD and Dragula as options. React-DnD was created by a prolific react  community contributor, so I am sure it works fine, but I was unable to get it to work after 20 or so minutes. I decided to try Dragula and was able to get it working in just a couple of minutes using [GitHub - bevacqua/react-dragula: Drag and drop so simple it hurts](https://github.com/bevacqua/react-dragula "bevacqua/react-dragula"). I highly recommend this library as it has a great API and works flawlessly in my application.
 
-### 1.3.6. Card creation local state
+## 1.6. Card creation local state
 
 When creating a new card, there is some local state that needs to be maintained:
 
@@ -314,7 +232,7 @@ Where should I store these pieces? In my application, the rendered structure loo
 Since the state storing which list is currently showing the new form list needs to go in the component which has access to all of the lists, that is `<ExistingLists>`. It made sense to me to put all of the callbacks and state there, since they are all related. I could have also utilized Redux for the state and placed the callback logic much closer to the `<NewCardForm>` component, but I decided it wasn’t worth the added Redux maintenance at this point.
 
 
-### 1.3.7. How to connect dragula to cards and lists simultaneously
+## 1.7. How to connect dragula to cards and lists simultaneously
 
 Many of instances of dragula can be configured on the same page, but nesting drag targets proved to be a little tricky. The way you configure dragula is by setting up “containers”, and their direct descendants will be draggable between each container.
 
@@ -370,13 +288,13 @@ The `isContainer` options key allows us to dynamically decide if an element that
 
 Notice the parallel between the constraints on the parent draggable item and the dynamic container definition for the nested draggable containers.
 
-#### 1.3.7.1. UPDATE
+### 1.7.1. UPDATE
 
 I noticed that sometimes dragging cards didn’t work and would show more than one card element being dragged at once. After playing with it I realized that it was happening after navigating around the app.
 
 The problem ended up being that I was creating the dragula instance in `componentDidMount`, but not cleaning it up in `componentWillUnmount`
 
-### 1.3.8. /cards/:cardId
+## 1.8. /cards/:cardId
 
 When you view a card on Trello, you will notice the card’s board is rendered behind the card.  How do we achieve this as well?
 
@@ -386,16 +304,16 @@ I came up with three options:
 2. Render the `Card` component for the `/cards/:cardId`  route and then render the `Board` from the `Card` component’s render function.
 3. Create two `<Route>` expressions for `/cards/:cardId`. One would render the board, and the other would render the card.
 
-#### 1.3.8.1. Thoughts
-# 2. introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.
+### 1.8.1. Thoughts
+\\#1 introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.
 
-# 3. introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.
+\\#2 introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.
 
-# 4. introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.
+\\#3 introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.
 
-#### 4.0.8.2. Decisions
+### 1.8.2. Decisions
 
-# 5. and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another card. This is a potential maintenance nightmare and not good pattern in general.
+\\#1 and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another card. This is a potential maintenance nightmare and not good pattern in general.
 
 I decided to go with #3. That is because each component can be told to render itself and the rendering is not co-dependent (although part of the logic in `Board` is, as it needs to retrieve itself through a card).
 
@@ -431,7 +349,7 @@ This is when it gets tricky. I solved it by introducing the following steps:
 
 NOTE: I created a method called `updateBoardInState` that encapsulates  kicking off steps 2+. I called this method directly in `componentDidMount` as well as in the subscription callback, because we need it to be executed when the component mounts, and not just when we get an update from the store.
 
-#### 5.0.8.3. UPDATE
+### 1.8.3. UPDATE
 
 I ended up refactoring my subscribe callback because I had two places that modified the state back and forth which got the app stuck in an infinite loop.
 
@@ -450,7 +368,7 @@ updateBoardInState = () => {
 
 The callback function now checks for the board id first. If there is no board is, that means we are on `/cards/:id` and the card hasn’t loaded yet. If we are on `/boards/:id`, the id is available immediately.
 
-#### 5.0.8.4. UPDATE 2
+### 1.8.4. UPDATE 2
 
 I originally rendered `BoardContainer` in two different routes. I found that this created a visible refresh when I changed between `/cards/:id` and `/boards/:id`. That is because each route rendered its own instance of `BoardContainer`. By only using one instance of that component, react is able to properly transition without the vision refresh of the board data.
 
@@ -466,7 +384,7 @@ to:
 ```javascript
 <Route path='/(boards|cards)/:id' exact component={BoardContainer} />
 ```
-### 5.0.9. Textarea onBlur
+## 1.9. Textarea onBlur
 
 I ran into a problem where `onblur` interrupts click events, which means that clicking on a save button outside of a textarea with a an onblur handler only fires the `onblur`, and not any `onclick` events on the button. The first solution I found for this came from [https://stackoverflow.com/a/28963938/617243](https://stackoverflow.com/a/28963938/617243 "this SO post").
 
@@ -508,17 +426,17 @@ handleSaveClick = (e) => {
   );
 };
 ```
-### 5.0.10. Archiving Cards
+## 1.10. Archiving Cards
 
 When a card is archived, we don’t want to show it anymore. My initial thought was that the easiest way to handle that is just to filter the archived cards out at the API level.
 
-### 5.0.11. Duplicated UI and logic for board/list/position selects on move/copy popovers
+## 1.11. Duplicated UI and logic for board/list/position selects on move/copy popovers
 
 There is quite a bit of logic and UI involved in the board/list/position portion of the move/copy popover form. Because of that, I extracted the UI to `CardLocationForm` and the logic to `CardLocationFormContainer`. This allows us to render it in both `MoveCardForm` and `CopyCardForm` with only the requirement of passing in a card prop and an `onLocationChange` prop which is a callback function which will be called with an object containing the selected board, list, and position.
 
 This made it easy to duplicate very little logic between the `MoveCardFormContainer` and `CopyCardFormContainer` components.
 
-### 5.0.12. How to load boards and lists on move/copy card popovers
+## 1.12. How to load boards and lists on move/copy card popovers
 
 When you access the move or copy popovers, you are able to choose different boards. The problem is, if you navigated directly to `/cards/:id`, the only board that is in the store is the one the current card belongs to. That means the only board that will be in the boards select is the current one.
 
