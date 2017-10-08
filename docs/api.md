@@ -70,7 +70,7 @@ All of the `/api` routes use the following format to return errors:
 
 ```json
 {
-		"error": "Invalid board id provided"
+  "error": "Invalid board id provided"
 }
 ```
 
@@ -106,18 +106,18 @@ None
 
 ```json
 [
-	{
-		"id": 1,
-		"title": "Web dev",
-		"created_at": "2017-10-04T05:57:02.777Z",
-		"updated_at": "2017-10-04T05:57:02.777Z"
-	},
-	{
-		"id": 2,
-		"title": "Cooking",
-		"created_at": "2017-10-04T15:29:04.095Z",
-		"updated_at": "2017-10-04T15:29:04.095Z"
-	}
+  {
+    "id": 1,
+    "title": "Web dev",
+    "created_at": "2017-10-04T05:57:02.777Z",
+    "updated_at": "2017-10-04T05:57:02.777Z"
+  },
+  {
+    "id": 2,
+    "title": "Cooking",
+    "created_at": "2017-10-04T15:29:04.095Z",
+    "updated_at": "2017-10-04T15:29:04.095Z"
+  }
 ]
 ```
 
@@ -133,9 +133,9 @@ Creates a board.
 
 ```json
 {
-	"board": {
-		"title": "My new board"
-	}
+  "board": {
+    "title": "My new board"
+  }
 }
 ```
 
@@ -147,10 +147,10 @@ The new board is returned in JSON format with a 201 response status code.
 
 ```json
 {
-	"id": 12,
-	"title": "My new board",
-	"created_at": "2017-10-06T23:08:28.375Z",
-	"updated_at": "2017-10-06T23:08:28.375Z"
+  "id": 12,
+  "title": "My new board",
+  "created_at": "2017-10-06T23:08:28.375Z",
+  "updated_at": "2017-10-06T23:08:28.375Z"
 }
 ```
 
@@ -175,10 +175,10 @@ None
 The board is returned with the following nested data:
 
 - board -\>
-	- lists -\>
-		- list -\>
-			- cards -\>
-				- card
+  - lists -\>
+    - list -\>
+      - cards -\>
+        - card
 
 Cards do not include all of the card data. This response includes only the following data for cards: `id`, `title`, `due_date`, `labels`, `description`, `list_id`, `board_id, position`, `comments_count`.
 
@@ -188,36 +188,36 @@ The response status code is 200.
 
 ```json
 {
-	"id": 1,
-	"title": "Web dev",
-	"created_at": "2017-10-04T05:57:02.777Z",
-	"updated_at": "2017-10-04T05:57:02.777Z",
-	"lists": [
-		{
-			"id": 3,
-			"title": "CSS",
-			"board_id": 1,
-			"created_at": "2017-10-04T06:53:39.302Z",
-			"updated_at": "2017-10-04T06:53:39.302Z",
-			"position": 65535.0,
-			"cards": [
-				{
-					"id": 7,
-					"title": "1",
-					"due_date": null,
-					"labels": [
-						"red",
-						"purple"
-					],
-					"description": "Selectors",
-					"list_id": 3,
-					"board_id": 1,
-					"position": 65535.0,
-					"comments_count": 0
-				}
-			]
-		}
-	]
+  "id": 1,
+  "title": "Web dev",
+  "created_at": "2017-10-04T05:57:02.777Z",
+  "updated_at": "2017-10-04T05:57:02.777Z",
+  "lists": [
+    {
+      "id": 3,
+      "title": "CSS",
+      "board_id": 1,
+      "created_at": "2017-10-04T06:53:39.302Z",
+      "updated_at": "2017-10-04T06:53:39.302Z",
+      "position": 65535.0,
+      "cards": [
+        {
+          "id": 7,
+          "title": "1",
+          "due_date": null,
+          "labels": [
+            "red",
+            "purple"
+          ],
+          "description": "Selectors",
+          "list_id": 3,
+          "board_id": 1,
+          "position": 65535.0,
+          "comments_count": 0
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -239,10 +239,10 @@ NOTE: The `board_id` where the list will reside is required.
 
 ```json
 {
-	"board_id": 1,
-	"list": { 
-		"title": "My list"
-	}
+  "board_id": 1,
+  "list": { 
+    "title": "My list"
+  }
 }
 ```
 
@@ -254,12 +254,12 @@ The list is returned in JSON form with a 201 status code.
 
 ```json
 {
-	"id": 10,
-	"title": "My list",
-	"board_id": 1,
-	"created_at": "2017-10-06T23:40:26.606Z",
-	"updated_at": "2017-10-06T23:40:26.606Z",
-	"position": 65535.0
+  "id": 10,
+  "title": "My list",
+  "board_id": 1,
+  "created_at": "2017-10-06T23:40:26.606Z",
+  "updated_at": "2017-10-06T23:40:26.606Z",
+  "position": 65535.0
 }
 ```
 
@@ -281,8 +281,8 @@ Any combination of `title` and `position` can be provided. The only requirement 
 
 ```json
 {
-	"title": "Updated title",
-	"position": 137882
+  "title": "Updated title",
+  "position": 137882
 }
 ```
 
@@ -294,12 +294,12 @@ The list is returned in JSON form with a 200 status code.
 
 ```json
 {
-	"id": 1,
-	"title": "Updated title",
-	"position": 137882.0,
-	"board_id": 1,
-	"created_at": "2017-10-04T05:57:07.222Z",
-	"updated_at": "2017-10-06T23:48:44.540Z"
+  "id": 1,
+  "title": "Updated title",
+  "position": 137882.0,
+  "board_id": 1,
+  "created_at": "2017-10-04T05:57:07.222Z",
+  "updated_at": "2017-10-06T23:48:44.540Z"
 }
 ```
 
@@ -321,10 +321,10 @@ NOTE: The `list_id` where the card will reside is required.
 
 ```json
 {
-	"list_id": 13,
-	"card": {
-		"title": "My new card"
-	}
+  "list_id": 13,
+  "card": {
+    "title": "My new card"
+  }
 }
 ```
 
@@ -336,19 +336,19 @@ The new card is returned in JSON format with a 201 response status code.
 
 ```json
 {
-	"id": 9,
-	"title": "My new card",
-	"description": "",
-	"labels": [],
-	"list_id": 13,
-	"position": 65535.0,
-	"archived": false,
-	"created_at": "2017-10-08T17:54:55.285Z",
-	"updated_at": "2017-10-08T17:54:55.285Z",
-	"due_date": null,
-	"completed": false,
-	"board_id": 1,
-	"comments_count": 0
+  "id": 9,
+  "title": "My new card",
+  "description": "",
+  "labels": [],
+  "list_id": 13,
+  "position": 65535.0,
+  "archived": false,
+  "created_at": "2017-10-08T17:54:55.285Z",
+  "updated_at": "2017-10-08T17:54:55.285Z",
+  "due_date": null,
+  "completed": false,
+  "board_id": 1,
+  "comments_count": 0
 }
 ```
 
@@ -376,29 +376,29 @@ The card is returned in JSON format. The JSON also includes the card’s comment
 
 ```json
 {
-	"id": 9,
-	"title": "My new card",
-	"description": "",
-	"labels": [],
-	"list_id": 13,
-	"position": 65535.0,
-	"archived": false,
-	"created_at": "2017-10-08T17:54:55.285Z",
-	"updated_at": "2017-10-08T17:54:55.285Z",
-	"due_date": null,
-	"completed": false,
-	"board_id": 1,
-	"comments_count": 0,
-	"comments": [],
-	"actions": [
-		{
-			"id": 49,
-			"description": " added this card to My list",
-			"created_at": "2017-10-08T17:54:55.319Z",
-			"updated_at": "2017-10-08T17:54:55.319Z",
-			"card_id": 9
-		}
-	]
+  "id": 9,
+  "title": "My new card",
+  "description": "",
+  "labels": [],
+  "list_id": 13,
+  "position": 65535.0,
+  "archived": false,
+  "created_at": "2017-10-08T17:54:55.285Z",
+  "updated_at": "2017-10-08T17:54:55.285Z",
+  "due_date": null,
+  "completed": false,
+  "board_id": 1,
+  "comments_count": 0,
+  "comments": [],
+  "actions": [
+    {
+      "id": 49,
+      "description": " added this card to My list",
+      "created_at": "2017-10-08T17:54:55.319Z",
+      "updated_at": "2017-10-08T17:54:55.319Z",
+      "card_id": 9
+    }
+  ]
 }
 ```
 
@@ -439,10 +439,10 @@ At least one attribute must be included in a `"card"`object in the payload. The 
 
 ```json
 {
-	"card": {
-		"title": "My updated title",
-		"completed": true
-	}
+  "card": {
+    "title": "My updated title",
+    "completed": true
+  }
 }
 ```
 
@@ -454,35 +454,35 @@ The updated card will be returned in JSON format. The returned object also inclu
 
 ```json
 {
-	"title": "My updated title",
-	"completed": true,
-	"list_id": 13,
-	"due_date": null,
-	"id": 9,
-	"archived": false,
-	"description": "",
-	"labels": [],
-	"position": 65535.0,
-	"created_at": "2017-10-08T17:54:55.285Z",
-	"updated_at": "2017-10-08T18:15:25.017Z",
-	"board_id": 1,
-	"comments_count": 0,
-	"actions": [
-		{
-			"id": 50,
-			"description": " marked the due date complete",
-			"created_at": "2017-10-08T18:15:25.014Z",
-			"updated_at": "2017-10-08T18:15:25.014Z",
-			"card_id": 9
-		},
-		{
-			"id": 49,
-			"description": " added this card to My list",
-			"created_at": "2017-10-08T17:54:55.319Z",
-			"updated_at": "2017-10-08T17:54:55.319Z",
-			"card_id": 9
-		}
-	]
+  "title": "My updated title",
+  "completed": true,
+  "list_id": 13,
+  "due_date": null,
+  "id": 9,
+  "archived": false,
+  "description": "",
+  "labels": [],
+  "position": 65535.0,
+  "created_at": "2017-10-08T17:54:55.285Z",
+  "updated_at": "2017-10-08T18:15:25.017Z",
+  "board_id": 1,
+  "comments_count": 0,
+  "actions": [
+    {
+      "id": 50,
+      "description": " marked the due date complete",
+      "created_at": "2017-10-08T18:15:25.014Z",
+      "updated_at": "2017-10-08T18:15:25.014Z",
+      "card_id": 9
+    },
+    {
+      "id": 49,
+      "description": " added this card to My list",
+      "created_at": "2017-10-08T17:54:55.319Z",
+      "updated_at": "2017-10-08T17:54:55.319Z",
+      "card_id": 9
+    }
+  ]
 }
 ```
 
@@ -504,10 +504,10 @@ NOTE: The `card_id` where the comment will reside is required.
 
 ```json
 {
-	"card_id": 9,
-	"comment": {
-		"text": "This is my comment"
-	}
+  "card_id": 9,
+  "comment": {
+    "text": "This is my comment"
+  }
 }
 ```
 
@@ -519,11 +519,11 @@ The new comment is returned in JSON format.
 
 ```json
 {
-	"id": 3,
-	"text": "This is my comment",
-	"card_id": 9,
-	"created_at": "2017-10-08T18:23:59.803Z",
-	"updated_at": "2017-10-08T18:23:59.803Z"
+  "id": 3,
+  "text": "This is my comment",
+  "card_id": 9,
+  "created_at": "2017-10-08T18:23:59.803Z",
+  "updated_at": "2017-10-08T18:23:59.803Z"
 }
 ```
 

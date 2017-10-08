@@ -182,7 +182,7 @@ The state used by this reducer is unique in that it is an object instead of an a
 
 ```json
 {
-		colorblind: false
+    colorblind: false
 }
 ```
 

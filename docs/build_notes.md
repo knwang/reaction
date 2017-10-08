@@ -29,12 +29,12 @@ My first thought was to store the data in a nested structure mirroring its relat
 
 ```javascript
 {
-	boards: [{
-		id: 1
-		lists: [{
-			id: 1
-		}]
-	}]
+  boards: [{
+    id: 1
+    lists: [{
+      id: 1
+    }]
+  }]
 }
 ```
 
@@ -49,13 +49,13 @@ I ended up going with a flat data structure, but didn’t include the child ids 
 
 ```javascript
 {
-	boards: [{
-		id: 1
-	},
-	lists: [{
-		id: 1,
-		board_id: 1
-	}]
+  boards: [{
+    id: 1
+  },
+  lists: [{
+    id: 1,
+    board_id: 1
+  }]
 }
 ```
 
@@ -216,15 +216,15 @@ Where should I store these pieces? In my application, the rendered structure loo
 ```
 <Application>
   <BoardContainer>
-	<Board>
-	  <ExistingLists>
-		<DraggableList>
-		  <List>
-			<NewCardForm />
-		  </List>
-		</DraggableList>
-	  </ExistingList>
-	</Board>
+  <Board>
+    <ExistingLists>
+    <DraggableList>
+      <List>
+      <NewCardForm />
+      </List>
+    </DraggableList>
+    </ExistingList>
+  </Board>
   <BoardContainer>
 <Application>
 ```
@@ -246,25 +246,25 @@ Parent draggable configuration (ES2015 syntax from [GitHub - bevacqua/react-drag
 
 ```javascript
   dragulaDecorator = (componentBackingInstance) => {
-	if (componentBackingInstance) {
-	  var event = document.createEvent('Event');
-	  event.initEvent('drop', true, true);
+  if (componentBackingInstance) {
+    var event = document.createEvent('Event');
+    event.initEvent('drop', true, true);
 
-	  let options = {
-		direction: 'horizontal',
-		moves: function (el, source, handle, sibling) {
-		  return !handle.closest("#cards-container");
-		},
-		accepts: function (el, target, source, sibling) {
-		  return !el.closest("#cards-container");
-		},
-	  };
+    let options = {
+    direction: 'horizontal',
+    moves: function (el, source, handle, sibling) {
+      return !handle.closest("#cards-container");
+    },
+    accepts: function (el, target, source, sibling) {
+      return !el.closest("#cards-container");
+    },
+    };
 
-	  dragula([componentBackingInstance], options)
-		.on('drop', function (el) {
-		  el.dispatchEvent(event);
-		});
-	}
+    dragula([componentBackingInstance], options)
+    .on('drop', function (el) {
+      el.dispatchEvent(event);
+    });
+  }
   };
 ```
 
@@ -276,11 +276,11 @@ Nested draggable items configuration:
 
 ```javascript
   componentDidMount() {
-	const cardDrake = dragula({
-	  isContainer: function (el) {
-		return el.id === 'cards-container';
-	  }
-	});
+  const cardDrake = dragula({
+    isContainer: function (el) {
+    return el.id === 'cards-container';
+    }
+  });
   }
 ```
 
@@ -339,13 +339,13 @@ This is when it gets tricky. I solved it by introducing the following steps:
 2. The callback to the subscription checks `this.state.board` and `this.state.isFetching` to see if we have a board yet.
 3. If we have a board, nothing is done.
 4. If we don’t have a board, I:
-	1. Look for a board id. The board id can come from either the url or the current card if we are at `/cards/:cardId`.
-	2. If we don’t have a board id (because we have not yet retrieved the current card), do nothing. These same steps will be repeated when the store is updated, thanks to our subscription. When the card is fetched (happening elsewhere in the app), the store will be updated and we will be able to proceed.
-	3. Once we have a board id, continue:
-	4. Update the `isFetching` state property to `true`. (This makes sure that any future store subscription callback invocations won’t retrieve the board, since we are already working on it)
-	5. In the `setState` callback, dispatch the `fetchBoard` thunk, with a callback.
-		1. In the callback to the thunk, receive the fetched board.
-		2. Update the local state state with the board and set `isFetching` to false.
+  1. Look for a board id. The board id can come from either the url or the current card if we are at `/cards/:cardId`.
+  2. If we don’t have a board id (because we have not yet retrieved the current card), do nothing. These same steps will be repeated when the store is updated, thanks to our subscription. When the card is fetched (happening elsewhere in the app), the store will be updated and we will be able to proceed.
+  3. Once we have a board id, continue:
+  4. Update the `isFetching` state property to `true`. (This makes sure that any future store subscription callback invocations won’t retrieve the board, since we are already working on it)
+  5. In the `setState` callback, dispatch the `fetchBoard` thunk, with a callback.
+    1. In the callback to the thunk, receive the fetched board.
+    2. Update the local state state with the board and set `isFetching` to false.
 
 NOTE: I created a method called `updateBoardInState` that encapsulates  kicking off steps 2+. I called this method directly in `componentDidMount` as well as in the subscription callback, because we need it to be executed when the component mounts, and not just when we get an update from the store.
 
@@ -361,7 +361,7 @@ updateBoardInState = () => {
   if (!boardId) { return null; }
 
   if (!this.state.board && !this.state.isFetching) {
-	this.fetchBoard(boardId);
+  this.fetchBoard(boardId);
   }
 }
 ```
@@ -391,7 +391,7 @@ I ran into a problem where `onblur` interrupts click events, which means that cl
 While using `onmousedown` worked, I didn’t consider it a good solution because a button shouldn’t respond to a click until the mouse button is _released_, rather than pressed. I ended up solving this using `setTimeout` and my own `showForm` state property. Here is the code with sample HTML:
 
 ```html
-		  <textarea onBlur={props.onInputBlur}></textarea>
+      <textarea onBlur={props.onInputBlur}></textarea>
           <button onClick={props.onSaveClick}>{props.isSaving ? "Saving..." : "Save"}</button>
 ```
 
