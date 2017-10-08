@@ -128,7 +128,7 @@ class Api::CardsController < ApplicationController
 
   def clone_comments(from, to)
     from.comments.find_each do |comment|
-      new_comment = comment.dup()
+      new_comment = comment.dup
       new_comment.card = to
       new_comment.save!
     end
