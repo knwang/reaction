@@ -1,68 +1,70 @@
-# Table of Contents
+<!-- TOC -->
 
-- [API Documentation](#api-documentation)
-    - [Example API Error Format](#example-api-error-format)
-    - [GET /](#get-)
-    - [GET /boards/:id](#get-boardsid)
-    - [GET /cards/:id](#get-cardsid)
-    - [GET /ui](#get-ui)
-    - [GET /api/boards](#get-apiboards)
-        - [Controller#Action](#controlleraction)
-        - [Expected parameters](#expected-parameters)
-        - [Example Response](#example-response)
-    - [POST /api/boards](#post-apiboards)
-        - [Controller#Action](#controlleraction-1)
-        - [Expected Payload](#expected-payload)
-        - [Successful Response](#successful-response)
-            - [Example Response](#example-response-1)
-        - [Error Response](#error-response)
-    - [GET /api/boards/:id](#get-apiboardsid)
-        - [Controller#Action](#controlleraction-2)
-        - [Expected Payload](#expected-payload-1)
-        - [Successful Response](#successful-response-1)
-            - [Example Response](#example-response-2)
-        - [Error Response](#error-response-1)
-    - [POST /api/lists](#post-apilists)
-        - [Controller#Action](#controlleraction-3)
-        - [Expected Payload](#expected-payload-2)
-        - [Successful Response](#successful-response-2)
-            - [Example Response](#example-response-3)
-        - [Error Response](#error-response-2)
-    - [PUT/PATCH /api/lists/:id](#putpatch-apilistsid)
-        - [Controller#Action](#controlleraction-4)
-        - [Expected Payload](#expected-payload-3)
-        - [Successful Response](#successful-response-3)
-            - [Example Response](#example-response-4)
-        - [Error Response](#error-response-3)
-    - [POST /api/cards](#post-apicards)
-        - [Controller#Action](#controlleraction-5)
-        - [Expected Payload](#expected-payload-4)
-        - [Successful Response](#successful-response-4)
-            - [Example Response](#example-response-5)
-        - [Error Response](#error-response-4)
-    - [GET /api/cards/:id](#get-apicardsid)
-        - [Controller#Action](#controlleraction-6)
-        - [Expected Payload](#expected-payload-5)
-        - [Successful Response](#successful-response-5)
-            - [Example Response](#example-response-6)
-        - [Error Response](#error-response-5)
-    - [PUT/PATCH /api/cards/:id](#putpatch-apicardsid)
-        - [Controller#Action](#controlleraction-7)
-        - [Expected Payload](#expected-payload-6)
-            - [Example Payload](#example-payload)
-        - [Successful Response](#successful-response-6)
-            - [Example Response](#example-response-7)
-        - [Error Response](#error-response-6)
-    - [POST /api/comments](#post-apicomments)
-        - [Controller#Action](#controlleraction-8)
-        - [Expected Payload](#expected-payload-7)
-        - [Successful Response](#successful-response-7)
-            - [Example Response](#example-response-8)
-        - [Error Response](#error-response-7)
+- [1. API Documentation](#1-api-documentation)
+    - [1.1. Example API Error Format](#11-example-api-error-format)
+    - [1.2. GET /](#12-get-)
+    - [1.3. GET /boards/:id](#13-get-boardsid)
+    - [1.4. GET /cards/:id](#14-get-cardsid)
+    - [1.5. GET /ui](#15-get-ui)
+    - [1.6. GET /api/boards](#16-get-apiboards)
+        - [1.6.1. Controller#Action](#161-controlleraction)
+        - [1.6.2. Expected parameters](#162-expected-parameters)
+        - [1.6.3. Example Response](#163-example-response)
+    - [1.7. POST /api/boards](#17-post-apiboards)
+        - [1.7.1. Controller#Action](#171-controlleraction)
+        - [1.7.2. Expected Payload](#172-expected-payload)
+        - [1.7.3. Successful Response](#173-successful-response)
+            - [1.7.3.1. Example Response](#1731-example-response)
+        - [1.7.4. Error Response](#174-error-response)
+    - [1.8. GET /api/boards/:id](#18-get-apiboardsid)
+        - [1.8.1. Controller#Action](#181-controlleraction)
+        - [1.8.2. Expected Payload](#182-expected-payload)
+        - [1.8.3. Successful Response](#183-successful-response)
+            - [1.8.3.1. Example Response](#1831-example-response)
+        - [1.8.4. Error Response](#184-error-response)
+    - [1.9. POST /api/lists](#19-post-apilists)
+        - [1.9.1. Controller#Action](#191-controlleraction)
+        - [1.9.2. Expected Payload](#192-expected-payload)
+        - [1.9.3. Successful Response](#193-successful-response)
+            - [1.9.3.1. Example Response](#1931-example-response)
+        - [1.9.4. Error Response](#194-error-response)
+    - [1.10. PUT/PATCH /api/lists/:id](#110-putpatch-apilistsid)
+        - [1.10.1. Controller#Action](#1101-controlleraction)
+        - [1.10.2. Expected Payload](#1102-expected-payload)
+        - [1.10.3. Successful Response](#1103-successful-response)
+            - [1.10.3.1. Example Response](#11031-example-response)
+        - [1.10.4. Error Response](#1104-error-response)
+    - [1.11. POST /api/cards](#111-post-apicards)
+        - [1.11.1. Controller#Action](#1111-controlleraction)
+        - [1.11.2. Expected Payload](#1112-expected-payload)
+        - [1.11.3. Successful Response](#1113-successful-response)
+            - [1.11.3.1. Example Response](#11131-example-response)
+        - [1.11.4. Error Response](#1114-error-response)
+    - [1.12. GET /api/cards/:id](#112-get-apicardsid)
+        - [1.12.1. Controller#Action](#1121-controlleraction)
+        - [1.12.2. Expected Payload](#1122-expected-payload)
+        - [1.12.3. Successful Response](#1123-successful-response)
+            - [1.12.3.1. Example Response](#11231-example-response)
+        - [1.12.4. Error Response](#1124-error-response)
+    - [1.13. PUT/PATCH /api/cards/:id](#113-putpatch-apicardsid)
+        - [1.13.1. Controller#Action](#1131-controlleraction)
+        - [1.13.2. Expected Payload](#1132-expected-payload)
+            - [1.13.2.1. Example Payload](#11321-example-payload)
+        - [1.13.3. Successful Response](#1133-successful-response)
+            - [1.13.3.1. Example Response](#11331-example-response)
+        - [1.13.4. Error Response](#1134-error-response)
+    - [1.14. POST /api/comments](#114-post-apicomments)
+        - [1.14.1. Controller#Action](#1141-controlleraction)
+        - [1.14.2. Expected Payload](#1142-expected-payload)
+        - [1.14.3. Successful Response](#1143-successful-response)
+            - [1.14.3.1. Example Response](#11431-example-response)
+        - [1.14.4. Error Response](#1144-error-response)
 
-# API Documentation
+<!-- /TOC -->
 
-## Example API Error Format
+# 1. API Documentation
+
+## 1.1. Example API Error Format
 
 All of the `/api` routes use the following format to return errors:
 
@@ -72,35 +74,35 @@ All of the `/api` routes use the following format to return errors:
 }
 ```
 
-## GET /
+## 1.2. GET /
 
 This route is used to render the template which renders the assets so that React can take over and render our boards index.
 
-## GET /boards/:id
+## 1.3. GET /boards/:id
 
 This route is also used to render the template. If we don’t have this route, people will not be able to navigate directly to boards. They would need to access `/` and then click on a board, every time.
 
-## GET /cards/:id
+## 1.4. GET /cards/:id
 
 Same as `GET /boards/:id`.
 
-## GET /ui
+## 1.5. GET /ui
 
 This page lists the static ui designs which should be used to build the React components.
 
-## GET /api/boards
+## 1.6. GET /api/boards
 
 Get all boards from the database. This does not return any nested data.
 
-### Controller#Action
+### 1.6.1. Controller#Action
 
 `api/boards#index`
 
-### Expected parameters
+### 1.6.2. Expected parameters
 
 None
 
-### Example Response
+### 1.6.3. Example Response
 
 ```json
 [
@@ -119,15 +121,15 @@ None
 ]
 ```
 
-## POST /api/boards
+## 1.7. POST /api/boards
 
 Creates a board.
 
-### Controller#Action
+### 1.7.1. Controller#Action
 
 `api/boards#create`
 
-### Expected Payload
+### 1.7.2. Expected Payload
 
 ```json
 {
@@ -137,11 +139,11 @@ Creates a board.
 }
 ```
 
-### Successful Response
+### 1.7.3. Successful Response
 
 The new board is returned in JSON format with a 201 response status code.
 
-#### Example Response
+#### 1.7.3.1. Example Response
 
 ```json
 {
@@ -152,23 +154,23 @@ The new board is returned in JSON format with a 201 response status code.
 }
 ```
 
-### Error Response
+### 1.7.4. Error Response
 
 If no title is provided, an error will be returned with a 422 “Unprocessable Entity” status code.
 
-## GET /api/boards/:id
+## 1.8. GET /api/boards/:id
 
 Retrieve the board with the given `id`.
 
-### Controller#Action
+### 1.8.1. Controller#Action
 
 `api/boards#show`
 
-### Expected Payload
+### 1.8.2. Expected Payload
 
 None
 
-### Successful Response
+### 1.8.3. Successful Response
 
 The board is returned with the following nested data:
 
@@ -182,7 +184,7 @@ Cards do not include all of the card data. This response includes only the follo
 
 The response status code is 200.
 
-#### Example Response
+#### 1.8.3.1. Example Response
 
 ```json
 {
@@ -219,19 +221,19 @@ The response status code is 200.
 }
 ```
 
-### Error Response
+### 1.8.4. Error Response
 
 If the board doesn’t exist an error will be returned with a 404 status code.
 
-## POST /api/lists
+## 1.9. POST /api/lists
 
 Creates a list.
 
-### Controller#Action
+### 1.9.1. Controller#Action
 
 `api/lists#create`
 
-### Expected Payload
+### 1.9.2. Expected Payload
 
 NOTE: The `board_id` where the list will reside is required.
 
@@ -244,11 +246,11 @@ NOTE: The `board_id` where the list will reside is required.
 }
 ```
 
-### Successful Response
+### 1.9.3. Successful Response
 
 The list is returned in JSON form with a 201 status code.
 
-#### Example Response
+#### 1.9.3.1. Example Response
 
 ```json
 {
@@ -261,19 +263,19 @@ The list is returned in JSON form with a 201 status code.
 }
 ```
 
-### Error Response
+### 1.9.4. Error Response
 
 If a board with the provided `board_id` doesn’t exist, an error will be returned with a 404 status code. If no title is provided, an error is returned with a 422 “Unprocessable Entity” status code.
 
-## PUT/PATCH /api/lists/:id
+## 1.10. PUT/PATCH /api/lists/:id
 
 Update a list.
 
-### Controller#Action
+### 1.10.1. Controller#Action
 
 `api/lists#update`
 
-### Expected Payload
+### 1.10.2. Expected Payload
 
 Any combination of `title` and `position` can be provided. The only requirement is that at least one must be provided.
 
@@ -284,11 +286,11 @@ Any combination of `title` and `position` can be provided. The only requirement 
 }
 ```
 
-### Successful Response
+### 1.10.3. Successful Response
 
 The list is returned in JSON form with a 200 status code.
 
-#### Example Response
+#### 1.10.3.1. Example Response
 
 ```json
 {
@@ -301,19 +303,19 @@ The list is returned in JSON form with a 200 status code.
 }
 ```
 
-### Error Response
+### 1.10.4. Error Response
 
 If a list with the provided `id` doesn’t exist, an error will be returned with a 404 status code. If no title or position is provided, an error is returned with a 422 “Unprocessable Entity” status code.
 
-## POST /api/cards
+## 1.11. POST /api/cards
 
 Creates a card. This also generates a card action describing that the card was added to the given list.
 
-### Controller#Action
+### 1.11.1. Controller#Action
 
 `api/cards#create`
 
-### Expected Payload
+### 1.11.2. Expected Payload
 
 NOTE: The `list_id` where the card will reside is required.
 
@@ -326,11 +328,11 @@ NOTE: The `list_id` where the card will reside is required.
 }
 ```
 
-### Successful Response
+### 1.11.3. Successful Response
 
 The new card is returned in JSON format with a 201 response status code.
 
-#### Example Response
+#### 1.11.3.1. Example Response
 
 ```json
 {
@@ -350,27 +352,27 @@ The new card is returned in JSON format with a 201 response status code.
 }
 ```
 
-### Error Response
+### 1.11.4. Error Response
 
 If an invalid (or no) `list_id` is provided, an error will be returned with a 404 response status code. The only required field is the title. If no title (or a blank one) is provided, a 422 “Unprocessable Entity” status code will be returned along with an error describing the problem.
 
-## GET /api/cards/:id
+## 1.12. GET /api/cards/:id
 
 Retrieve the card with the given `id`.
 
-### Controller#Action
+### 1.12.1. Controller#Action
 
 `api/cards#show`
 
-### Expected Payload
+### 1.12.2. Expected Payload
 
 None
 
-### Successful Response
+### 1.12.3. Successful Response
 
 The card is returned in JSON format. The JSON also includes the card’s comments and actions nested within the card object.
 
-#### Example Response
+#### 1.12.3.1. Example Response
 
 ```json
 {
@@ -400,11 +402,11 @@ The card is returned in JSON format. The JSON also includes the card’s comment
 }
 ```
 
-### Error Response
+### 1.12.4. Error Response
 
 If no card exists with the given `id`, an error response will be returned with a 404 status code.
 
-## PUT/PATCH /api/cards/:id
+## 1.13. PUT/PATCH /api/cards/:id
 
 Update a card. This also generates card actions in the following situations:
 
@@ -416,11 +418,11 @@ Update a card. This also generates card actions in the following situations:
 - Card was archived
 - Card was sent back to the board from the archive
 
-### Controller#Action
+### 1.13.1. Controller#Action
 
 `api/cards#update `
 
-### Expected Payload
+### 1.13.2. Expected Payload
 
 At least one attribute must be included in a `"card"`object in the payload. The allowed attributes are:
 
@@ -433,7 +435,7 @@ At least one attribute must be included in a `"card"`object in the payload. The 
 - `completed`
 - `labels`
 
-#### Example Payload
+#### 1.13.2.1. Example Payload
 
 ```json
 {
@@ -444,11 +446,11 @@ At least one attribute must be included in a `"card"`object in the payload. The 
 }
 ```
 
-### Successful Response
+### 1.13.3. Successful Response
 
 The updated card will be returned in JSON format. The returned object also includes the card’s actions nested within the `card` object. That is because certain updates generate new actions which need to be displayed.
 
-#### Example Response
+#### 1.13.3.1. Example Response
 
 ```json
 {
@@ -484,19 +486,19 @@ The updated card will be returned in JSON format. The returned object also inclu
 }
 ```
 
-### Error Response
+### 1.13.4. Error Response
 
 If no card exists with the given `id`, a 404 status code is returned with an error. If an empty title is provided, or no attributes are provided, a 422 “Unprocessable Entity” status code is returned along with an error.
 
-## POST /api/comments
+## 1.14. POST /api/comments
 
 Create a comment on a card.
 
-### Controller#Action
+### 1.14.1. Controller#Action
 
 `api/comments#create`
 
-### Expected Payload
+### 1.14.2. Expected Payload
 
 NOTE: The `card_id` where the comment will reside is required.
 
@@ -509,11 +511,11 @@ NOTE: The `card_id` where the comment will reside is required.
 }
 ```
 
-### Successful Response
+### 1.14.3. Successful Response
 
 The new comment is returned in JSON format.
 
-#### Example Response
+#### 1.14.3.1. Example Response
 
 ```json
 {
@@ -525,6 +527,6 @@ The new comment is returned in JSON format.
 }
 ```
 
-### Error Response
+### 1.14.4. Error Response
 
 If no card exists with the given `id`, a 404 status code will be returned with an error. If no `text` (or an empty one) is provided, a 422 “Unprocessable Entity” status code will be returned with an error.
