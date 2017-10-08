@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const allLabels = ["green", "yellow", "orange", "red", "purple", "blue"];
 
@@ -49,6 +50,13 @@ const LabelsForm = (props) => {
       </div>
     </div>
   );
+};
+
+LabelsForm.propTypes = {
+  selectedLabels: PropTypes.array,
+  onClickLabel: PropTypes.func,
+  onClose: PropTypes.func,
+  onToggleColorblind: PropTypes.func
 };
 
 export default LabelsForm;

@@ -13,6 +13,11 @@ class CopyCardFormContainer extends React.Component {
     store: PropTypes.object
   };
 
+  static propTypes = {
+    card: PropTypes.object,
+    onClose: PropTypes.func
+  };
+
   state = {
     location: {
       boardId: undefined,

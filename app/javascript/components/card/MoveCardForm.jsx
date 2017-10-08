@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import CardLocationFormContainer from './CardLocationFormContainer';
 
@@ -26,5 +27,13 @@ const MoveCardForm = (props) => (
     </div>
   </div>
 );
+
+MoveCardForm.propTypes = {
+  card: PropTypes.object,
+  isSubmitDisabled: PropTypes.bool,
+  onCloseClick: PropTypes.func,
+  onLocationChange: PropTypes.func,
+  onSubmit: PropTypes.func
+}
 
 export default MoveCardForm;

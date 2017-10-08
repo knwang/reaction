@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ListCard from './ListCard';
 
@@ -16,5 +17,9 @@ const CardListing = props => (
     }
   </div>
 );
+
+CardListing.propTypes = {
+  cards: PropTypes.array
+};
 
 export default CardListing;

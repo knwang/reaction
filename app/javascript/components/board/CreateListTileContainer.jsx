@@ -19,6 +19,10 @@ class CreateListTileContainer extends React.Component {
     store: PropTypes.object
   };
 
+  static propTypes = {
+    match: PropTypes.object
+  };
+
   handleTileClick = (e) => {
     e.stopPropagation();
 

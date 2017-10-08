@@ -10,6 +10,10 @@ class EditableListTitle extends React.Component {
     store: PropTypes.object
   };
 
+  static propTypes = {
+    list: PropTypes.object
+  };
+
   state = {
     title: this.props.list.title,
     showInput: false

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import CardLocationFormContainer from './CardLocationFormContainer';
 
@@ -57,5 +58,17 @@ const CopyCardForm = (props) => (
     </div>
   </div>
 );
+
+CopyCardForm.propTypes = {
+  card: PropTypes.object,
+  title: PropTypes.string,
+  commentsCount: PropTypes.number,
+  keepComments: PropTypes.bool,
+  onCloseClick: PropTypes.func,
+  onTitleChange: PropTypes.func,
+  onKeepCommentsChange: PropTypes.func,
+  onLocationChange: PropTypes.func,
+  onSubmit: PropTypes.func
+}
 
 export default CopyCardForm;

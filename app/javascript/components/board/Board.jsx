@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import BoardHeader from './BoardHeader';
 import ListListing from './ListListing';
@@ -73,6 +74,10 @@ const Board = props => {
   } else {
     return null;
   }
+};
+
+Board.propTypes = {
+  board: PropTypes.object
 };
 
 export default Board;

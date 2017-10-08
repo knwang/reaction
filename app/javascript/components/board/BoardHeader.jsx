@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const BoardHeader = props => (
   <header>
@@ -13,5 +14,9 @@ const BoardHeader = props => (
       <i className="sub-icon sm-icon"></i>Subscribed</div>
   </header>
 );
+
+BoardHeader.propTypes = {
+  title: PropTypes.string
+};
 
 export default BoardHeader;

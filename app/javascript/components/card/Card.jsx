@@ -244,4 +244,21 @@ const Card = (props) => {
   }
 };
 
+Card.propTypes = {
+  card: PropTypes.object,
+  comments: PropTypes.array,
+  onOverlayClick: PropTypes.func,
+  onCardClick: PropTypes.func,
+  onTitleChange: PropTypes.func,
+  onTitleBlur: PropTypes.func,
+  onTitleKeyPress: PropTypes.func,
+  onToggleCompleted: PropTypes.func,
+  onUnarchiveClick: PropTypes.func,
+  onArchiveClick: PropTypes.func,
+  currentBoardId: PropTypes.number,
+  title: PropTypes.string,
+  showPopover: PropTypes.func,
+  listTitle: PropTypes.string
+}
+
 export default Card;

@@ -22,6 +22,12 @@ class CardLocationFormContainer extends React.Component {
     store: PropTypes.object
   };
 
+  static propTypes = {
+    card: PropTypes.object,
+    mode: PropTypes.string,
+    onLocationChange: PropTypes.func
+  };
+
   state = {
     selectedBoard: undefined,
     selectedList: undefined,

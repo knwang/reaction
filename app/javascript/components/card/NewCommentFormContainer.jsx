@@ -10,6 +10,10 @@ class NewCommentFormContainer extends React.Component {
     store: PropTypes.object
   };
 
+  static propTypes = {
+    card: PropTypes.object
+  };
+
   state = {
     comment: '',
     isSaving: false

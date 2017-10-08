@@ -6,6 +6,7 @@ import moment from 'moment';
 class DueDateForm extends React.Component {
   static propTypes = {
     dueDate: PropTypes.string,
+    onClose: PropTypes.func,
     onSubmit: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
   };

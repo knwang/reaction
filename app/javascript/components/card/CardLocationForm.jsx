@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const CardLocationForm = (props) => (
   <div>
@@ -64,5 +65,22 @@ const CardLocationForm = (props) => (
     </div>
   </div>
 );
+
+CardLocationForm.propTypes = {
+  boards: PropTypes.array,
+  lists: PropTypes.array,
+  positions: PropTypes.array,
+  selectedBoardTitle: PropTypes.string,
+  currentBoardId: PropTypes.number,
+  selectedBoardId: PropTypes.number,
+  selectedListTitle: PropTypes.string,
+  selectedListId: PropTypes.id,
+  currentListId: PropTypes.number,
+  selectedPositionHumanIndex: PropTypes.number,
+  currentPosition: PropTypes.number,
+  onBoardChange: PropTypes.func,
+  onListChange: PropTypes.func,
+  onPositionChange: PropTypes.func
+};
 
 export default CardLocationForm;

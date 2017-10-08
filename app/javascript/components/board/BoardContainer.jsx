@@ -19,6 +19,10 @@ class BoardContainer extends React.Component {
     currentBoardId: PropTypes.number
   };
 
+  static propTypes = {
+    match: PropTypes.object
+  };
+
   getChildContext() {
     return {
       currentBoardId: this.boardId()

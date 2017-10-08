@@ -13,6 +13,12 @@ class MoveCardFormContainer extends React.Component {
     store: PropTypes.object
   };
 
+  static propTypes = {
+    card: PropTypes.object,
+    history: PropTypes.object,
+    onClose: PropTypes.func
+  }
+
   state = {
     location: {
       boardId: undefined,

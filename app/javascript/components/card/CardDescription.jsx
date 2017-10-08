@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import showdown from 'showdown';
 
 const converter = new showdown.Converter();
@@ -55,5 +56,17 @@ const CardDescription = (props) => (
     }
   </form>
 );
+
+CardDescription.propTypes = {
+  description: PropTypes.string,
+  showForm: PropTypes.bool,
+  onEditClick: PropTypes.func,
+  onInputBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onSaveClick: PropTypes.func,
+  onDiscardChangeClick: PropTypes.func,
+  isSaving: PropTypes.bool,
+  edited: PropTypes.bool 
+}
 
 export default CardDescription;

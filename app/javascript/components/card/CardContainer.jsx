@@ -23,6 +23,11 @@ class CardContainer extends React.Component {
     store: PropTypes.object.isRequired
   };
 
+  static propTypes = {
+    history: PropTypes.object,
+    match: PropTypes.object
+  }
+
   state = {
     title: '',
     card: undefined,

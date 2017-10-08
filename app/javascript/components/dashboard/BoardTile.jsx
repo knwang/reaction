@@ -12,6 +12,7 @@ const BoardTile = (props) => (
 );
 
 BoardTile.propTypes = {
+  id: PropTypes.number,
   title: PropTypes.string.isRequired
 };
 

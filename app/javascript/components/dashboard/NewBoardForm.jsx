@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CreateBoardTileForm = (props) => (
+const NewBoardForm = (props) => (
   <div>
     <header>
       <span>Create Board</span>
@@ -32,11 +32,11 @@ const CreateBoardTileForm = (props) => (
   </div>
 );
 
-CreateBoardTileForm.propTypes = {
+NewBoardForm.propTypes = {
   onCloseClick: PropTypes.func.isRequired,
   onTextChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
 
-export default CreateBoardTileForm;
+export default NewBoardForm;

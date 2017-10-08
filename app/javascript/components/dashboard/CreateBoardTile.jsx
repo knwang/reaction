@@ -12,4 +12,8 @@ const CreateBoardTile = (props) => (
   </li>
 );
 
+CreateBoardTile.propTypes = {
+  onClick: PropTypes.func
+}
+
 export default CreateBoardTile;

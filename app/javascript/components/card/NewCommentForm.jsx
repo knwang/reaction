@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const NewCommentForm = (props) => (
   <div>
@@ -36,5 +37,13 @@ const NewCommentForm = (props) => (
     </div>
   </div>
 );
+
+NewCommentForm.propTypes = {
+  comment: PropTypes.string,
+  isSaving: PropTypes.bool,
+  isEdited: PropTypes.bool,
+  onChange: PropTypes.func,
+  onSubmit: PropTypes.func
+};
 
 export default NewCommentForm;

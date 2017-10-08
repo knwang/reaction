@@ -1,8 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import $ from 'jquery';
 import debounce from 'debounce';
 
 class Popover extends React.Component {
+  static propTypes = {
+    visible: PropTypes.bool,
+    attachedTo: PropTypes.object,
+    coverTarget: PropTypes.bool,
+    type: PropTypes.string,
+    children: PropTypes.node
+  };
+
   state = {
     position: {
       top: 0,

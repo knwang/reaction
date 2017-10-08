@@ -4547,6 +4547,42 @@ module.exports = __webpack_require__(24);
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+if (true) {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(87)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = require('./factoryWithThrowingShims')();
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -4605,7 +4641,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4673,42 +4709,6 @@ if (true) {
 }
 
 module.exports = warning;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-if (true) {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(87)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = require('./factoryWithThrowingShims')();
-}
-
 
 /***/ }),
 /* 5 */
@@ -4873,7 +4873,7 @@ var _prodInvariant = __webpack_require__(5);
 var DOMProperty = __webpack_require__(21);
 var ReactDOMComponentFlags = __webpack_require__(89);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 var Flags = ReactDOMComponentFlags;
@@ -5181,8 +5181,8 @@ var _prodInvariant = __webpack_require__(25);
 
 var ReactCurrentOwner = __webpack_require__(15);
 
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 function isNative(fn) {
   // Based on isNative() from Lodash
@@ -6044,7 +6044,7 @@ var ReactFeatureFlags = __webpack_require__(94);
 var ReactReconciler = __webpack_require__(27);
 var Transaction = __webpack_require__(43);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 var dirtyComponents = [];
 var updateBatchNumber = 0;
@@ -6296,7 +6296,7 @@ var _assign = __webpack_require__(6);
 var PooledClass = __webpack_require__(23);
 
 var emptyFunction = __webpack_require__(14);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var didWarnForAddedNewProperty = false;
 var isProxySupported = typeof Proxy === 'function';
@@ -6680,7 +6680,7 @@ function listCards(state, listId, sortFunction) {
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 function checkMask(value, bitmask) {
   return (value & bitmask) === bitmask;
@@ -6896,7 +6896,7 @@ var _assign = __webpack_require__(6);
 
 var ReactCurrentOwner = __webpack_require__(15);
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 var canDefineProperty = __webpack_require__(40);
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -7241,7 +7241,7 @@ module.exports = ReactElement;
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Static poolers. Several custom versions for each potential number of
@@ -7729,7 +7729,7 @@ process.umask = function() { return 0; };
 var ReactRef = __webpack_require__(279);
 var ReactInstrumentation = __webpack_require__(11);
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 /**
  * Helper to call ReactRef.attachRefs with this composite component, split out
@@ -8108,7 +8108,7 @@ var EventPluginUtils = __webpack_require__(52);
 
 var accumulateInto = __webpack_require__(90);
 var forEachAccumulated = __webpack_require__(91);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var getListener = EventPluginHub.getListener;
 
@@ -8250,7 +8250,7 @@ var ReactErrorUtils = __webpack_require__(53);
 
 var accumulateInto = __webpack_require__(90);
 var forEachAccumulated = __webpack_require__(91);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Internal store for event listeners
@@ -9064,7 +9064,7 @@ module.exports = emptyObject;
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Injectable ordering of event plugins.
@@ -9322,7 +9322,7 @@ module.exports = EventPluginRegistry;
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 var OBSERVED_ERROR = {};
 
@@ -10441,8 +10441,8 @@ var _prodInvariant = __webpack_require__(5);
 
 var ReactErrorUtils = __webpack_require__(53);
 
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 /**
  * Injected dependencies:
@@ -11203,8 +11203,8 @@ var propTypesFactory = __webpack_require__(86);
 var React = __webpack_require__(24);
 var PropTypes = propTypesFactory(React.isValidElement);
 
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var hasReadOnlyValue = {
   button: true,
@@ -11341,7 +11341,7 @@ module.exports = LinkedValueUtils;
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 var injected = false;
 
@@ -11578,8 +11578,8 @@ var ReactInstanceMap = __webpack_require__(34);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactUpdates = __webpack_require__(16);
 
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 function enqueueUpdate(internalInstance) {
   ReactUpdates.enqueueUpdate(internalInstance);
@@ -11813,7 +11813,7 @@ module.exports = ReactUpdateQueue;
 var _assign = __webpack_require__(6);
 
 var emptyFunction = __webpack_require__(14);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var validateDOMNesting = emptyFunction;
 
@@ -12421,7 +12421,7 @@ exports.default = createTransitionManager;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -13110,7 +13110,7 @@ var ReactNoopUpdateQueue = __webpack_require__(82);
 
 var canDefineProperty = __webpack_require__(40);
 var emptyObject = __webpack_require__(41);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var lowPriorityWarning = __webpack_require__(51);
 
 /**
@@ -13251,7 +13251,7 @@ module.exports = {
 
 
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 function warnNoop(publicInstance, callerName) {
   if (true) {
@@ -13437,7 +13437,7 @@ var checkReactTypeSpec = __webpack_require__(261);
 
 var canDefineProperty = __webpack_require__(40);
 var getIteratorFn = __webpack_require__(84);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 var lowPriorityWarning = __webpack_require__(51);
 
 function getDeclarationErrorAddendum() {
@@ -13710,8 +13710,8 @@ module.exports = function(isValidElement) {
 
 
 var emptyFunction = __webpack_require__(14);
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var ReactPropTypesSecret = __webpack_require__(88);
 var checkPropTypes = __webpack_require__(265);
@@ -14276,7 +14276,7 @@ module.exports = ReactDOMComponentFlags;
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Accumulates items that must not be null or undefined into the first one. This
@@ -14417,7 +14417,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var PooledClass = __webpack_require__(23);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * A specialized pseudo-event module to help keep track of components waiting to
@@ -15028,7 +15028,7 @@ var ReactDOMComponentTree = __webpack_require__(7);
 var ReactInstrumentation = __webpack_require__(11);
 
 var quoteAttributeValueForBrowser = __webpack_require__(304);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var VALID_ATTRIBUTE_NAME_REGEX = new RegExp('^[' + DOMProperty.ATTRIBUTE_NAME_START_CHAR + '][' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
 var illegalAttributeNameCache = {};
@@ -15291,7 +15291,7 @@ var LinkedValueUtils = __webpack_require__(60);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactUpdates = __webpack_require__(16);
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var didWarnValueLink = false;
 var didWarnValueDefaultValue = false;
@@ -15498,8 +15498,8 @@ var ReactEmptyComponent = __webpack_require__(106);
 var ReactHostComponent = __webpack_require__(107);
 
 var getNextDebugID = __webpack_require__(315);
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 // To avoid a cyclic dependency, we create the final class in this module
 var ReactCompositeComponentWrapper = function (element) {
@@ -15629,7 +15629,7 @@ var _prodInvariant = __webpack_require__(5);
 
 var React = __webpack_require__(24);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 var ReactNodeTypes = {
   HOST: 0,
@@ -15706,7 +15706,7 @@ module.exports = ReactEmptyComponent;
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 var genericComponentClass = null;
 var textComponentClass = null;
@@ -15783,9 +15783,9 @@ var ReactCurrentOwner = __webpack_require__(15);
 var REACT_ELEMENT_TYPE = __webpack_require__(316);
 
 var getIteratorFn = __webpack_require__(317);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var KeyEscapeUtils = __webpack_require__(64);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var SEPARATOR = '.';
 var SUBSEPARATOR = ':';
@@ -16232,10 +16232,10 @@ var ReactUpdates = __webpack_require__(16);
 
 var emptyObject = __webpack_require__(41);
 var instantiateReactComponent = __webpack_require__(104);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var setInnerHTML = __webpack_require__(45);
 var shouldUpdateReactComponent = __webpack_require__(63);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 var ROOT_ATTR_NAME = DOMProperty.ROOT_ATTRIBUTE_NAME;
@@ -16963,7 +16963,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
@@ -17088,7 +17088,7 @@ Link.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__matchPath__ = __webpack_require__(72);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -17371,7 +17371,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return subscriptionShape; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return storeShape; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prop_types__);
 
 
@@ -18444,6 +18444,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _jquery = __webpack_require__(441);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -18601,6 +18605,17 @@ var Popover = function (_React$Component) {
   return Popover;
 }(_react2.default.Component);
 
+Object.defineProperty(Popover, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    visible: _propTypes2.default.bool,
+    attachedTo: _propTypes2.default.object,
+    coverTarget: _propTypes2.default.bool,
+    type: _propTypes2.default.string,
+    children: _propTypes2.default.node
+  }
+});
 exports.default = Popover;
 
 /***/ }),
@@ -29707,7 +29722,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -29882,6 +29897,7 @@ Object.defineProperty(DueDateForm, 'propTypes', {
   writable: true,
   value: {
     dueDate: _propTypes2.default.string,
+    onClose: _propTypes2.default.func,
     onSubmit: _propTypes2.default.func.isRequired,
     onRemove: _propTypes2.default.func.isRequired
   }
@@ -29905,7 +29921,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -30240,6 +30256,15 @@ Object.defineProperty(CardLocationFormContainer, 'contextTypes', {
     store: _propTypes2.default.object
   }
 });
+Object.defineProperty(CardLocationFormContainer, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    card: _propTypes2.default.object,
+    mode: _propTypes2.default.string,
+    onLocationChange: _propTypes2.default.func
+  }
+});
 exports.default = CardLocationFormContainer;
 
 /***/ }),
@@ -30500,7 +30525,7 @@ module.exports = ReactChildren;
 
 var _prodInvariant = __webpack_require__(25);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Static poolers. Several custom versions for each potential number of
@@ -30620,9 +30645,9 @@ var ReactCurrentOwner = __webpack_require__(15);
 var REACT_ELEMENT_TYPE = __webpack_require__(83);
 
 var getIteratorFn = __webpack_require__(84);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var KeyEscapeUtils = __webpack_require__(259);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var SEPARATOR = '.';
 var SUBSEPARATOR = ':';
@@ -31038,8 +31063,8 @@ var _prodInvariant = __webpack_require__(25);
 var ReactPropTypeLocationNames = __webpack_require__(262);
 var ReactPropTypesSecret = __webpack_require__(263);
 
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var ReactComponentTreeHook;
 
@@ -31202,8 +31227,8 @@ module.exports = factory(isValidElement);
 
 
 if (true) {
-  var invariant = __webpack_require__(2);
-  var warning = __webpack_require__(3);
+  var invariant = __webpack_require__(3);
+  var warning = __webpack_require__(4);
   var ReactPropTypesSecret = __webpack_require__(88);
   var loggedTypeFailures = {};
 }
@@ -31320,10 +31345,10 @@ module.exports = factory(Component, isValidElement, ReactNoopUpdateQueue);
 var _assign = __webpack_require__(6);
 
 var emptyObject = __webpack_require__(41);
-var _invariant = __webpack_require__(2);
+var _invariant = __webpack_require__(3);
 
 if (true) {
-  var warning = __webpack_require__(3);
+  var warning = __webpack_require__(4);
 }
 
 var MIXINS_KEY = 'mixins';
@@ -32199,7 +32224,7 @@ var _prodInvariant = __webpack_require__(25);
 
 var ReactElement = __webpack_require__(22);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Returns the first child in a collection of children and verifies that there
@@ -32261,7 +32286,7 @@ var ReactVersion = __webpack_require__(350);
 var findDOMNode = __webpack_require__(351);
 var getHostComponentFromComposite = __webpack_require__(113);
 var renderSubtreeIntoContainer = __webpack_require__(352);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 ReactDefaultInjection.inject();
 
@@ -33521,7 +33546,7 @@ module.exports = ReactRef;
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * @param {?object} object
@@ -33623,7 +33648,7 @@ var ReactComponentTreeHook = __webpack_require__(10);
 var ExecutionEnvironment = __webpack_require__(8);
 
 var performanceNow = __webpack_require__(284);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var hooks = [];
 var didHookThrowForEvent = {};
@@ -33983,7 +34008,7 @@ module.exports = ReactDebugTool;
 
 
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 if (true) {
   var processingChildContext = false;
@@ -34545,7 +34570,7 @@ var ExecutionEnvironment = __webpack_require__(8);
 
 var createNodesFromMarkup = __webpack_require__(291);
 var emptyFunction = __webpack_require__(14);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 var Danger = {
   /**
@@ -34596,7 +34621,7 @@ var ExecutionEnvironment = __webpack_require__(8);
 
 var createArrayFromMixed = __webpack_require__(292);
 var getMarkupWrap = __webpack_require__(293);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Dummy container used to render all markup.
@@ -34679,7 +34704,7 @@ module.exports = createNodesFromMarkup;
  * @typechecks
  */
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Convert array-like objects to arrays.
@@ -34814,7 +34839,7 @@ module.exports = createArrayFromMixed;
 
 var ExecutionEnvironment = __webpack_require__(8);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Dummy container used to detect which wraps are necessary.
@@ -34974,12 +34999,12 @@ var ReactServerRenderingTransaction = __webpack_require__(319);
 
 var emptyFunction = __webpack_require__(14);
 var escapeTextContentForBrowser = __webpack_require__(46);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var isEventSupported = __webpack_require__(55);
 var shallowEqual = __webpack_require__(62);
 var inputValueTracking = __webpack_require__(95);
 var validateDOMNesting = __webpack_require__(66);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var Flags = ReactDOMComponentFlags;
 var deleteListener = EventPluginHub.deleteListener;
@@ -36000,7 +36025,7 @@ var camelizeStyleName = __webpack_require__(298);
 var dangerousStyleValue = __webpack_require__(300);
 var hyphenateStyleName = __webpack_require__(301);
 var memoizeStringOnly = __webpack_require__(303);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var processStyleName = memoizeStringOnly(function (styleName) {
   return hyphenateStyleName(styleName);
@@ -36295,7 +36320,7 @@ module.exports = camelize;
 
 
 var CSSProperty = __webpack_require__(100);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var isUnitlessNumber = CSSProperty.isUnitlessNumber;
 var styleWarnings = {};
@@ -36677,8 +36702,8 @@ var LinkedValueUtils = __webpack_require__(60);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactUpdates = __webpack_require__(16);
 
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var didWarnValueLink = false;
 var didWarnCheckedLink = false;
@@ -36967,7 +36992,7 @@ var React = __webpack_require__(24);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactDOMSelect = __webpack_require__(103);
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 var didWarnInvalidOptionChildren = false;
 
 function flattenChildren(children) {
@@ -37095,8 +37120,8 @@ var LinkedValueUtils = __webpack_require__(60);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactUpdates = __webpack_require__(16);
 
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var didWarnValueLink = false;
 var didWarnValDefaultVal = false;
@@ -37265,7 +37290,7 @@ var ReactChildReconciler = __webpack_require__(311);
 
 var emptyFunction = __webpack_require__(14);
 var flattenChildren = __webpack_require__(318);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Make an update for markup to be rendered and inserted at a supplied index.
@@ -37710,7 +37735,7 @@ var instantiateReactComponent = __webpack_require__(104);
 var KeyEscapeUtils = __webpack_require__(64);
 var shouldUpdateReactComponent = __webpack_require__(63);
 var traverseAllChildren = __webpack_require__(108);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var ReactComponentTreeHook;
 
@@ -37880,10 +37905,10 @@ if (true) {
 }
 
 var emptyObject = __webpack_require__(41);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var shallowEqual = __webpack_require__(62);
 var shouldUpdateReactComponent = __webpack_require__(63);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var CompositeTypes = {
   ImpureClass: 0,
@@ -38773,8 +38798,8 @@ var _prodInvariant = __webpack_require__(5);
 var ReactPropTypeLocationNames = __webpack_require__(314);
 var ReactPropTypesSecret = __webpack_require__(102);
 
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var ReactComponentTreeHook;
 
@@ -38991,7 +39016,7 @@ module.exports = getIteratorFn;
 
 var KeyEscapeUtils = __webpack_require__(64);
 var traverseAllChildren = __webpack_require__(108);
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var ReactComponentTreeHook;
 
@@ -39170,7 +39195,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var ReactUpdateQueue = __webpack_require__(65);
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 function warnNoop(publicInstance, callerName) {
   if (true) {
@@ -39376,7 +39401,7 @@ module.exports = ReactDOMEmptyComponent;
 
 var _prodInvariant = __webpack_require__(5);
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Return the lowest common ancestor of A and B, or null if they are in
@@ -39523,7 +39548,7 @@ var DOMLazyTree = __webpack_require__(28);
 var ReactDOMComponentTree = __webpack_require__(7);
 
 var escapeTextContentForBrowser = __webpack_require__(46);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var validateDOMNesting = __webpack_require__(66);
 
 /**
@@ -41102,7 +41127,7 @@ var SyntheticWheelEvent = __webpack_require__(345);
 
 var emptyFunction = __webpack_require__(14);
 var getEventCharCode = __webpack_require__(67);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 
 /**
  * Turns
@@ -42030,8 +42055,8 @@ var ReactDOMComponentTree = __webpack_require__(7);
 var ReactInstanceMap = __webpack_require__(34);
 
 var getHostComponentFromComposite = __webpack_require__(113);
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var invariant = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 /**
  * Returns the DOM node rendered by this element.
@@ -42113,7 +42138,7 @@ var DOMProperty = __webpack_require__(21);
 var EventPluginRegistry = __webpack_require__(42);
 var ReactComponentTreeHook = __webpack_require__(10);
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 if (true) {
   var reactProps = {
@@ -42228,7 +42253,7 @@ module.exports = ReactDOMUnknownPropertyHook;
 
 var ReactComponentTreeHook = __webpack_require__(10);
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var didWarnValueNull = false;
 
@@ -42277,7 +42302,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 var DOMProperty = __webpack_require__(21);
 var ReactComponentTreeHook = __webpack_require__(10);
 
-var warning = __webpack_require__(3);
+var warning = __webpack_require__(4);
 
 var warnedProperties = {};
 var rARIA = new RegExp('^(aria)-[' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
@@ -42364,7 +42389,7 @@ module.exports = ReactDOMInvalidARIAHook;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory__ = __webpack_require__(357);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory__);
@@ -42744,7 +42769,7 @@ exports.default = createBrowserHistory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createHashHistory__ = __webpack_require__(359);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createHashHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_history_createHashHistory__);
@@ -43151,7 +43176,7 @@ exports.default = createHashHistory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createMemoryHistory__ = __webpack_require__(362);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createMemoryHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_history_createMemoryHistory__);
@@ -43392,7 +43417,7 @@ exports.default = createMemoryHistory;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Route__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(117);
@@ -43925,7 +43950,7 @@ module.exports = Array.isArray || function (arr) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
@@ -44027,7 +44052,7 @@ Prompt.contextTypes = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_warning__);
@@ -44970,7 +44995,7 @@ var createMemoryHistory = function createMemoryHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_history_PathUtils__);
@@ -45160,7 +45185,7 @@ StaticRouter.childContextTypes = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_warning__);
@@ -45276,7 +45301,7 @@ Switch.propTypes = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
@@ -45322,7 +45347,7 @@ var withRouter = function withRouter(Component) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = createProvider;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PropTypes__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(74);
@@ -46860,7 +46885,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(18);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -47040,7 +47065,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(49);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -47192,7 +47217,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -47245,8 +47270,9 @@ var BoardsDashboard = function BoardsDashboard(props) {
   );
 };
 
-BoardsDashboard.contextTypes = {
-  store: _propTypes2.default.object
+BoardsDashboard.propTypes = {
+  boards: _propTypes2.default.array,
+  onNewBoardClick: _propTypes2.default.func
 };
 
 exports.default = BoardsDashboard;
@@ -47266,7 +47292,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -47291,6 +47317,7 @@ var BoardTile = function BoardTile(props) {
 };
 
 BoardTile.propTypes = {
+  id: _propTypes2.default.number,
   title: _propTypes2.default.string.isRequired
 };
 
@@ -47311,7 +47338,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -47336,6 +47363,10 @@ var CreateBoardTile = function CreateBoardTile(props) {
   );
 };
 
+CreateBoardTile.propTypes = {
+  onClick: _propTypes2.default.func
+};
+
 exports.default = CreateBoardTile;
 
 /***/ }),
@@ -47355,7 +47386,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -47470,13 +47501,13 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CreateBoardTileForm = function CreateBoardTileForm(props) {
+var NewBoardForm = function NewBoardForm(props) {
   return _react2.default.createElement(
     'div',
     null,
@@ -47531,14 +47562,14 @@ var CreateBoardTileForm = function CreateBoardTileForm(props) {
   );
 };
 
-CreateBoardTileForm.propTypes = {
+NewBoardForm.propTypes = {
   onCloseClick: _propTypes2.default.func.isRequired,
   onTextChange: _propTypes2.default.func.isRequired,
   onSubmit: _propTypes2.default.func.isRequired,
   title: _propTypes2.default.string.isRequired
 };
 
-exports.default = CreateBoardTileForm;
+exports.default = NewBoardForm;
 
 /***/ }),
 /* 421 */
@@ -58787,7 +58818,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -58950,6 +58981,13 @@ Object.defineProperty(BoardContainer, 'childContextTypes', {
     currentBoardId: _propTypes2.default.number
   }
 });
+Object.defineProperty(BoardContainer, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    match: _propTypes2.default.object
+  }
+});
 ;
 
 exports.default = BoardContainer;
@@ -58983,6 +59021,10 @@ Object.defineProperty(exports, "__esModule", {
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _BoardHeader = __webpack_require__(446);
 
@@ -59246,6 +59288,10 @@ var Board = function Board(props) {
     }
 };
 
+Board.propTypes = {
+    board: _propTypes2.default.object
+};
+
 exports.default = Board;
 
 /***/ }),
@@ -59263,40 +59309,48 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var BoardHeader = function BoardHeader(props) {
   return _react2.default.createElement(
-    "header",
+    'header',
     null,
     _react2.default.createElement(
-      "ul",
+      'ul',
       null,
       _react2.default.createElement(
-        "li",
-        { id: "title" },
+        'li',
+        { id: 'title' },
         props.title
       ),
-      _react2.default.createElement("li", { className: "star-icon icon" }),
+      _react2.default.createElement('li', { className: 'star-icon icon' }),
       _react2.default.createElement(
-        "li",
-        { className: "private private-icon icon" },
-        "Private"
+        'li',
+        { className: 'private private-icon icon' },
+        'Private'
       )
     ),
     _react2.default.createElement(
-      "div",
-      { className: "menu" },
-      _react2.default.createElement("i", { className: "more-icon sm-icon" }),
-      "Show Menu"
+      'div',
+      { className: 'menu' },
+      _react2.default.createElement('i', { className: 'more-icon sm-icon' }),
+      'Show Menu'
     ),
     _react2.default.createElement(
-      "div",
-      { className: "subscribed" },
-      _react2.default.createElement("i", { className: "sub-icon sm-icon" }),
-      "Subscribed"
+      'div',
+      { className: 'subscribed' },
+      _react2.default.createElement('i', { className: 'sub-icon sm-icon' }),
+      'Subscribed'
     )
   );
+};
+
+BoardHeader.propTypes = {
+  title: _propTypes2.default.string
 };
 
 exports.default = BoardHeader;
@@ -59316,6 +59370,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _ExistingLists = __webpack_require__(448);
 
 var _ExistingLists2 = _interopRequireDefault(_ExistingLists);
@@ -59333,6 +59391,10 @@ var ListListing = function ListListing(props) {
     _react2.default.createElement(_ExistingLists2.default, { boardId: props.boardId }),
     _react2.default.createElement(_CreateListTileContainer2.default, null)
   );
+};
+
+ListListing.propTypes = {
+  boardId: _propTypes2.default.number
 };
 
 exports.default = ListListing;
@@ -59354,7 +59416,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -60960,7 +61022,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61045,12 +61107,15 @@ var List = function List(props) {
 };
 
 List.propTypes = {
+  cards: _propTypes2.default.array,
   list: _propTypes2.default.object.isRequired,
   addCardActive: _propTypes2.default.bool.isRequired,
+  newCardFormText: _propTypes2.default.string,
   onDrop: _propTypes2.default.func.isRequired,
   onAddCardClick: _propTypes2.default.func.isRequired,
   onNewCardFormChange: _propTypes2.default.func.isRequired,
   onNewCardFormSubmit: _propTypes2.default.func.isRequired,
+  onNewCardFormClose: _propTypes2.default.func,
   onNewCardFormKeyPress: _propTypes2.default.func
 };
 
@@ -61073,7 +61138,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61180,6 +61245,13 @@ Object.defineProperty(EditableListTitle, 'contextTypes', {
     store: _propTypes2.default.object
   }
 });
+Object.defineProperty(EditableListTitle, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    list: _propTypes2.default.object
+  }
+});
 ;
 
 exports.default = EditableListTitle;
@@ -61199,7 +61271,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61241,7 +61313,9 @@ EditableTitle.propTypes = {
   onKeyPress: _propTypes2.default.func.isRequired,
   onChange: _propTypes2.default.func.isRequired,
   onTitleClick: _propTypes2.default.func.isRequired,
-  showInput: _propTypes2.default.bool.isRequired
+  showInput: _propTypes2.default.bool.isRequired,
+  childClassName: _propTypes2.default.string,
+  title: _propTypes2.default.string
 };
 
 exports.default = EditableTitle;
@@ -61260,6 +61334,10 @@ Object.defineProperty(exports, "__esModule", {
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _ListCard = __webpack_require__(466);
 
@@ -61284,6 +61362,10 @@ var CardListing = function CardListing(props) {
   );
 };
 
+CardListing.propTypes = {
+  cards: _propTypes2.default.array
+};
+
 exports.default = CardListing;
 
 /***/ }),
@@ -61297,15 +61379,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(18);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61321,142 +61401,100 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var hasComments = function hasComments(card) {
+  return card.comments_count;
+};
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var hasDueDate = function hasDueDate(card) {
+  return !!card.due_date;
+};
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var hasDescription = function hasDescription(card) {
+  var description = card.description;
 
-var ListCard = function (_React$Component) {
-  _inherits(ListCard, _React$Component);
+  return description && description.trim().length > 0;
+};
 
-  function ListCard() {
-    var _ref;
+var formattedDueDate = function formattedDueDate(card) {
+  var momentDate = (0, _moment2.default)(card.due_date);
+  var formatString = void 0;
 
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, ListCard);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ListCard.__proto__ || Object.getPrototypeOf(ListCard)).call.apply(_ref, [this].concat(args))), _this), Object.defineProperty(_this, 'hasComments', {
-      enumerable: true,
-      writable: true,
-      value: function value() {
-        return _this.props.card.comments_count;
-      }
-    }), Object.defineProperty(_this, 'hasDueDate', {
-      enumerable: true,
-      writable: true,
-      value: function value() {
-        return !!_this.props.card.due_date;
-      }
-    }), Object.defineProperty(_this, 'hasDescription', {
-      enumerable: true,
-      writable: true,
-      value: function value() {
-        var description = _this.props.card.description;
-
-        return description && description.trim().length > 0;
-      }
-    }), Object.defineProperty(_this, 'formattedDueDate', {
-      enumerable: true,
-      writable: true,
-      value: function value() {
-        var momentDate = (0, _moment2.default)(_this.props.card.due_date);
-        var formatString = void 0;
-
-        if (momentDate.toDate().getFullYear() === new Date().getFullYear()) {
-          formatString = 'MMM D';
-        } else {
-          formatString = 'MMM D, YYYY';
-        }
-
-        var formatted = momentDate.format(formatString);
-
-        return '' + formatted;
-      }
-    }), Object.defineProperty(_this, 'dueClass', {
-      enumerable: true,
-      writable: true,
-      value: function value() {
-        var diff = ((0, _moment2.default)(_this.props.card.due_date).toDate() - new Date()) / (1000 * 60 * 60 * 24);
-
-        if (_this.props.card.completed) {
-          return "completed";
-        } else if (diff < -1) {
-          return "overdue";
-        } else if (diff < 0) {
-          return "overdue-recent";
-        } else if (diff < 1) {
-          return "due-soon";
-        } else {
-          return "";
-        }
-      }
-    }), _temp), _possibleConstructorReturn(_this, _ret);
+  if (momentDate.toDate().getFullYear() === new Date().getFullYear()) {
+    formatString = 'MMM D';
+  } else {
+    formatString = 'MMM D, YYYY';
   }
 
-  _createClass(ListCard, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        _reactRouterDom.Link,
-        {
-          to: '/cards/' + this.props.card.id,
-          'data-card-id': this.props.card.id
-        },
+  var formatted = momentDate.format(formatString);
+
+  return '' + formatted;
+};
+
+var dueClass = function dueClass(card) {
+  var diff = ((0, _moment2.default)(card.due_date).toDate() - new Date()) / (1000 * 60 * 60 * 24);
+
+  if (card.completed) {
+    return "completed";
+  } else if (diff < -1) {
+    return "overdue";
+  } else if (diff < 0) {
+    return "overdue-recent";
+  } else if (diff < 1) {
+    return "due-soon";
+  } else {
+    return "";
+  }
+};
+
+var ListCard = function ListCard(props) {
+  return _react2.default.createElement(
+    _reactRouterDom.Link,
+    {
+      to: '/cards/' + props.card.id,
+      'data-card-id': props.card.id
+    },
+    _react2.default.createElement(
+      'div',
+      { className: 'card-background' },
+      _react2.default.createElement(
+        'div',
+        { className: 'card ' },
+        _react2.default.createElement('i', { className: 'edit-toggle edit-icon sm-icon' }),
         _react2.default.createElement(
           'div',
-          { className: 'card-background' },
+          { className: 'card-info' },
+          props.card.labels.map(function (label, index) {
+            return _react2.default.createElement('div', {
+              className: 'card-label ' + label + ' colorblindable',
+              key: index
+            });
+          }),
           _react2.default.createElement(
-            'div',
-            { className: 'card ' },
-            _react2.default.createElement('i', { className: 'edit-toggle edit-icon sm-icon' }),
-            _react2.default.createElement(
-              'div',
-              { className: 'card-info' },
-              this.props.card.labels.map(function (label, index) {
-                return _react2.default.createElement('div', {
-                  className: 'card-label ' + label + ' colorblindable',
-                  key: index
-                });
-              }),
-              _react2.default.createElement(
-                'p',
-                null,
-                this.props.card.title
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'card-icons' },
-              this.hasDueDate() ? _react2.default.createElement(
-                'i',
-                { className: 'clock-icon sm-icon ' + this.dueClass() },
-                this.formattedDueDate()
-              ) : null,
-              this.hasDescription() ? _react2.default.createElement('i', { className: 'description-icon sm-icon' }) : null,
-              this.hasComments() ? _react2.default.createElement('i', { className: 'comment-icon sm-icon' }) : null
-            )
+            'p',
+            null,
+            props.card.title
           )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'card-icons' },
+          hasDueDate(props.card) ? _react2.default.createElement(
+            'i',
+            { className: 'clock-icon sm-icon ' + dueClass(props.card) },
+            formattedDueDate(props.card)
+          ) : null,
+          hasDescription(props.card) ? _react2.default.createElement('i', { className: 'description-icon sm-icon' }) : null,
+          hasComments(props.card) ? _react2.default.createElement('i', { className: 'comment-icon sm-icon' }) : null
         )
-      );
-    }
-  }]);
+      )
+    )
+  );
+};
 
-  return ListCard;
-}(_react2.default.Component);
+ListCard.propTypes = {
+  card: _propTypes2.default.object
+};
 
-Object.defineProperty(ListCard, 'contextTypes', {
-  enumerable: true,
-  writable: true,
-  value: {
-    store: _propTypes2.default.object.isRequired
-  }
-});
 exports.default = ListCard;
 
 /***/ }),
@@ -61726,7 +61764,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61777,7 +61815,8 @@ NewCardForm.propTypes = {
   value: _propTypes2.default.string.isRequired,
   onChange: _propTypes2.default.func.isRequired,
   onSubmit: _propTypes2.default.func.isRequired,
-  onKeyPress: _propTypes2.default.func
+  onKeyPress: _propTypes2.default.func,
+  onClose: _propTypes2.default.func
 };
 
 exports.default = NewCardForm;
@@ -61801,7 +61840,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(18);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61935,6 +61974,13 @@ Object.defineProperty(CreateListTileContainer, 'contextTypes', {
     store: _propTypes2.default.object
   }
 });
+Object.defineProperty(CreateListTileContainer, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    match: _propTypes2.default.object
+  }
+});
 exports.default = (0, _reactRouterDom.withRouter)(CreateListTileContainer);
 
 /***/ }),
@@ -62011,7 +62057,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -62115,12 +62161,12 @@ Object.defineProperty(CreateListTile, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
+    title: _propTypes2.default.string,
     showForm: _propTypes2.default.bool,
     onTileClick: _propTypes2.default.func,
     onCloseClick: _propTypes2.default.func,
     onChange: _propTypes2.default.func,
-    onSubmit: _propTypes2.default.func,
-    onKeyPress: _propTypes2.default.func
+    onSubmit: _propTypes2.default.func
   }
 });
 exports.default = CreateListTile;
@@ -62146,7 +62192,7 @@ var _reactRedux = __webpack_require__(49);
 
 var _reactRouterDom = __webpack_require__(18);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -62557,6 +62603,14 @@ Object.defineProperty(CardContainer, 'contextTypes', {
   writable: true,
   value: {
     store: _propTypes2.default.object.isRequired
+  }
+});
+Object.defineProperty(CardContainer, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    history: _propTypes2.default.object,
+    match: _propTypes2.default.object
   }
 });
 exports.default = (0, _reactRouterDom.withRouter)(CardContainer);
@@ -79700,7 +79754,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -80151,6 +80205,23 @@ var Card = function Card(props) {
   }
 };
 
+Card.propTypes = {
+  card: _propTypes2.default.object,
+  comments: _propTypes2.default.array,
+  onOverlayClick: _propTypes2.default.func,
+  onCardClick: _propTypes2.default.func,
+  onTitleChange: _propTypes2.default.func,
+  onTitleBlur: _propTypes2.default.func,
+  onTitleKeyPress: _propTypes2.default.func,
+  onToggleCompleted: _propTypes2.default.func,
+  onUnarchiveClick: _propTypes2.default.func,
+  onArchiveClick: _propTypes2.default.func,
+  currentBoardId: _propTypes2.default.number,
+  title: _propTypes2.default.string,
+  showPopover: _propTypes2.default.func,
+  listTitle: _propTypes2.default.string
+};
+
 exports.default = Card;
 
 /***/ }),
@@ -80178,7 +80249,7 @@ var _CardActions = __webpack_require__(39);
 
 var actions = _interopRequireWildcard(_CardActions);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -80342,6 +80413,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _showdown = __webpack_require__(478);
 
 var _showdown2 = _interopRequireDefault(_showdown);
@@ -80418,6 +80493,18 @@ var CardDescription = function CardDescription(props) {
       )
     ) : null
   );
+};
+
+CardDescription.propTypes = {
+  description: _propTypes2.default.string,
+  showForm: _propTypes2.default.bool,
+  onEditClick: _propTypes2.default.func,
+  onInputBlur: _propTypes2.default.func,
+  onChange: _propTypes2.default.func,
+  onSaveClick: _propTypes2.default.func,
+  onDiscardChangeClick: _propTypes2.default.func,
+  isSaving: _propTypes2.default.bool,
+  edited: _propTypes2.default.bool
 };
 
 exports.default = CardDescription;
@@ -83455,7 +83542,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -83551,6 +83638,13 @@ Object.defineProperty(NewCommentFormContainer, 'contextTypes', {
     store: _propTypes2.default.object
   }
 });
+Object.defineProperty(NewCommentFormContainer, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    card: _propTypes2.default.object
+  }
+});
 ;
 
 exports.default = NewCommentFormContainer;
@@ -83570,56 +83664,60 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var NewCommentForm = function NewCommentForm(props) {
   return _react2.default.createElement(
-    "div",
+    'div',
     null,
     _react2.default.createElement(
-      "h2",
-      { className: "comment-icon icon" },
-      "Add Comment"
+      'h2',
+      { className: 'comment-icon icon' },
+      'Add Comment'
     ),
     _react2.default.createElement(
-      "div",
+      'div',
       null,
       _react2.default.createElement(
-        "div",
-        { className: "member-container" },
+        'div',
+        { className: 'member-container' },
         _react2.default.createElement(
-          "div",
-          { className: "card-member" },
-          "TP"
+          'div',
+          { className: 'card-member' },
+          'TP'
         )
       ),
       _react2.default.createElement(
-        "div",
-        { className: "comment" },
+        'div',
+        { className: 'comment' },
         _react2.default.createElement(
-          "label",
+          'label',
           null,
-          _react2.default.createElement("textarea", {
-            required: "",
-            rows: "1",
-            placeholder: "Write a comment...",
+          _react2.default.createElement('textarea', {
+            required: '',
+            rows: '1',
+            placeholder: 'Write a comment...',
             onChange: props.onChange,
             value: props.comment
           }),
           _react2.default.createElement(
-            "div",
+            'div',
             null,
-            _react2.default.createElement("a", { className: "light-button card-icon sm-icon" }),
-            _react2.default.createElement("a", { className: "light-button smiley-icon sm-icon" }),
-            _react2.default.createElement("a", { className: "light-button email-icon sm-icon" }),
-            _react2.default.createElement("a", { className: "light-button attachment-icon sm-icon" })
+            _react2.default.createElement('a', { className: 'light-button card-icon sm-icon' }),
+            _react2.default.createElement('a', { className: 'light-button smiley-icon sm-icon' }),
+            _react2.default.createElement('a', { className: 'light-button email-icon sm-icon' }),
+            _react2.default.createElement('a', { className: 'light-button attachment-icon sm-icon' })
           ),
           _react2.default.createElement(
-            "div",
+            'div',
             null,
-            _react2.default.createElement("input", {
-              type: "submit",
-              className: "button",
+            _react2.default.createElement('input', {
+              type: 'submit',
+              className: 'button',
               value: props.isSaving ? "Saving..." : "Save",
               disabled: !props.isEdited,
               onClick: props.onSubmit
@@ -83629,6 +83727,14 @@ var NewCommentForm = function NewCommentForm(props) {
       )
     )
   );
+};
+
+NewCommentForm.propTypes = {
+  comment: _propTypes2.default.string,
+  isSaving: _propTypes2.default.bool,
+  isEdited: _propTypes2.default.bool,
+  onChange: _propTypes2.default.func,
+  onSubmit: _propTypes2.default.func
 };
 
 exports.default = NewCommentForm;
@@ -84961,6 +85067,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var allLabels = ["green", "yellow", "orange", "red", "purple", "blue"];
@@ -84968,7 +85078,7 @@ var allLabels = ["green", "yellow", "orange", "red", "purple", "blue"];
 var LabelsForm = function LabelsForm(props) {
   var labelLis = allLabels.map(function (label) {
     return _react2.default.createElement(
-      "li",
+      'li',
       {
         key: label,
         onClick: function onClick(e) {
@@ -84976,66 +85086,73 @@ var LabelsForm = function LabelsForm(props) {
         }
       },
       _react2.default.createElement(
-        "div",
-        { className: label + " colorblindable", "data-id": "1" },
-        props.selectedLabels.indexOf(label) !== -1 ? _react2.default.createElement("i", { className: "check-icon sm-icon" }) : null
+        'div',
+        { className: label + ' colorblindable', 'data-id': '1' },
+        props.selectedLabels.indexOf(label) !== -1 ? _react2.default.createElement('i', { className: 'check-icon sm-icon' }) : null
       ),
-      _react2.default.createElement("div", { className: "label-background " + label }),
-      _react2.default.createElement("div", { className: "label-background-overlay" }),
-      _react2.default.createElement("i", { className: "edit-icon icon not-implemented" })
+      _react2.default.createElement('div', { className: 'label-background ' + label }),
+      _react2.default.createElement('div', { className: 'label-background-overlay' }),
+      _react2.default.createElement('i', { className: 'edit-icon icon not-implemented' })
     );
   });
 
   return _react2.default.createElement(
-    "div",
-    { id: "add-options-labels-dropdown" },
+    'div',
+    { id: 'add-options-labels-dropdown' },
     _react2.default.createElement(
-      "header",
+      'header',
       null,
       _react2.default.createElement(
-        "span",
+        'span',
         null,
-        "Change due date"
+        'Change due date'
       ),
-      _react2.default.createElement("a", {
-        href: "#",
-        className: "icon-sm icon-close",
+      _react2.default.createElement('a', {
+        href: '#',
+        className: 'icon-sm icon-close',
         onClick: props.onClose
       })
     ),
     _react2.default.createElement(
-      "div",
-      { className: "content" },
-      _react2.default.createElement("input", { className: "dropdown-input", placeholder: "Search labels...", type: "text" }),
+      'div',
+      { className: 'content' },
+      _react2.default.createElement('input', { className: 'dropdown-input', placeholder: 'Search labels...', type: 'text' }),
       _react2.default.createElement(
-        "div",
-        { className: "labels-search-results" },
+        'div',
+        { className: 'labels-search-results' },
         _react2.default.createElement(
-          "ul",
-          { className: "label-list" },
+          'ul',
+          { className: 'label-list' },
           labelLis
         ),
         _react2.default.createElement(
-          "ul",
-          { className: "light-list" },
+          'ul',
+          { className: 'light-list' },
           _react2.default.createElement(
-            "li",
-            { className: "not-implemented" },
-            "Create a new label"
+            'li',
+            { className: 'not-implemented' },
+            'Create a new label'
           ),
-          _react2.default.createElement("hr", null),
+          _react2.default.createElement('hr', null),
           _react2.default.createElement(
-            "li",
+            'li',
             {
-              className: "toggleColorblind",
+              className: 'toggleColorblind',
               onClick: props.onToggleColorblind
             },
-            "Enable color blind friendly mode."
+            'Enable color blind friendly mode.'
           )
         )
       )
     )
   );
+};
+
+LabelsForm.propTypes = {
+  selectedLabels: _propTypes2.default.array,
+  onClickLabel: _propTypes2.default.func,
+  onClose: _propTypes2.default.func,
+  onToggleColorblind: _propTypes2.default.func
 };
 
 exports.default = LabelsForm;
@@ -85057,7 +85174,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -85194,6 +85311,15 @@ Object.defineProperty(MoveCardFormContainer, 'contextTypes', {
     store: _propTypes2.default.object
   }
 });
+Object.defineProperty(MoveCardFormContainer, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    card: _propTypes2.default.object,
+    history: _propTypes2.default.object,
+    onClose: _propTypes2.default.func
+  }
+});
 exports.default = (0, _reactRouterDom.withRouter)(MoveCardFormContainer);
 
 /***/ }),
@@ -85210,6 +85336,10 @@ Object.defineProperty(exports, "__esModule", {
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _CardLocationFormContainer = __webpack_require__(254);
 
@@ -85256,6 +85386,14 @@ var MoveCardForm = function MoveCardForm(props) {
   );
 };
 
+MoveCardForm.propTypes = {
+  card: _propTypes2.default.object,
+  isSubmitDisabled: _propTypes2.default.bool,
+  onCloseClick: _propTypes2.default.func,
+  onLocationChange: _propTypes2.default.func,
+  onSubmit: _propTypes2.default.func
+};
+
 exports.default = MoveCardForm;
 
 /***/ }),
@@ -85273,38 +85411,42 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CardLocationForm = function CardLocationForm(props) {
   return _react2.default.createElement(
-    "div",
+    'div',
     null,
     _react2.default.createElement(
-      "div",
-      { className: "button-link setting board" },
+      'div',
+      { className: 'button-link setting board' },
       _react2.default.createElement(
-        "span",
-        { className: "label" },
-        "Board"
+        'span',
+        { className: 'label' },
+        'Board'
       ),
       _react2.default.createElement(
-        "span",
-        { className: "value js-board-value" },
+        'span',
+        { className: 'value js-board-value' },
         props.selectedBoardTitle
       ),
       _react2.default.createElement(
-        "label",
+        'label',
         null,
-        "Board"
+        'Board'
       ),
       _react2.default.createElement(
-        "select",
+        'select',
         { onChange: props.onBoardChange, value: props.selectedBoardId },
         props.boards.map(function (board) {
           var selected = board.id === props.currentBoardId;
 
           return _react2.default.createElement(
-            "option",
+            'option',
             { value: board.id, key: board.id },
             board.title,
             selected ? ' (current)' : ''
@@ -85313,34 +85455,34 @@ var CardLocationForm = function CardLocationForm(props) {
       )
     ),
     _react2.default.createElement(
-      "div",
+      'div',
       null,
       _react2.default.createElement(
-        "div",
-        { className: "button-link setting list" },
+        'div',
+        { className: 'button-link setting list' },
         _react2.default.createElement(
-          "span",
-          { className: "label" },
-          "List"
+          'span',
+          { className: 'label' },
+          'List'
         ),
         _react2.default.createElement(
-          "span",
-          { className: "value js-list-value" },
+          'span',
+          { className: 'value js-list-value' },
           props.selectedListTitle
         ),
         _react2.default.createElement(
-          "label",
+          'label',
           null,
-          "List"
+          'List'
         ),
         _react2.default.createElement(
-          "select",
+          'select',
           { onChange: props.onListChange, value: props.selectedListId },
           props.lists.map(function (list) {
             var selected = list.id === props.currentListId;
 
             return _react2.default.createElement(
-              "option",
+              'option',
               { value: list.id, key: list.id },
               list.title,
               selected ? ' (current)' : ''
@@ -85349,31 +85491,31 @@ var CardLocationForm = function CardLocationForm(props) {
         )
       ),
       _react2.default.createElement(
-        "div",
-        { className: "button-link setting position" },
+        'div',
+        { className: 'button-link setting position' },
         _react2.default.createElement(
-          "span",
-          { className: "label" },
-          "Position"
+          'span',
+          { className: 'label' },
+          'Position'
         ),
         _react2.default.createElement(
-          "span",
-          { className: "value" },
+          'span',
+          { className: 'value' },
           props.selectedPositionHumanIndex
         ),
         _react2.default.createElement(
-          "label",
+          'label',
           null,
-          "Position"
+          'Position'
         ),
         _react2.default.createElement(
-          "select",
+          'select',
           { onChange: props.onPositionChange, value: props.selectedPosition },
           props.positions.map(function (position, index) {
             var selected = props.selectedListId === props.currentListId && props.currentPosition === position;
 
             return _react2.default.createElement(
-              "option",
+              'option',
               { value: position, key: position },
               index + 1,
               selected ? ' (current)' : ''
@@ -85383,6 +85525,23 @@ var CardLocationForm = function CardLocationForm(props) {
       )
     )
   );
+};
+
+CardLocationForm.propTypes = {
+  boards: _propTypes2.default.array,
+  lists: _propTypes2.default.array,
+  positions: _propTypes2.default.array,
+  selectedBoardTitle: _propTypes2.default.string,
+  currentBoardId: _propTypes2.default.number,
+  selectedBoardId: _propTypes2.default.number,
+  selectedListTitle: _propTypes2.default.string,
+  selectedListId: _propTypes2.default.id,
+  currentListId: _propTypes2.default.number,
+  selectedPositionHumanIndex: _propTypes2.default.number,
+  currentPosition: _propTypes2.default.number,
+  onBoardChange: _propTypes2.default.func,
+  onListChange: _propTypes2.default.func,
+  onPositionChange: _propTypes2.default.func
 };
 
 exports.default = CardLocationForm;
@@ -85404,7 +85563,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -85575,6 +85734,14 @@ Object.defineProperty(CopyCardFormContainer, 'contextTypes', {
     store: _propTypes2.default.object
   }
 });
+Object.defineProperty(CopyCardFormContainer, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    card: _propTypes2.default.object,
+    onClose: _propTypes2.default.func
+  }
+});
 exports.default = CopyCardFormContainer;
 
 /***/ }),
@@ -85591,6 +85758,10 @@ Object.defineProperty(exports, "__esModule", {
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _CardLocationFormContainer = __webpack_require__(254);
 
@@ -85684,6 +85855,18 @@ var CopyCardForm = function CopyCardForm(props) {
       )
     )
   );
+};
+
+CopyCardForm.propTypes = {
+  card: _propTypes2.default.object,
+  title: _propTypes2.default.string,
+  commentsCount: _propTypes2.default.number,
+  keepComments: _propTypes2.default.bool,
+  onCloseClick: _propTypes2.default.func,
+  onTitleChange: _propTypes2.default.func,
+  onKeepCommentsChange: _propTypes2.default.func,
+  onLocationChange: _propTypes2.default.func,
+  onSubmit: _propTypes2.default.func
 };
 
 exports.default = CopyCardForm;

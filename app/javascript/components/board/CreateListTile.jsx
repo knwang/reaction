@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 class CreateListTile extends React.Component {
   static propTypes = {
+    title: PropTypes.string,
     showForm: PropTypes.bool,
     onTileClick: PropTypes.func,
     onCloseClick: PropTypes.func,
     onChange: PropTypes.func,
-    onSubmit: PropTypes.func,
-    onKeyPress: PropTypes.func
+    onSubmit: PropTypes.func
   };
 
   componentDidUpdate() {

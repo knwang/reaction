@@ -45,12 +45,15 @@ const List = props => (
 );
 
 List.propTypes = {
+  cards: PropTypes.array,
   list: PropTypes.object.isRequired,
   addCardActive: PropTypes.bool.isRequired,
+  newCardFormText: PropTypes.string,
   onDrop: PropTypes.func.isRequired,
   onAddCardClick: PropTypes.func.isRequired,
   onNewCardFormChange: PropTypes.func.isRequired,
   onNewCardFormSubmit: PropTypes.func.isRequired,
+  onNewCardFormClose: PropTypes.func,
   onNewCardFormKeyPress: PropTypes.func
 };
 

@@ -33,7 +33,9 @@ EditableTitle.propTypes = {
   onKeyPress: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onTitleClick: PropTypes.func.isRequired,
-  showInput: PropTypes.bool.isRequired
+  showInput: PropTypes.bool.isRequired,
+  childClassName: PropTypes.string,
+  title: PropTypes.string
 }
 
 export default EditableTitle;

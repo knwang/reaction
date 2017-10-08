@@ -31,7 +31,8 @@ NewCardForm.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onKeyPress: PropTypes.func
+  onKeyPress: PropTypes.func,
+  onClose: PropTypes.func
 }
 
 export default NewCardForm

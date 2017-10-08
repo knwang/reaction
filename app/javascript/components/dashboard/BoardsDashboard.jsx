@@ -32,8 +32,9 @@ const BoardsDashboard = props => {
   );
 }
 
-BoardsDashboard.contextTypes = {
-  store: PropTypes.object
-};
+BoardsDashboard.propTypes = {
+  boards: PropTypes.array,
+  onNewBoardClick: PropTypes.func
+}
 
 export default BoardsDashboard;
