@@ -80,7 +80,7 @@ This route is used to render the template which renders the assets so that React
 
 ## 1.3. GET /boards/:id
 
-This route is also used to render the template. If we don’t have this route, people will not be able to navigate directly to boards. They would need to access `/` and then click on a board, every time.
+This route is also used to render the template. If we don’t have this route, users will not be able to navigate directly to boards. They would need to access `/` and then click on a board, every time.
 
 ## 1.4. GET /cards/:id
 
@@ -180,7 +180,7 @@ The board is returned with the following nested data:
       - cards -\>
         - card
 
-Cards do not include all of the card data. This response includes only the following data for cards: `id`, `title`, `due_date`, `labels`, `description`, `list_id`, `board_id, position`, `comments_count`.
+Cards do not include all of the card data. This response includes only the following data for cards: `id`, `title`, `due_date`, `labels`, `description`, `list_id`, `board_id`, `position`, `comments_count`.
 
 The response status code is 200.
 

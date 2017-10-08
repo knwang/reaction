@@ -3,6 +3,8 @@
 - [1. Build Notes](#1-build-notes)
     - [1.1. Redux data structure](#11-redux-data-structure)
     - [1.2. New Board and List Forms](#12-new-board-and-list-forms)
+- [1 can obviously be handled using local state and event handler functions located in either the component or (preferably) a container component.](#1-can-obviously-be-handled-using-local-state-and-event-handler-functions-located-in-either-the-component-or-preferably-a-container-component)
+- [2 is a little bit more difficult. We don’t want to hide the form until the save completes, in case it fails. We also need to reset the current text when the save completes, so that if the user shows the form again the previous text isn’t displayed.](#2-is-a-little-bit-more-difficult-we-dont-want-to-hide-the-form-until-the-save-completes-in-case-it-fails-we-also-need-to-reset-the-current-text-when-the-save-completes-so-that-if-the-user-shows-the-form-again-the-previous-text-isnt-displayed)
     - [1.3. How to access board id in new list form](#13-how-to-access-board-id-in-new-list-form)
     - [1.4. How to order items](#14-how-to-order-items)
     - [1.5. React-DnD vs Dragula](#15-react-dnd-vs-dragula)
@@ -11,11 +13,17 @@
         - [1.7.1. UPDATE](#171-update)
     - [1.8. /cards/:cardId](#18-cardscardid)
         - [1.8.1. Thoughts](#181-thoughts)
+- [1 introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.](#1-introduces-some-logic-requirements-making-sure-the-card-component-has-a-board-or-can-retrieve-it-from-the-api-so-that-it-can-be-rendered)
+- [2 introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.](#2-introduces-similar-requirements-but-inverted-the-board-component-has-to-know-how-to-retrieve-the-card-so-it-can-be-displayed)
+- [3 introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.](#3-introduces-a-unique-requirement-that-it-has-to-be-able-to-figure-out-what-board-to-display-based-only-on-having-the-data-for-a-single-card)
         - [1.8.2. Decisions](#182-decisions)
+- [1 and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another component. This is a potential maintenance nightmare and not good pattern in general.](#1-and-2-are-asking-for-trouble-since-in-order-to-render-the-component-we-want-it-has-to-be-rendered-through-another-component-this-is-a-potential-maintenance-nightmare-and-not-good-pattern-in-general)
         - [1.8.3. UPDATE](#183-update)
         - [1.8.4. UPDATE 2](#184-update-2)
     - [1.9. Textarea onBlur](#19-textarea-onblur)
     - [1.10. Archiving Cards](#110-archiving-cards)
+- [1 is nice because it allows us to easily show archived cards without another](#1-is-nice-because-it-allows-us-to-easily-show-archived-cards-without-another)
+- [2 is nice because it comes with the bonus that when we fetch a board any](#2-is-nice-because-it-comes-with-the-bonus-that-when-we-fetch-a-board-any)
     - [1.11. Duplicated UI and logic for board/list/position selects on move/copy popovers](#111-duplicated-ui-and-logic-for-boardlistposition-selects-on-movecopy-popovers)
     - [1.12. How to load boards and lists on move/copy card popovers](#112-how-to-load-boards-and-lists-on-movecopy-card-popovers)
 
@@ -60,7 +68,7 @@ I ended up going with a flat data structure, but didn’t include the child ids 
 ```
 
 
-I also didn’t always end up cleaning up the nested data, but I don’t use it. There is a library called [normalizr](https://github.com/paularmstrong/normalizr) which normalizes json data and would make cleaning up the nested data easy, and I would probably use it in a production project.
+I also didn’t always end up cleaning up the nested data, but I don’t use it. There is a library called [normalizr](https://github.com/paularmstrong/normalizr) which normalizes json data and would make cleaning up the nested data easy. I would probably use it in a production project.
 
 ## 1.2. New Board and List Forms
 
@@ -75,9 +83,9 @@ The tricky part is that these pieces of state need to be modified in two situati
 1. When the user interacts with the form.
 2. When the save is complete
 
-\\#1 can obviously be handled using local state and event handler functions located in either the component or (preferably) a container component.
+#1 can obviously be handled using local state and event handler functions located in either the component or (preferably) a container component.
 
-\\#2 is a little bit more difficult. We don’t want to hide the form until the save completes, in case it fails. We also need to reset the current text when the save completes, so that if the user shows the form again the previous text isn’t displayed.
+#2 is a little bit more difficult. We don’t want to hide the form until the save completes, in case it fails. We also need to reset the current text when the save completes, so that if the user shows the form again the previous text isn’t displayed.
 
 Since the redux store receives a dispatched action when the save completes, it makes sense to put the form state in the redux store and handle the save completion in a reducer that updates the form state.
 
@@ -177,7 +185,7 @@ The more I thought about this though, the more I realized it was going to requir
 When updating one item, all of its sibling items would need to be updated with newly normalized positions. I came up with three options:
 
 1. Return an array of the item and its updated siblings from the API.
-2. Return manually update the siblings locally (an idea I never gave real consideration because it is so bad).
+2. Manually update the siblings locally (an idea I never gave real consideration because it is so bad).
 3. After the update request completes, trigger a fetch of the parent which would retrieve the items
 
 All three of these options carried more maintenance contracts than I thought were worth it.
@@ -196,7 +204,7 @@ I mimicked these rules in my own implementation.
 
 ## 1.5. React-DnD vs Dragula
 
-When implement dragging lists I found React-DnD and Dragula as options. React-DnD was created by a prolific react  community contributor, so I am sure it works fine, but I was unable to get it to work after 20 or so minutes. I decided to try Dragula and was able to get it working in just a couple of minutes using [GitHub - bevacqua/react-dragula: Drag and drop so simple it hurts](https://github.com/bevacqua/react-dragula "bevacqua/react-dragula"). I highly recommend this library as it has a great API and works flawlessly in my application.
+When implementing dragging lists I found React-DnD and Dragula as options. React-DnD was created by a prolific react  community contributor, so I am sure it works fine, but I was unable to get it to work after 20 or so minutes. I decided to try Dragula and was able to get it working in just a couple of minutes using [bevacqua/react-dragula](https://github.com/bevacqua/react-dragula). I highly recommend this library as it has a great API and works flawlessly in my application.
 
 ## 1.6. Card creation local state
 
@@ -216,17 +224,22 @@ Where should I store these pieces? In my application, the rendered structure loo
 ```
 <Application>
   <BoardContainer>
-  <Board>
-    <ExistingLists>
-    <DraggableList>
-      <List>
-      <NewCardForm />
-      </List>
-    </DraggableList>
-    </ExistingList>
-  </Board>
-  <BoardContainer>
-<Application>
+    <Board>
+      <ExistingLists>
+        <DraggableList>
+          <List>
+            <NewCardForm />
+          </List>
+        </DraggableList>
+        <DraggableList>
+          <List>
+            <NewCardForm />
+          </List>
+        </DraggableList>
+      </ExistingList>
+    </Board>
+  </BoardContainer>
+</Application>
 ```
 
 Since the state storing which list is currently showing the new form list needs to go in the component which has access to all of the lists, that is `<ExistingLists>`. It made sense to me to put all of the callbacks and state there, since they are all related. I could have also utilized Redux for the state and placed the callback logic much closer to the `<NewCardForm>` component, but I decided it wasn’t worth the added Redux maintenance at this point.
@@ -236,36 +249,33 @@ Since the state storing which list is currently showing the new form list needs 
 
 Many of instances of dragula can be configured on the same page, but nesting drag targets proved to be a little tricky. The way you configure dragula is by setting up “containers”, and their direct descendants will be draggable between each container.
 
-All child elements of the draggable element serve as handles (unless configured otherwise). When you are nesting drag targets, this becomes a problem. When you click on the nested draggable item to drag it, the parent draggable item catches the drag as well, and ends up being the item that is getting dragged. Fortunately, draggable provides us with ways to deal with this.
+All child elements of the draggable element serve as handles (unless configured otherwise). When you are nesting drag targets, this becomes a problem. When you click on the nested draggable item to drag it, the parent draggable item catches the drag as well, and ends up being the item that is getting dragged. Fortunately, dragula provides us with ways to deal with this.
 
-When initializing a draggable instance, you can provide an options object. One of the keys you can provide a callback function for is called `moves`. If this method returns a truth value, the draggable item begins dragging. If not, it does nothing. This means we can set some specifics on the parent draggable item, and let the nested draggable item always be draggable. 
+When initializing a dragula instance, you can provide an options object. One of the keys you can provide a callback function for is called `moves`. If this method returns a truthy value, the draggable item begins dragging. If not, it does nothing. This means we can set some specifics on the parent draggable item, and let the nested draggable item always be draggable. 
 
 When we click on the nested draggable item or any of its descendants, we always want a drag to be initiated for that item, but never the parent draggable item. This is the solution I used:
 
-Parent draggable configuration (ES2015 syntax from [GitHub - bevacqua/react-dragula: Drag and drop so simple it hurts](https://github.com/bevacqua/react-dragula "bevacqua/react-dragula")
+Parent draggable configuration (ES2015 syntax from [bevacqua/react-dragula](https://github.com/bevacqua/react-dragula)):
 
 ```javascript
-  dragulaDecorator = (componentBackingInstance) => {
+dragulaDecorator = (componentBackingInstance) => {
   if (componentBackingInstance) {
-    var event = document.createEvent('Event');
-    event.initEvent('drop', true, true);
-
     let options = {
-    direction: 'horizontal',
-    moves: function (el, source, handle, sibling) {
-      return !handle.closest("#cards-container");
-    },
-    accepts: function (el, target, source, sibling) {
-      return !el.closest("#cards-container");
-    },
+      direction: 'horizontal',
+      moves: function (el, source, handle, sibling) {
+        return !handle.closest("#cards-container");
+      },
+      accepts: function (el, target, source, sibling) {
+        return !el.closest("#cards-container");
+      }
     };
 
     dragula([componentBackingInstance], options)
-    .on('drop', function (el) {
-      el.dispatchEvent(event);
-    });
+      .on('drop', function (el) {
+        el.dispatchEvent(new Event("drop", { "bubbles": true }));
+      });
   }
-  };
+};
 ```
 
 As previously mentioned, `moves` describes what elements this drake can drag. `!handle.closest(“#cards-container")` says “the clicked page element (`handle`) has no parent with the `cards-container` class.” Using this means that all of the child elements of the lists (drag target here) should initiate a list drag *unless* they have a `#cards-container` parent.
@@ -275,13 +285,13 @@ As previously mentioned, `moves` describes what elements this drake can drag. `!
 Nested draggable items configuration:
 
 ```javascript
-  componentDidMount() {
-  const cardDrake = dragula({
+componentDidMount() {
+  this.cardDrake = dragula({
     isContainer: function (el) {
-    return el.id === 'cards-container';
+      return el.id === 'cards-container';
     }
   });
-  }
+}
 ```
 
 The `isContainer` options key allows us to dynamically decide if an element that receives a click is a container or not. Since the card lists are `#cards-container` elements, this sets all card containers to be containers, and allows cards to be dragged between them.
@@ -305,19 +315,19 @@ I came up with three options:
 3. Create two `<Route>` expressions for `/cards/:cardId`. One would render the board, and the other would render the card.
 
 ### 1.8.1. Thoughts
-\\#1 introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.
+#1 introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.
 
-\\#2 introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.
+#2 introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.
 
-\\#3 introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.
+#3 introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.
 
 ### 1.8.2. Decisions
 
-\\#1 and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another card. This is a potential maintenance nightmare and not good pattern in general.
+#1 and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another component. This is a potential maintenance nightmare and not good pattern in general.
 
-I decided to go with #3. That is because each component can be told to render itself and the rendering is not co-dependent (although part of the logic in `Board` is, as it needs to retrieve itself through a card).
+I decided to go with #3. That is because each component can be told to render itself and the rendering is not co-dependent (although part of the logic in `Board` is, as it needs to retrieve itself using a card id).
 
-The data structure I had used on the API server up till this point was “Board has_many Lists, List has_many cards”. Because of this, my next problem arose. How do I get the board one through a card’s data? That answer seemed to be simple: look through the lists for the one the card belongs to, then grab the board that list belongs to. 
+The data structure I had used on the API server up 'til this point was “Board has_many Lists, List has_many cards”. Because of this, my next problem arose. How do I get the board through a card’s data? That answer seemed to be simple: look through the lists for the one the card belongs to, then grab the board that list belongs to. 
 
 There is a caveat though. If the board hasn’t been loaded, we don’t have the board’s lists. That means we won’t find the card’s list when we look, which means I *couldn’t* find the board using only the card data.
 
@@ -339,13 +349,13 @@ This is when it gets tricky. I solved it by introducing the following steps:
 2. The callback to the subscription checks `this.state.board` and `this.state.isFetching` to see if we have a board yet.
 3. If we have a board, nothing is done.
 4. If we don’t have a board, I:
-  1. Look for a board id. The board id can come from either the url or the current card if we are at `/cards/:cardId`.
-  2. If we don’t have a board id (because we have not yet retrieved the current card), do nothing. These same steps will be repeated when the store is updated, thanks to our subscription. When the card is fetched (happening elsewhere in the app), the store will be updated and we will be able to proceed.
-  3. Once we have a board id, continue:
-  4. Update the `isFetching` state property to `true`. (This makes sure that any future store subscription callback invocations won’t retrieve the board, since we are already working on it)
-  5. In the `setState` callback, dispatch the `fetchBoard` thunk, with a callback.
-    1. In the callback to the thunk, receive the fetched board.
-    2. Update the local state state with the board and set `isFetching` to false.
+    1. Look for a board id. The board id can come from either the url or the current card if we are at `/cards/:cardId`.
+    2. If we don’t have a board id (because we have not yet retrieved the current card), do nothing. These same steps will be repeated when the store is updated, thanks to our subscription. When the card is fetched (happening elsewhere in the app), the store will be updated and we will be able to proceed.
+    3. Once we have a board id, continue:
+        1. Update the `isFetching` state property to `true`. (This makes sure that any future store subscription callback invocations won’t retrieve the board, since we are already working on it)
+        2. In the `setState` callback, dispatch the `fetchBoard` thunk, with a callback.
+            1. In the callback to the thunk, receive the fetched board.
+            2. Update the local state with the board and set `isFetching` to false.
 
 NOTE: I created a method called `updateBoardInState` that encapsulates  kicking off steps 2+. I called this method directly in `componentDidMount` as well as in the subscription callback, because we need it to be executed when the component mounts, and not just when we get an update from the store.
 
@@ -361,7 +371,7 @@ updateBoardInState = () => {
   if (!boardId) { return null; }
 
   if (!this.state.board && !this.state.isFetching) {
-  this.fetchBoard(boardId);
+    this.fetchBoard(boardId);
   }
 }
 ```
@@ -370,29 +380,29 @@ The callback function now checks for the board id first. If there is no board is
 
 ### 1.8.4. UPDATE 2
 
-I originally rendered `BoardContainer` in two different routes. I found that this created a visible refresh when I changed between `/cards/:id` and `/boards/:id`. That is because each route rendered its own instance of `BoardContainer`. By only using one instance of that component, react is able to properly transition without the vision refresh of the board data.
+I originally rendered `BoardContainer` in two different routes. I found that this created a visible refresh when I changed between `/cards/:id` and `/boards/:id`. That is because each route rendered its own instance of `BoardContainer`. By only using one instance of that component, react is able to properly transition without the visual refresh of the board data.
 
  I changed:
 
-```javascript
+```jsx
+<Route path='/boards/:boardId' exact component={BoardContainer} />
 <Route path='/cards/:cardId' exact component={BoardContainer} />
-<Route path='/cards/:cardId' exact component={CardContainer} />
 ```
 
 to:
 
-```javascript
+```jsx
 <Route path='/(boards|cards)/:id' exact component={BoardContainer} />
 ```
 ## 1.9. Textarea onBlur
 
-I ran into a problem where `onblur` interrupts click events, which means that clicking on a save button outside of a textarea with a an onblur handler only fires the `onblur`, and not any `onclick` events on the button. The first solution I found for this came from [https://stackoverflow.com/a/28963938/617243](https://stackoverflow.com/a/28963938/617243 "this SO post").
+I ran into a problem where `onblur` interrupts click events, which means that clicking on a save button outside of a textarea with an onblur handler only fires the `onblur`, and not any `onclick` events on the button. The first solution I found for this came from [Stack Overflow](https://stackoverflow.com/a/28963938/617243 "this SO post").
 
 While using `onmousedown` worked, I didn’t consider it a good solution because a button shouldn’t respond to a click until the mouse button is _released_, rather than pressed. I ended up solving this using `setTimeout` and my own `showForm` state property. Here is the code with sample HTML:
 
-```html
-      <textarea onBlur={props.onInputBlur}></textarea>
-          <button onClick={props.onSaveClick}>{props.isSaving ? "Saving..." : "Save"}</button>
+```jsx
+<textarea onBlur={props.onInputBlur}></textarea>
+<button onClick={props.onSaveClick}>{props.isSaving ? "Saving..." : "Save"}</button>
 ```
 
 ```javascript
@@ -428,7 +438,26 @@ handleSaveClick = (e) => {
 ```
 ## 1.10. Archiving Cards
 
-When a card is archived, we don’t want to show it anymore. My initial thought was that the easiest way to handle that is just to filter the archived cards out at the API level.
+When a card is archived, we don’t want to show it anymore.
+
+THere are two ways to handle this:
+
+1. Return all cards, including archived items, from the API.
+2. Filter the archived cards on the API, returning only active cards.
+
+#1 is nice because it allows us to easily show archived cards without another
+API call. The downside is that we have to remember to always filter out archived
+cards from the display when we don't want them.
+
+#2 is nice because it comes with the bonus that when we fetch a board any
+archived cards are automatically removed from our store since they won't be in
+the removed data. The only downside here is that we still need to filter
+archived cards out of the list view since when we archive a card it will still
+be in our store but will be marked as archived. This has to be the case so that
+when the card is archived we can render the it with the "Archived" banner across
+the top and the "Send to Board" button.
+
+I decided to go with #2 since there is less maintenance overhead.
 
 ## 1.11. Duplicated UI and logic for board/list/position selects on move/copy popovers
 
@@ -444,4 +473,4 @@ To fix this, I fetched all boards when `CardLocationFormContainer` is mounted. T
 
 The next problem was displaying the lists for one of the other boards that we have loaded the base data for (title only, no lists), but haven’t browsed so we don’t have the lists in our store.
 
-My solution to this was fetching the selected board when the dropdown is changed. This loads the lists and the base data for the list’s cards. This has the added bonus of making sure the “positions” list reflects up to date data, since it is based on the number of cards in the currently selected list.
+My solution to this was fetching the selected board when the dropdown is changed. This loads the lists and the base data for the list’s cards. This has the added bonus of making sure the “positions” list reflects up to date data, since it is based on the number of just-fetched cards in the currently selected list.

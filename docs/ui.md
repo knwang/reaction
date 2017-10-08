@@ -21,7 +21,7 @@ NOTE: It is important to have the `<p>` and `<input>` wrapped in a `<div>` so th
 
 
 ### 1.1.2. Create a list form
-The create a list button tile should add the `selected` class when it is clicked on. This will display the form. When either the “Save” of “X” buttons are clicked, the `selected` class should be removed.
+When the create a list button tile is clicked, it should add the `selected` class to the `#new-list.new-list` element. This will display the form. When either the “Save” or “X” buttons are clicked, the `selected` class should be removed.
 
 
 ### 1.1.3. New Card Form
@@ -33,4 +33,4 @@ Since only one list should have the form active at a time, only one list should 
 
 Colorblind labels are toggled by adding the `colorblind` class to a parent element. The easiest way to do this is to apply it to the top-most `<div>` rendered in our application, because that is a parent to both the lists UI and the card UI.
 
-It could also be added in multiple places, to parents of each of those elements.
+It could also be added in multiple places, to parents of both the lists UI and card UI.
