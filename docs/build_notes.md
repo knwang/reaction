@@ -3,8 +3,6 @@
 - [1. Build Notes](#1-build-notes)
     - [1.1. Redux data structure](#11-redux-data-structure)
     - [1.2. New Board and List Forms](#12-new-board-and-list-forms)
-- [1 can obviously be handled using local state and event handler functions located in either the component or (preferably) a container component.](#1-can-obviously-be-handled-using-local-state-and-event-handler-functions-located-in-either-the-component-or-preferably-a-container-component)
-- [2 is a little bit more difficult. We don’t want to hide the form until the save completes, in case it fails. We also need to reset the current text when the save completes, so that if the user shows the form again the previous text isn’t displayed.](#2-is-a-little-bit-more-difficult-we-dont-want-to-hide-the-form-until-the-save-completes-in-case-it-fails-we-also-need-to-reset-the-current-text-when-the-save-completes-so-that-if-the-user-shows-the-form-again-the-previous-text-isnt-displayed)
     - [1.3. How to access board id in new list form](#13-how-to-access-board-id-in-new-list-form)
     - [1.4. How to order items](#14-how-to-order-items)
     - [1.5. React-DnD vs Dragula](#15-react-dnd-vs-dragula)
@@ -13,17 +11,11 @@
         - [1.7.1. UPDATE](#171-update)
     - [1.8. /cards/:cardId](#18-cardscardid)
         - [1.8.1. Thoughts](#181-thoughts)
-- [1 introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.](#1-introduces-some-logic-requirements-making-sure-the-card-component-has-a-board-or-can-retrieve-it-from-the-api-so-that-it-can-be-rendered)
-- [2 introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.](#2-introduces-similar-requirements-but-inverted-the-board-component-has-to-know-how-to-retrieve-the-card-so-it-can-be-displayed)
-- [3 introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.](#3-introduces-a-unique-requirement-that-it-has-to-be-able-to-figure-out-what-board-to-display-based-only-on-having-the-data-for-a-single-card)
         - [1.8.2. Decisions](#182-decisions)
-- [1 and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another component. This is a potential maintenance nightmare and not good pattern in general.](#1-and-2-are-asking-for-trouble-since-in-order-to-render-the-component-we-want-it-has-to-be-rendered-through-another-component-this-is-a-potential-maintenance-nightmare-and-not-good-pattern-in-general)
         - [1.8.3. UPDATE](#183-update)
         - [1.8.4. UPDATE 2](#184-update-2)
     - [1.9. Textarea onBlur](#19-textarea-onblur)
     - [1.10. Archiving Cards](#110-archiving-cards)
-- [1 is nice because it allows us to easily show archived cards without another](#1-is-nice-because-it-allows-us-to-easily-show-archived-cards-without-another)
-- [2 is nice because it comes with the bonus that when we fetch a board any](#2-is-nice-because-it-comes-with-the-bonus-that-when-we-fetch-a-board-any)
     - [1.11. Duplicated UI and logic for board/list/position selects on move/copy popovers](#111-duplicated-ui-and-logic-for-boardlistposition-selects-on-movecopy-popovers)
     - [1.12. How to load boards and lists on move/copy card popovers](#112-how-to-load-boards-and-lists-on-movecopy-card-popovers)
 
@@ -33,7 +25,7 @@
 
 ## 1.1. Redux data structure
 
-My first thought was to store the data in a nested structure mirroring its relationships.:
+My first thought was to store the data in a nested structure mirroring its relationships:
 
 ```javascript
 {
@@ -83,9 +75,9 @@ The tricky part is that these pieces of state need to be modified in two situati
 1. When the user interacts with the form.
 2. When the save is complete
 
-#1 can obviously be handled using local state and event handler functions located in either the component or (preferably) a container component.
+\#1 can obviously be handled using local state and event handler functions located in either the component or (preferably) a container component.
 
-#2 is a little bit more difficult. We don’t want to hide the form until the save completes, in case it fails. We also need to reset the current text when the save completes, so that if the user shows the form again the previous text isn’t displayed.
+\#2 is a little bit more difficult. We don’t want to hide the form until the save completes, in case it fails. We also need to reset the current text when the save completes, so that if the user shows the form again the previous text isn’t displayed.
 
 Since the redux store receives a dispatched action when the save completes, it makes sense to put the form state in the redux store and handle the save completion in a reducer that updates the form state.
 
@@ -315,15 +307,15 @@ I came up with three options:
 3. Create two `<Route>` expressions for `/cards/:cardId`. One would render the board, and the other would render the card.
 
 ### 1.8.1. Thoughts
-#1 introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.
+\#1 introduces some logic requirements making sure the `Card` component has a board (or can retrieve it from the API) so that it can be rendered.
 
-#2 introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.
+\#2 introduces similar requirements, but inverted. The `Board` component has to know how to retrieve the card so it can be displayed.
 
-#3 introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.
+\#3 introduces a unique requirement that it has to be able to figure out what board to display based only on having the data for a single card.
 
 ### 1.8.2. Decisions
 
-#1 and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another component. This is a potential maintenance nightmare and not good pattern in general.
+\#1 and #2 are asking for trouble since in order to render the component we want, it has to be rendered through another component. This is a potential maintenance nightmare and not good pattern in general.
 
 I decided to go with #3. That is because each component can be told to render itself and the rendering is not co-dependent (although part of the logic in `Board` is, as it needs to retrieve itself using a card id).
 
@@ -440,16 +432,16 @@ handleSaveClick = (e) => {
 
 When a card is archived, we don’t want to show it anymore.
 
-THere are two ways to handle this:
+There are two ways to handle this:
 
 1. Return all cards, including archived items, from the API.
 2. Filter the archived cards on the API, returning only active cards.
 
-#1 is nice because it allows us to easily show archived cards without another
+\#1 is nice because it allows us to easily show archived cards without another
 API call. The downside is that we have to remember to always filter out archived
 cards from the display when we don't want them.
 
-#2 is nice because it comes with the bonus that when we fetch a board any
+\#2 is nice because it comes with the bonus that when we fetch a board any
 archived cards are automatically removed from our store since they won't be in
 the removed data. The only downside here is that we still need to filter
 archived cards out of the list view since when we archive a card it will still
