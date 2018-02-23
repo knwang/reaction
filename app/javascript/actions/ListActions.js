@@ -13,8 +13,8 @@ export function updateListRequest() {
   return { type: types.UPDATE_LIST_REQUEST };
 }
 
-export function updateListSuccess(boardId, listId, updatedList) {
-  return { type: types.UPDATE_LIST_SUCCESS, boardId, listId, updatedList };
+export function updateListSuccess(listId, updatedList) {
+  return { type: types.UPDATE_LIST_SUCCESS, listId, updatedList };
 }
 
 export function createList(boardId, list, callback) {
@@ -28,11 +28,11 @@ export function createList(boardId, list, callback) {
   }
 }
 
-export function updateList(boardId, listId, data) {
+export function updateList(listId, data) {
   return function(dispatch) {
     dispatch(updateListRequest());
-    apiClient.updateList(boardId, listId, data, updatedList => {
-      dispatch(updateListSuccess(boardId, listId, updatedList));
+    apiClient.updateList(listId, data, updatedList => {
+      dispatch(updateListSuccess(listId, updatedList));
     });
   }
 }
